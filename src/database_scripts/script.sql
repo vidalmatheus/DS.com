@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS Paciente CASCADE;
 DROP TABLE IF EXISTS Consulta CASCADE;
 DROP TABLE IF EXISTS Funcionario CASCADE;
 
--- -----------------------------------------------------
+-- ----------------------------------------------------- 
 -- Table `ds`.`medico`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS "ds".medico ;
