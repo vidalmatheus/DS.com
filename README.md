@@ -29,30 +29,30 @@ Schedule:
  
 --------------------------------end week 6---------------------------------------------------
 
-[] Tela de login
+[ ] Tela de login
 
-[] Tela de Cadastro
+[ ] Tela de Cadastro
 
-[] Tela de Agendamento
+[ ] Tela de Agendamento
 
 --------------------------------end week 7---------------------------------------------------
 
-[] Integração com o Banco de Dados
+[ ] Integração com o Banco de Dados
 
-[] Segurança
+[ ] Segurança
 
-[] Revisão de Bugs
+[ ] Revisão de Bugs
 
-[] Hospedagem free
+[ ] Hospedagem free
 
-[] Testes
+[ ] Testes
 
 --------------------------------end week 8---------------------------------------------------
 
-[] 
+[ ] 
 
 --------------------------------end week 9---------------------------------------------------
 
-[] 
+[ ] 
 
 --------------------------------end week 10---------------------------------------------------
