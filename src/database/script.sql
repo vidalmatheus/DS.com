@@ -2,6 +2,7 @@
 
 -- DROP DATABASE ds;
 
+/*
 CREATE DATABASE ds
     WITH 
     OWNER = postgres
@@ -10,7 +11,7 @@ CREATE DATABASE ds
     LC_CTYPE = 'Portuguese_Brazil.1252'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
-
+*/
 
 DROP TABLE IF EXISTS Medico CASCADE;
 DROP TABLE IF EXISTS Paciente CASCADE;
@@ -22,7 +23,7 @@ DROP TABLE IF EXISTS Consulta CASCADE;
 DROP TABLE IF EXISTS "ds".medico ;
 
 CREATE TABLE Medico (
-    CRM bigint NOT NULL,
+    CRM int NOT NULL,
 	senha bytea NOT NULL,
 	SARAM int,
     Nome VARCHAR(50) NOT NULL,
@@ -97,15 +98,17 @@ insert into Consulta (CPF_pac,CRM,Data,Hora,status,CPF_staff) values
 -- Query
 -- -----------------------------------------------------
 
---select * from Paciente;
+select * from Paciente;
 --select * from medico;
 --select * from Consulta;
 
+/*
 select p.Nome, k.Nome, data, hora 
 from
 	(medico as m inner join consulta as c on (m.CRM=c.CRM) ) as k
 	inner join paciente as p on (k.CPF_pac=p.CPF)
 where status = 'marcado'
+*/
 
 
 
