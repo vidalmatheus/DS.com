@@ -9360,6 +9360,100 @@
 							"length": "20"
 						}
 					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAFrID3rQavsBUI=",
+					"_parent": {
+						"$ref": "AAAAAAFrATsafbFRyc4="
+					},
+					"name": "Medico_Agenda",
+					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIEUEe6v5aKg=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "CRM",
+							"type": "int",
+							"length": 0,
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFrAT/wIrLMCuI="
+							},
+							"unique": true
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIEuJa6wDDtg=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "h08002",
+							"type": "BOOLEAN",
+							"length": 0,
+							"nullable": true
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk4cqawPGzo=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "h08302",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk4od6wV1+8=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "Column2"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk4tLqwbg58=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "Column3"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk4x56whlGY=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "Column4"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk43K6wnMOs=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "Column5"
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk47L6wtOgw=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "...",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFrIk5Kzaw0EUg=",
+							"_parent": {
+								"$ref": "AAAAAAFrID3rQavsBUI="
+							},
+							"name": "Column6"
+						}
+					]
 				}
 			]
 		}

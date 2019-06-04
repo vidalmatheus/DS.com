@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS Consulta CASCADE;
 DROP TABLE IF EXISTS "ds".medico ;
 
 CREATE TABLE Medico (
-    CRM int NOT NULL,
+    CRM int unique NOT NULL,
 	senha bytea NOT NULL,
-	SARAM int,
+	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     Especialidade VARCHAR(20) NOT NULL,
     militar VARCHAR(20) NOT NULL,
@@ -39,9 +39,9 @@ CREATE TABLE Medico (
 DROP TABLE IF EXISTS "ds".paciente ;
 
 CREATE TABLE Paciente (
-    CPF bigint NOT NULL,
+    CPF bigint unique NOT NULL,
 	senha bytea NOT NULL,
-	SARAM int,
+	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     dt_nasc DATE NOT NULL,
     sexo CHAR NOT NULL,
@@ -58,12 +58,11 @@ CREATE TABLE Paciente (
 -- -----------------------------------------------------
 CREATE TABLE Consulta (
     id SERIAL,
-    CPF_pac bigint NOT NULL,
-    CRM int NOT NULL,
+    CPF_pac bigint unique NOT NULL,
+    CRM int unique NOT NULL,
     Data DATE NOT NULL,
     Hora TIME NOT NULL,
     status VARCHAR(10) NOT NULL,
-    CPF_staff bigint NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -80,18 +79,18 @@ delete from Medico;
 delete from Consulta;
 
 insert into Paciente values 
-(13420296746,'123456',0,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
-(43967557839,'123456',0,'Adriano Soares','1996/03/08','M','Rua H8B,214 - SJC,SP','(18)99606-3534','srodrigues@gmail.com','alunoITA',false),
-(04339241698,'123456',0,'Pedro Alves','1997/04/04','M','Rua H8B,203 - SJC,SP','(18)99605-7649','alvesouza@gmail.com','alunoITA',false);
+(13420296746,'123456',7654321,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
+(43967557839,'123456',8654321,'Adriano Soares','1996/03/08','M','Rua H8B,214 - SJC,SP','(18)99606-3534','srodrigues@gmail.com','alunoITA',false),
+(04339241698,'123456',9654321,'Pedro Alves','1997/04/04','M','Rua H8B,203 - SJC,SP','(18)99605-7649','alvesouza@gmail.com','alunoITA',false);
 
 insert into Medico values 
 (16863158,'123456',1234567,'Charlie','odontologista','1tenente'),
-(15846758,'123456',1234567,'Jonas','ortopedista','2tenente'),
-(15523418,'123456',1234567,'Nathalia','oftalmologista','capitao');
+(15846758,'123456',1234568,'Jonas','ortopedista','2tenente'),
+(15523418,'123456',1234569,'Nathalia','oftalmologista','capitao');
 
-insert into Consulta (CPF_pac,CRM,Data,Hora,status,CPF_staff) values 
-(13420296746,16863158,'2019/05/27','11:00:00','aberto',13420296749),
-(43967557839,15846758,'2019/05/28','15:30:00','marcado',13420296749);
+insert into Consulta (CPF_pac,CRM,Data,Hora,status) values 
+(13420296746,16863158,'2019/05/27','11:00:00','aberto'),
+(43967557839,15846758,'2019/05/28','15:30:00','marcado');
 
 
 -- -----------------------------------------------------
