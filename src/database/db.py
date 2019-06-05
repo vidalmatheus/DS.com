@@ -6,10 +6,11 @@ db = Flask(__name__)
 
 #connect to the db 
 con = psycopg2.connect(
-            host = "localhost",
-            database="ds",
-            user = "postgres",
-            password = "admin")
+            host = "ec2-50-19-114-27.compute-1.amazonaws.com",
+            database="d4hj7938me3577",
+            user = "pjiswamglyhfme",
+            port = 5432,
+            password = "2829cb6cc89be5cfbe36da3706dfe468c9b8a46c2f2560f85ac05e5ec7870b80")
 
 @db.route('/', methods=['GET', 'POST'])
 def index():
