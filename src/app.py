@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, json
+from flask import Flask, render_template, request, redirect, json, url_for
 import psycopg2
 
 # create app
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='/static')
 
 ### connect to the db 
 con = psycopg2.connect(
@@ -16,6 +16,10 @@ con = psycopg2.connect(
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
