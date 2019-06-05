@@ -1,19 +1,24 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, json
 import psycopg2
 
 # create app
-db = Flask(__name__)
+app = Flask(__name__)
 
-#connect to the db 
+### connect to the db 
 con = psycopg2.connect(
             host = "ec2-50-19-114-27.compute-1.amazonaws.com",
             database="d4hj7938me3577",
             user = "pjiswamglyhfme",
             port = 5432,
             password = "2829cb6cc89be5cfbe36da3706dfe468c9b8a46c2f2560f85ac05e5ec7870b80")
+####
 
-@db.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
@@ -36,9 +41,9 @@ def index():
         #close the cursor
         cur.close()
         return redirect('/users')
-    return render_template('index.html')
+    return render_template('cadastro.html')
 
-@db.route('/users')
+@app.route('/users')
 def users():
     cur = con.cursor()  
     resultValue = cur.execute("SELECT * FROM paciente")
@@ -58,7 +63,7 @@ for r in rows:
 '''
 
 if __name__ == '__main__':
-    db.run(debug=True)
+    app.run(debug=True)
     #close the connection
     con.close()
 
