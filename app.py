@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request, redirect, json, url_for
-import psycopg2, subprocess
+import psycopg2, os, subprocess
 
 # create app
 app = Flask(__name__,static_url_path='/static')
 
 ### connect to the db 
-proc = subprocess.Popen('heroku config:get DATABASE_URL -a divisaosaude', stdout=subprocess.PIPE, shell=True)
-db_url = proc.stdout.read().decode('utf-8').strip() 
-print(db_url)
-con = psycopg2.connect(db_url)
+DATABASE_URL = os.environ['DATABASE_URL']
+
+con = psycopg2.connect(DATABASE_URL, sslmode='require')
 ####
 
 # main page
