@@ -5,6 +5,12 @@ from config import *
 # create app
 app = Flask(__name__,static_url_path='/static')
 
+### connect to the db 
+proc = subprocess.Popen('heroku config:get DATABASE_URL -a divisaosaude', stdout=subprocess.PIPE, shell=True)
+db_url = proc.stdout.read().decode('utf-8').strip() + '?sslmode=require'
+con = psycopg2.connect(db_url)
+####
+
 # main page
 @app.route('/')
 def index():
@@ -15,7 +21,7 @@ def index():
 def login():
     return render_template('login.html')
 
-# 
+# register 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -42,6 +48,7 @@ def register():
         return redirect('/users')
     return render_template('register.html')
 
+# users registers
 @app.route('/users')
 def users():
     cur = con.cursor()  
