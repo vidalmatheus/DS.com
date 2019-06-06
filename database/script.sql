@@ -39,7 +39,7 @@ CREATE TABLE Medico (
 DROP TABLE IF EXISTS "ds".paciente ;
 
 CREATE TABLE Paciente (
-    CPF bigint unique NOT NULL,
+    CPF varchar(14) unique NOT NULL,
 	senha bytea NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE Paciente (
 -- -----------------------------------------------------
 CREATE TABLE Consulta (
     id SERIAL,
-    CPF_pac bigint unique NOT NULL,
+    CPF_pac varchar(14) unique NOT NULL,
     CRM int unique NOT NULL,
     Data DATE NOT NULL,
     Hora TIME NOT NULL,

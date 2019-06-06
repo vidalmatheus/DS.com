@@ -1,18 +1,37 @@
-<table border = 1>
-    <h1>Relação de Pacientes</h1> 
-    {% for user in userDetails %}
-    <tr> 
-      <td> {{user[0]}} </td>
-      <td> {{user[1]}} </td>
-      <td> {{user[2]}} </td>
-      <td> {{user[3]}} </td>
-      <td> {{user[4]}} </td>
-      <td> {{user[5]}} </td>
-      <td> {{user[6]}} </td>
-      <td> {{user[7]}} </td>
-      <td> {{user[8]}} </td>
-      <td> {{user[9]}} </td>
-      <td> {{user[10]}} </td>
-    </tr>
-    {% endfor %}
-  </table>
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/img/DS.ico" type="image/x-icon" />
+    <title>Cadastro</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+
+
+</head>
+
+<body>
+    <table border=1>
+        <h1>Relação de Pacientes</h1>
+        {% for user in userDetails %}
+        <tr>
+            <td> {{user[0]}} </td>
+            <td> {{user[1]}} </td>
+            <td> {{user[2]}} </td>
+            <td> {{user[3]}} </td>
+            <td> {{user[4]}} </td>
+            <td> {{user[5]}} </td>
+            <td> {{user[6]}} </td>
+            <td> {{user[7]}} </td>
+            <td> {{user[8]}} </td>
+            <td> {{user[9]}} </td>
+            <td> {{user[10]}} </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>
