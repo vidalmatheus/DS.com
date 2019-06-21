@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link rel="icon" href="../static/img/DS.ico" type="image/x-icon" />
+    <title>Divisão de Saúde</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/vendors/linericon/style.css">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="../static/vendors/lightbox/simpleLightbox.css">
+    <link rel="stylesheet" href="../static/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="../static/vendors/animate-css/animate.css">
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/styleDS.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+
+
+</head>
+
+<body>
+    <header class="header_area">
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container box_1620">
+                    <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
+
+                </div>
+            </nav>
+        </div>
+    </header>
+
+  <!--================ Bloco Azul  =================-->
+    <section class="home_banner_area">
+        <div class="banner_inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="banner_content">
+                            <h2>Olá, Adriano !</h2>
+                            <p>Não esqueça de verificar seu calendário</br>
+                                para não esquecer de suas consultas.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="home_left_img">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;<a class="banner_btn" href="login">Alterar Dados</a> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <a class="banner_btn" href="register">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Inicio Da Area de Filtro -->
+  <div class="whole-wrap">
+      <div class="container">
+          <div class="section-top-border">
+              <div class="row">
+                  <div class="col-lg-8 col-md-8">
+                      <h3 class="mb-30 title_color">Marcar Consulta</h3>
+                      <h5 class="mb-30 title_color">Especialidade</h5>
+                          <div class="default-select" id="default-select">
+                              <select>
+                                  <option value="1">Geral</option>
+                                  <option value="1">Ortopedista</option>
+                                  <option value="1">Dentista</option>
+                                  <option value="1">Oftalmologista</option>
+                                  <option value="1">Nutricionista</option>
+                              </select>
+                          </div>
+                      <h5 class="mb-30 title_color"><br/>Descreva o motivo da consulta.</h5>
+                          <div class="mt-10">
+                              <textarea class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'" required></textarea>
+                          </div>
+                      <div class="button-group-area mt-40">
+                          <a href="#" class="genric-btn success circle">Enviar</a>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
+                      <div class="single-element-widget">
+                          <h4 class="mb-30 title_color">Destina-se</h4>
+                          <div class="switch-wrap d-flex justify-content-between">
+                              <p>Pessoal:&emsp;&emsp;&emsp;&emsp;</p>
+                              <div class="confirm-switch">
+                                  <input type="checkbox" id="confirm-switch" checked >
+                                  <label for="confirm-switch"></label>
+                              </div>
+                          </div>
+                          <div class="switch-wrap d-flex justify-content-between">
+                              <p>Dependente:&emsp;&emsp;&emsp;&emsp; </p>
+                              <div class="primary-switch">
+                                  <input type="checkbox" id="default-switch" >
+                                  <label for="default-switch"></label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="single-element-widget">
+                          <h4 class="mb-30 title_color">Selecione o médico de sua preferência.</h4>
+                          <div class="default-select" id="default-select">
+                              <select>
+                                  <option value="1">Qualquer</option>
+                                  <option value="1">Jackson</option>
+                                  <option value="1">Alonso</option>
+                                  <option value="1">Bizarro</option>
+                                  <option value="1">Nilda</option>
+                              </select><br/>
+                          </div><br/>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Fim Da Area de Filtro -->
+
+
+
+    <!--================ Inicio da Agenda =================-->
+  <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
+    <div class="cd-schedule__timeline">
+      <ul>
+            <li><span>08:00</span></li>
+            <li><span>08:30</span></li>
+            <li><span>09:00</span></li>
+            <li><span>09:30</span></li>
+            <li><span>10:00</span></li>
+            <li><span>10:30</span></li>
+            <li><span>11:00</span></li>
+            <li><span>11:30</span></li>
+            <li><span>12:00</span></li>
+            <li><span>12:30</span></li>
+            <li><span>13:00</span></li>
+            <li><span>13:30</span></li>
+            <li><span>14:00</span></li>
+            <li><span>14:30</span></li>
+            <li><span>15:00</span></li>
+            <li><span>15:30</span></li>
+            <li><span>16:00</span></li>
+            <li><span>16:30</span></li>
+            <li><span>17:00</span></li>
+          </ul>
+        </div>
+      
+        <div class="cd-schedule__events">
+          <ul>
+            <li class="cd-schedule__group">
+              <div class="cd-schedule__top-info"><span>Segunda</span></div>
+      
+              <ul>
+                <li class="cd-schedule__event">
+                  <a data-start="08:30" data-end="9:30" data-event="event-4">
+                    <div class="cd-schedule__name">Livre</div>
+                  </a>
+                </li>
+      
+              </ul>
+
+            </li>
+      
+            <li class="cd-schedule__group">
+              <div class="cd-schedule__top-info"><span>Terça</span></div>
+      
+            </li>
+      
+            <li class="cd-schedule__group">
+              <div class="cd-schedule__top-info"><span>Quarta</span></div>
+      
+              <ul>
+      
+                <li class="cd-schedule__event">
+                  <a data-start="10:00" data-end="12:00"  data-event="event-4">
+                    <div class="cd-schedule__name">Livre</div>
+                  </a>
+                </li>
+      
+                
+              </ul>
+
+            </li>
+      
+            <li class="cd-schedule__group">
+              <div class="cd-schedule__top-info"><span>Quinta</span></div>
+      
+            </li>
+      
+            <li class="cd-schedule__group">
+              <div class="cd-schedule__top-info"><span>Sexta</span></div>
+      
+              <ul>
+                <li class="cd-schedule__event">
+                  <a data-start="10:00" data-end="11:00"  data-event="event-4">
+                    <div class="cd-schedule__name">Livre</div>
+                  </a>
+                </li>
+      
+      
+                <li class="cd-schedule__event">
+                  <a data-start="12:00" data-end="17:00"  data-event="event-2">
+                    <div class="cd-schedule__name">Fora de Funcionamento</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      
+        <div class="cd-schedule-modal">
+          <header class="cd-schedule-modal__header">
+            <div class="cd-schedule-modal__content">
+              <span class="cd-schedule-modal__date"></span>
+              <h3 class="cd-schedule-modal__name"></h3>
+            </div>
+      
+            <div class="cd-schedule-modal__header-bg"></div>
+          </header>
+      
+          <div class="cd-schedule-modal__body">
+            <div class="cd-schedule-modal__event-info"></div>
+            <div class="cd-schedule-modal__body-bg"></div>
+          </div>
+      
+        </div>
+      
+        <div class="cd-schedule__cover-layer"></div>
+      </div> 
+    <!-- Fim da Tabela -->
+
+    <!-- Carregamento dos códigos -->
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/popper.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/stellar.js"></script>
+    <script src="../static/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="../static/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="../static/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="../static/vendors/isotope/isotope-min.js"></script>
+    <script src="../static/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="../static/js/jquery.ajaxchimp.min.js"></script>
+    <script src="../static/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="../static/vendors/counter-up/jquery.counterup.min.js"></script>
+    <script src="../static/js/mail-script.js"></script>
+    <script src="../static/js/theme.js"></script>
+    <script src="../static/js/util.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+
+</html>

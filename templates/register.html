@@ -60,11 +60,14 @@
                                 <label for="birth_date" class="text-info">Data de Nascimento*</label><br>
                                 <input type="date" name="birth_date" id="birth_date" class="form-control" required>
                             </div>
-                            <div class="checkbox">
-                                <label for="birth_date" class="text-info">Sexo</label>
-                                <!--Falta fazer pegar só um tipo de sexo-->
-                                <input type="checkbox" ng-model="item.checked" name="sex" value="M"> M
-                                <input type="checkbox" ng-model="item.checked" name="sex" value="F"> F
+                            <div class="form-group">    
+                                <div class="default-select" id="default-select">
+                                        <select>
+                                            <option value="1">Sexo</option>
+                                            <option value="1">Masculino</option>
+                                            <option value="1">Feminino</option>
+                                        </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="adress" class="text-info">Endereço*</label><br>
