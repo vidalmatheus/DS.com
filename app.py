@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, json, url_for
-import psycopg2, os, subprocess
+import psycopg2, os, subprocess,bcrypt
 
 # create app
 app = Flask(__name__,static_url_path='/static')
