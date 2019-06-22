@@ -1,4 +1,4 @@
-from sharedData import Blueprint,render_template, request,bcrypt,redirect,url_for, con
+from sharedData import *
 login_api = Blueprint('login_api', __name__)
 
 #login
@@ -9,7 +9,7 @@ def login():
         userDetails = request.form
         psd = userDetails['password']
         #cursor
-        cur = con.cursor()
+        cur = getData().cursor()
         errorSARAM = errorCPF = False
         if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
             if (len(userDetails['login']) == 7):

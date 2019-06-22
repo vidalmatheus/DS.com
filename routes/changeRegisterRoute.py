@@ -1,4 +1,4 @@
-from sharedData import Blueprint, render_template
+from sharedData import *
 
 changeRegister_api = Blueprint('changeRegister_api', __name__)
 

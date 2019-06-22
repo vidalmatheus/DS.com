@@ -1,4 +1,4 @@
-from sharedData import Blueprint, render_template, request
+from sharedData import *
 
 logged_api = Blueprint('logged_api', __name__)
 
