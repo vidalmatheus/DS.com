@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, json, url_for
-import psycopg2, os, subprocess,bcrypt
+import psycopg2, os, subprocess, bcrypt
 
 # create app
 app = Flask(__name__,static_url_path='/static')
@@ -32,7 +32,8 @@ def login():
         else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
         psd_db = cur.fetchall()
 
-        print(int.from_bytes(psd_db[0][0], byteorder='big')) ## Tem que converter para inteiro, não sei ##
+        print(bcrypt.hashpw(psd.encode(),psd_db[0][0])) ## Tem que converter para inteiro, não sei ##
+        print(psd_db[0][0])
         if (bcrypt.hashpw(psd.encode(),psd_db[0][0]) == psd_db[0][0]): ## NÃO ESTÁ FUNCIONANDO ##
             #close the cursor
             cur.close()
@@ -52,6 +53,7 @@ def register():
         name = userDetails['name']
         birth_date = userDetails['birth_date']
         sex = userDetails['sex']
+        print(sex)
         adress = userDetails['adress']
         phone = userDetails['phone']
         email = userDetails['email']
@@ -59,7 +61,8 @@ def register():
         #cursor 
         cur = con.cursor()  
         print(cpf,psd,saram,name,birth_date,sex,adress,phone,email,military)
-        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,psd,saram,name,birth_date,sex,adress,phone,email,military,False))
+        print(bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12)))
+        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12)),saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation 
         con.commit()
         #close the cursor

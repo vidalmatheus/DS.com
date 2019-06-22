@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS "ds".medico ;
 
 CREATE TABLE Medico (
     CRM int unique NOT NULL,
-	senha bytea NOT NULL,
+	senha varchar(70) NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     Especialidade VARCHAR(20) NOT NULL,
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS "ds".paciente ;
 
 CREATE TABLE Paciente (
     CPF varchar(14) unique NOT NULL,
-	senha bytea NOT NULL,
+	senha varchar(70) NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     dt_nasc DATE NOT NULL,
@@ -73,7 +73,7 @@ ALTER TABLE Consulta ADD FOREIGN KEY (CPF_pac) REFERENCES Paciente(CPF);
 -- -----------------------------------------------------
 -- Inserts
 -- -----------------------------------------------------
-
+/*
 delete from Paciente;
 delete from Medico;
 delete from Consulta;
@@ -91,7 +91,7 @@ insert into Medico values
 insert into Consulta (CPF_pac,CRM,Data,Hora,status) values 
 (13420296746,16863158,'2019/05/27','11:00:00','aberto'),
 (43967557839,15846758,'2019/05/28','15:30:00','marcado');
-
+*/
 
 -- -----------------------------------------------------
 -- Query
