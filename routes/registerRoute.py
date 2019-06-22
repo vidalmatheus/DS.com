@@ -19,7 +19,7 @@ def register():
         email = userDetails['email']
         military = userDetails['military']
         #cursor
-        cur = getData().cursor()
+        cur = con.cursor()
         print(cpf,psd,saram,name,birth_date,sex,adress,phone,email,military)
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
@@ -28,7 +28,7 @@ def register():
         print("tamanho = " + str(len(hashedDecoded)))
         cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation
-        getData().commit()
+        con.commit()
         #close the cursor
         cur.close()
         return redirect('/users')

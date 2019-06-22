@@ -9,7 +9,7 @@ def login():
         userDetails = request.form
         psd = userDetails['password']
         #cursor
-        cur = getData().cursor()
+        cur = con.cursor()
         errorSARAM = errorCPF = False
         if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
             if (len(userDetails['login']) == 7):
