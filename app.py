@@ -23,21 +23,34 @@ def login():
         psd = userDetails['password']
         #cursor 
         cur = con.cursor()  
-        if (len(userDetails['login']) == 7): 
-            saram = userDetails['login']
-            cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
-        elif (len(userDetails['login']) == 11): 
-            cpf = userDetails['login']
-            cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
-        else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
-        psd_db = cur.fetchall()
+        errorSARAM = errorCPF = False 
+        if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
+            if (len(userDetails['login']) == 7): 
+                saram = userDetails['login']
+                cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+                user = cur.fetchall()
+                if (len(user)==0): errorSARAM = True 
+            elif (len(userDetails['login']) == 11): 
+                cpf = userDetails['login']
+                #134.202.967-46
+                cpf = cpf[0:3]+"."+cpf[3:6]+"."+cpf[6:9]+"-"+cpf[9:11]
+                print(cpf)
+                cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
+                user = cur.fetchall()
+                if (len(user)==0): errorCPF = True 
 
-        print(bcrypt.hashpw(psd.encode(),psd_db[0][0].encode())) ## Tem que converter para inteiro, não sei ##
-        print(psd_db[0][0].encode())
-        if (bcrypt.hashpw(psd.encode(),psd_db[0][0].encode()) == psd_db[0][0].encode()): ## NÃO ESTÁ FUNCIONANDO ##
-            #close the cursor
-            cur.close()
-            return redirect('/logged') ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+            if (errorSARAM): print("SARAM NÃO ENCONTRADO")
+            elif (errorCPF): print("CPF NÃO ENCONTRADO")
+            else:
+                psd_db = user[0][1]
+                print(bcrypt.hashpw(psd.encode(),psd_db.encode())) 
+                print(psd_db.encode())
+                if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()): 
+                    #close the cursor
+                    cur.close()
+                    return redirect(url_for('logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+                else: print("SENHA ERRADA!") ## FALTA JOGAR PRO html
+        else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
 
     return render_template('login.html')
 
@@ -53,7 +66,6 @@ def register():
         name = userDetails['name']
         birth_date = userDetails['birth_date']
         sex = userDetails['sex']
-        print(sex)
         adress = userDetails['adress']
         phone = userDetails['phone']
         email = userDetails['email']
@@ -64,8 +76,8 @@ def register():
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
         print(hashed)
-        print("decoded hash = " + hashed.decoded("utf-8"))
-        print("tamanho = " + str(len(hashed)))
+        print("decoded hash = " + hashedDecoded)
+        print("tamanho = " + str(len(hashedDecoded)))
         cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation 
         con.commit()
@@ -74,16 +86,23 @@ def register():
         return redirect('/users')
     return render_template('register.html')
 
+# change register 
+@app.route('/changeregister')
+def changeRegister():
+    return render_template('changeRegister.html')
+
+
 # logged page
 @app.route('/logged')
 def logged():
-    return render_template('logged.html')
+    print(request.args.get('userDetails'))
+    return render_template('logged.html',userDetails=request.args.get('userDetails'))
 
 # users registers
 @app.route('/users')
 def users():
     cur = con.cursor()  
-    resultValue = cur.execute("SELECT * FROM paciente")
+    cur.execute("SELECT * FROM paciente")
     userDetails = cur.fetchall()
     return render_template('users.html',userDetails=userDetails)
 

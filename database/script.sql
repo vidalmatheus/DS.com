@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS "ds".medico ;
 
 CREATE TABLE Medico (
     CRM int unique NOT NULL,
-	senha varchar(70) NOT NULL,
+	senha varchar NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     Especialidade VARCHAR(20) NOT NULL,
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS "ds".paciente ;
 
 CREATE TABLE Paciente (
     CPF varchar(14) unique NOT NULL,
-	senha varchar(70) NOT NULL,
+	senha varchar NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
     dt_nasc DATE NOT NULL,
@@ -79,7 +79,7 @@ delete from Medico;
 delete from Consulta;
 
 insert into Paciente values 
-(13420296746,'123456',7654321,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
+(13420296746,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',7654321,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
 (43967557839,'123456',8654321,'Adriano Soares','1996/03/08','M','Rua H8B,214 - SJC,SP','(18)99606-3534','srodrigues@gmail.com','alunoITA',false),
 (04339241698,'123456',9654321,'Pedro Alves','1997/04/04','M','Rua H8B,203 - SJC,SP','(18)99605-7649','alvesouza@gmail.com','alunoITA',false);
 
