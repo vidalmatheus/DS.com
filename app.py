@@ -32,9 +32,9 @@ def login():
         else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
         psd_db = cur.fetchall()
 
-        print(bcrypt.hashpw(psd.encode(),psd_db[0][0])) ## Tem que converter para inteiro, não sei ##
-        print(psd_db[0][0])
-        if (bcrypt.hashpw(psd.encode(),psd_db[0][0]) == psd_db[0][0]): ## NÃO ESTÁ FUNCIONANDO ##
+        print(bcrypt.hashpw(psd.encode(),psd_db[0][0].encode())) ## Tem que converter para inteiro, não sei ##
+        print(psd_db[0][0].encode())
+        if (bcrypt.hashpw(psd.encode(),psd_db[0][0].encode()) == psd_db[0][0].encode()): ## NÃO ESTÁ FUNCIONANDO ##
             #close the cursor
             cur.close()
             return redirect('/logged') ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
@@ -62,9 +62,11 @@ def register():
         cur = con.cursor()  
         print(cpf,psd,saram,name,birth_date,sex,adress,phone,email,military)
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
+        hashedDecoded = hashed.decode('utf-8')
         print(hashed)
+        print("decoded hash = " + hashed.decoded("utf-8"))
         print("tamanho = " + str(len(hashed)))
-        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,bcrypt.hashpw(psd.encode(),hashed),saram,name,birth_date,sex,adress,phone,email,military,False))
+        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation 
         con.commit()
         #close the cursor
