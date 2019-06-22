@@ -61,8 +61,10 @@ def register():
         #cursor 
         cur = con.cursor()  
         print(cpf,psd,saram,name,birth_date,sex,adress,phone,email,military)
-        print(bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12)))
-        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12)),saram,name,birth_date,sex,adress,phone,email,military,False))
+        hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
+        print(hashed)
+        print("tamanho = " + str(len(hashed)))
+        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,bcrypt.hashpw(psd.encode(),hashed),saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation 
         con.commit()
         #close the cursor
