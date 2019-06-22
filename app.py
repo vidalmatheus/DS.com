@@ -31,7 +31,7 @@ def login():
             cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
         else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
         psd_db = cur.fetchall()
-        print(psd_db) 
+        print(int.from_bytes(psd_db[0][0], byteorder='big')) ## Tem que converter para inteiro, não sei ##
         if (psd == psd_db): ## NÃO ESTÁ FUNCIONANDO ## 
             #close the cursor
             cur.close()
