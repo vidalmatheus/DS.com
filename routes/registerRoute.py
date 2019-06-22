@@ -1,4 +1,4 @@
-from sharedData import *
+from sharedData import Blueprint,render_template, request,bcrypt,redirect, con
 
 register_api = Blueprint('register_api', __name__)
 

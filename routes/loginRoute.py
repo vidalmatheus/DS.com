@@ -1,4 +1,4 @@
-from sharedData import *
+from sharedData import Blueprint,render_template, request,bcrypt,redirect,url_for, con
 login_api = Blueprint('login_api', __name__)
 
 #login

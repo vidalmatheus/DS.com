@@ -1,4 +1,4 @@
-from sharedData import *
+from sharedData import Blueprint,render_template,con
 
 users_api = Blueprint('users_api', __name__)
 
