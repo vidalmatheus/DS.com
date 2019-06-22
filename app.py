@@ -15,8 +15,28 @@ def index():
     return render_template('index.html')
 
 # login page
-@app.route('/login')
+@app.route('/login', methods=['GET','POST']) ## FALTA FAZER FUNCIONAR ##
 def login():
+    if request.method == 'POST':
+        # Fetch form data
+        userDetails = request.form
+        psd = userDetails['password']
+        #cursor 
+        cur = con.cursor()  
+        if (len(userDetails['login']) == 7): 
+            saram = userDetails['login']
+            cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
+        elif (len(userDetails['login']) == 11): 
+            cpf = userDetails['login']
+            cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
+        else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
+        psd_db = cur.fetchall()
+        print(psd_db) 
+        if (psd == psd_db): ## NÃO ESTÁ FUNCIONANDO ## 
+            #close the cursor
+            cur.close()
+            return redirect('/logged') ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+
     return render_template('login.html')
 
 # register 
@@ -45,6 +65,11 @@ def register():
         cur.close()
         return redirect('/users')
     return render_template('register.html')
+
+# logged page
+@app.route('/logged')
+def logged():
+    return render_template('logged.html')
 
 # users registers
 @app.route('/users')
