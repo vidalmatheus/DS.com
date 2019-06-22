@@ -17,5 +17,5 @@ def index():
 if __name__ == '__main__':
     app.run(debug=True)
     #close the connection
-    con.close()
+    connectionData.getConnector().close()
 

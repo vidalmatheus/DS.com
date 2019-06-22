@@ -2,14 +2,14 @@ from sharedData import *
 login_api = Blueprint('login_api', __name__)
 
 #login
-@login_api.route("/login")
+@login_api.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
         psd = userDetails['password']
         #cursor
-        cur = con.cursor()
+        cur = connectionData.getConnector().cursor()
         errorSARAM = errorCPF = False
         if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
             if (len(userDetails['login']) == 7):
@@ -30,12 +30,18 @@ def login():
             elif (errorCPF): print("CPF NÃO ENCONTRADO")
             else:
                 psd_db = user[0][1]
+
+                #vou alterar umas coisas aqui
+
+
+
+                #fim alteração
                 print(bcrypt.hashpw(psd.encode(),psd_db.encode()))
                 print(psd_db.encode())
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     #close the cursor
                     cur.close()
-                    return redirect(url_for('logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+                    return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
                 else: print("SENHA ERRADA!") ## FALTA JOGAR PRO html
         else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
 
