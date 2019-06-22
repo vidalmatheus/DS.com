@@ -31,8 +31,9 @@ def login():
             cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
         else: print("ERRO! CONTA NÃO EXISTENTE!") ## FALTA JOGAR PRO html
         psd_db = cur.fetchall()
+
         print(int.from_bytes(psd_db[0][0], byteorder='big')) ## Tem que converter para inteiro, não sei ##
-        if (psd == psd_db): ## NÃO ESTÁ FUNCIONANDO ## 
+        if (bcrypt.hashpw(psd.encode(),psd_db[0][0]) == psd_db[0][0]): ## NÃO ESTÁ FUNCIONANDO ##
             #close the cursor
             cur.close()
             return redirect('/logged') ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
