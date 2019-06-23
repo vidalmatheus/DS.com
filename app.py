@@ -1,10 +1,13 @@
 from sharedData import *
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
+import logging
 
 # create app
 app = Flask(__name__,static_url_path='/static')
 app.secret_key = os.urandom(24)
 
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 #blueprint
 app.register_blueprint(loginRoute.login_api)
