@@ -30,10 +30,21 @@ def login():
             elif (errorCPF): print("CPF NÃO ENCONTRADO")
             else:
                 psd_db = user[0][1]
-
+                print("o tipo de variavel da user[0] é "+str(type(user[0])))
+                print("o tipo de variavel da user[0][0] é " + str(type(user[0][0])))
+                print("o tipo de variavel da user[0][1] é " + str(type(user[0][1])))
+                print("o tipo de variavel da user[0][2] é " + str(type(user[0][2])))
+                print("o tipo de variavel da user[0][3] é " + str(type(user[0][3])))
+                print("o tipo de variavel da user[0][4] é " + str(type(user[0][4])))
+                print("o tipo de variavel da user[0][5] é " + str(type(user[0][5])))
+                print("o tipo de variavel da user[0][6] é " + str(type(user[0][6])))
+                print("o tipo de variavel da user[0][7] é " + str(type(user[0][7])))
+                print("o tipo de variavel da user[0][8] é " + str(type(user[0][8])))
+                print("o tipo de variavel da user[0][9] é " + str(type(user[0][9])))
+                print("o tipo de variavel da user[0][10] é " + str(type(user[0][10])))
                 #vou alterar umas coisas aqui
 
-
+                userData.logginUser(user[0])
 
                 #fim alteração
                 print(bcrypt.hashpw(psd.encode(),psd_db.encode()))
@@ -41,7 +52,8 @@ def login():
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     #close the cursor
                     cur.close()
-                    return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+                    #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
+                    return redirect('/logged')
                 else: print("SENHA ERRADA!") ## FALTA JOGAR PRO html
         else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
 

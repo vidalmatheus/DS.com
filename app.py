@@ -12,6 +12,7 @@ app.register_blueprint(changeRegisterRoute.changeRegister_api)
 # main page
 @app.route('/')
 def index():
+    userData.logOutUser()
     return render_template('index.html')
 
 if __name__ == '__main__':
