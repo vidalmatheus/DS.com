@@ -94,9 +94,13 @@ class acessManager:
         self.dictUsersOn = {"0000000" : acessoUser()}
 
     def addUserOn(self, user = acessoUser()):
-        if user.getCPF() == "0000000":
+        cpf = user.getCPF()
+        if cpf == "0000000":
             return
-        self.dictUsersOn.update({user.getCPF(): user})
+        if cpf in self.dictUsersOn:
+            self.dictUsersOn[user.getCPF()] = user
+            return
+        self.dictUsersOn.update({cpf: user})
 
     def logoutUser(self,cpf):
         if cpf == "0000000" and self.dictUsersOn != None:
