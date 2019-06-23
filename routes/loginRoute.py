@@ -6,7 +6,7 @@ login_api = Blueprint('login_api', __name__)
 def login():
     userData = usuario.acessoUser()
     if 'user' in session:
-        if usersDataOnline.getUser(session['user'] != None):
+        if usersDataOnline.getUser(session['user']) != None:
             return redirect('/logged')
         else:
             session.pop('user', None)

@@ -40,8 +40,15 @@ def changeRegister():
             #commit the transcation
             connectionData.getConnector().commit()
             cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+
+            #apaga no dictionary a usuario
+            usersDataOnline.logoutUser(cpf)
+            userData = usuario.acessoUser()
+
             user = cur.fetchall()
             userData.logginUser(user[0])
+            usersDataOnline.addUserOn(userData)
+
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
             #close the cursor
             cur.close()
