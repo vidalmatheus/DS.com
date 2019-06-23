@@ -5,12 +5,17 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 # users registers
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
+    print("////////////////////////////////////////")
+    print("comeca change register")
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     userData = usersDataOnline.getUser(session['user'])
     if userData == None:
+        print("usersDataOnline.getUser(session['user']) == None")
         if 'user' in session:
             session.pop('user', None)
         return redirect('/')
     user_list = userData.getStringList()
+    print("userData.getStringList() = "+ str(user_list))
     saram = user_list[1]
     if request.method == 'POST':
         # Fetch form data

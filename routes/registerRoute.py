@@ -5,6 +5,9 @@ register_api = Blueprint('register_api', __name__)
 # register
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
+    print("////////////////////////////////////////")
+    print("comeca register")
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     if request.method == 'POST':
         print("/////////////////////////")
         print("Comeca route register")
