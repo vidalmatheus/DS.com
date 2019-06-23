@@ -55,14 +55,18 @@ def login():
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     userData.logginUser(user[0])
-                    if not session['user'] == userData.getCPF():
-                        if usersDataOnline.userIsOn(userData.getCPF()):
-                            print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                            return redirect('/login')
-                        else:
-                            print("Usuario nao esta logado")
-                            session['user'] = userData.getCPF()
-                            usersDataOnline.addUserOn(userData)
+                    if 'user' in session:
+                        print("FLAG 11")
+                        if not session['user'] == userData.getCPF():
+                            print("FLAG 12")
+                            if usersDataOnline.userIsOn(userData.getCPF()):
+                                print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                return redirect('/login')
+                            else:
+                                print("Usuario nao esta logado")
+                                session['user'] = userData.getCPF()
+                                usersDataOnline.addUserOn(userData)
+                    print("FLAG 13")
                     #close the cursor
                     cur.close()
                     #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
