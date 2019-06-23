@@ -12,8 +12,14 @@ app.register_blueprint(changeRegisterRoute.changeRegister_api)
 # main page
 @app.route('/')
 def index():
+    if userData.getLogged():
+        return redirect('/logged')
     userData.logOutUser()
     return render_template('index.html')
+@app.route('/out')
+def out():
+    userData.logOutUser()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
