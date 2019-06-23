@@ -108,7 +108,7 @@ class acessManager:
             return
         
         self.dictUsersOn.update({cpf: user})
-        print("self.dictUsersOn[cpf].getStringList() = " + self.dictUsersOn[cpf].getStringList())
+        print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
 
     def logoutUser(self,cpf):
         if cpf == "0000000" and self.dictUsersOn != None:
