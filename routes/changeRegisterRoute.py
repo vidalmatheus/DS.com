@@ -31,6 +31,7 @@ def changeRegister():
         return redirect('/logged')
     return render_template('register.html')
 
+    userData = usersDataOnline.getUser(session['user'])
     userDetails = userData.getStringList()
     #userDetails = userData.getName()
     print("tipo de userData.getStringList() = " + str(type(userDetails)))

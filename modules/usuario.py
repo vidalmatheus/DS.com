@@ -1,9 +1,11 @@
 import datetime
+
+
 class acessoUser:
     def __init__(self):
         self.name = "visitante"
         self.logado = False
-        self.cpf = ""
+        self.cpf = "0000000"
         self.dataNascimento = datetime.datetime.now()
         self.saram = 0000000
         self.endereco = ""
@@ -86,3 +88,18 @@ class acessoUser:
         lista.append(self.classificacao)
         return lista
 
+
+class acessManager:
+    def __init__(self):
+        self.dictUsersOn = {"0000000" : acessoUser()}
+
+    def addUserOn(self, user = acessoUser()):
+        if user.getCPF() == "0000000":
+            return
+        self.dictUsersOn.update({user.getCPF(): user})
+
+    def logoutUser(self,cpf):
+        self.dictUsersOn.pop(str(cpf), None)
+
+    def getUser(self,cpf):
+        return self.dictUsersOn[str(cpf)]
