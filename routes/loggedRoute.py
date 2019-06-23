@@ -10,7 +10,7 @@ def logged():
         return redirect('/login')
     print(request.args.get('userDetails'))
     userData = usersDataOnline.getUser(session['user'])
-    if userData == None:
+    if usersDataOnline.userIsOn(session['user']):
         session.pop('user', None)
         return redirect('/login')
     return render_template('logged.html',userDetails = userData.getName())
