@@ -26,8 +26,14 @@ def register():
         cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation
         connectionData.getConnector().commit()
+        userData = usuario.acessoUser()
+        cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+        user = cur.fetchall()
+        userData.logginUser(user[0])
+        session['user'] = cpf
+        usersDataOnline.addUserOn(userData)
         #close the cursor
         cur.close()
-        return redirect('/users')
+        return redirect('/logged')
     return render_template('register.html')
 

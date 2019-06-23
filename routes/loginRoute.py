@@ -44,9 +44,9 @@ def login():
                 print("o user[0][9] = " + user[0][9])
                 print("o tipo de variavel da user[0][10] = " + str(type(user[0][10])))
                 #vou alterar umas coisas aqui
-                userData.logginUser(user[0])
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
+                    userData.logginUser(user[0])
                     usersDataOnline.addUserOn(userData)
                     session['user'] = userData.getCPF()
                     #close the cursor
