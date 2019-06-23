@@ -88,7 +88,7 @@ class acessoUser:
         lista.append(self.classificacao)
         return lista
 
-    def copy(self, userCopied = acessoUser()):
+    def copy(self, userCopied):
         self.name = userCopied.name
         self.logado = userCopied.logado
         self.cpf = userCopied.cpf
