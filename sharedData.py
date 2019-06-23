@@ -19,6 +19,5 @@ connectionData = dataBase.dataAccess()
 userData = usuario.acessoUser()
 ###
 
-#as Rotas
-from routes import loginRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
+
 
