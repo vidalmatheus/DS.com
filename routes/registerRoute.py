@@ -38,7 +38,7 @@ def register():
         usersDataOnline.addUserOn(userData)
         print("after added user on login")
         print("session['user'] = "+ session['user'])
-        print("usersDataOnline.getDictionary = "+ str(usersDataOnline.getDictionary))
+        print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
         #close the cursor
         cur.close()
         return redirect('/logged')

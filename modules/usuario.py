@@ -105,7 +105,9 @@ class acessoUser:
 class acessManager:
     def __init__(self):
         self.dictUsersOn = {"0000000" : acessoUser()}
-
+    def resetServer(self):
+        self.dictUsersOn.clear()
+        self.dictUsersOn = {"0000000" : acessoUser()}
     def addUserOn(self, user = acessoUser()):
         cpf = user.getCPF()
         userDict = acessoUser()
