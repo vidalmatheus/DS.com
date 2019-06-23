@@ -55,6 +55,10 @@ def login():
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     userData.logginUser(user[0])
+                    print("userData.getStringList = "+str(userData.getStringList))
+                    print("session = "+str(session))
+                    
+                    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
                     if usersDataOnline.userIsOn(userData.getCPF()):
                         print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         return redirect('/login')
