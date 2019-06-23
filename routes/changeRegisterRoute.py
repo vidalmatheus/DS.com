@@ -42,6 +42,7 @@ def changeRegister():
             cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
 
             #apaga no dictionary a usuario
+            cpf = session['user']
             usersDataOnline.logoutUser(cpf)
             userData = usuario.acessoUser()
 
