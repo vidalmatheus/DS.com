@@ -6,7 +6,7 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
     userData = usersDataOnline.getUser(session['user'])
-    userDetails = userData.getStringList()
+    user = userData.getStringList()
     saram = user[1]
     if request.method == 'POST':
         # Fetch form data
@@ -29,7 +29,7 @@ def changeRegister():
             cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
             psd_db = cur.fetchall()
             psd_db = psd_db[0][0]
-            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode()):        
+            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):        
                 cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,saram))
             else:
                 cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(name,birth_date,sex,adress,phone,email,military,saram)) 
