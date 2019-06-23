@@ -79,7 +79,7 @@ class acessoUser:
         lista.append(str(self.saram))
         lista.append(self.cpf)
         lista.append(str(self.dataNascimento))
-        lista.append(self.getSexo())
+        lista.append(self.sexo)
         lista.append(self.endereco)
         lista.append(self.numContato)
         lista.append(self.email)

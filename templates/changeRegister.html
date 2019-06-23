@@ -59,11 +59,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="saram" class="text-info">SARAM</label><br>
-                                <input type="code" value={{userDetails[1]}} name="saram" id="saram" maxlength=7 class="form-control" required>
+                                <input type="code" value={{userDetails[1]}} name="saram" id="saram" maxlength=7 class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="cpf" class="text-info">CPF</label><br>
-                                <input type="cpf" value={{userDetails[2]}} name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required>
+                                <input type="cpf" value={{userDetails[2]}} name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="birth_date" class="text-info">Data de Nascimento</label><br>
@@ -71,9 +71,13 @@
                             </div>
                             <div class="form-group">
                                 <div class="default-select" id="default-select">
-                                    <select>
-                                            <option value="1">{{userDetails[4]}}</option>
-                                        </select>
+                                    <select name="sex" id="sex" required>
+                                            <% if({{userDetails[4]}} == 'M'){ %>
+                                                <option value="{{userDetails[4]}}">Masculino</option>
+                                            <% } else { %>
+                                                <option value="{{userDetails[4]}}">Feminino</option>
+                                            <% } %>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -95,7 +99,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="Enviar">
-                                <input type="submit" name="cancell" class="btn btn-info btn-md" value="Cancelar">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Cancelar">
                             </div>
                         </form>
                     </div>
