@@ -139,7 +139,7 @@ class acessManager:
         print("acessManager.userIsOn()")
         if isOnDict:
             print("User is on       ?")
-            print(str(self.dictUsersOn))
+            print("self.dictUsersOn = "+ str(self.dictUsersOn))
             if self.dictUsersOn[cpf] == None:
                 return False
             return True
