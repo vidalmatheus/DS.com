@@ -9,6 +9,7 @@ def changeRegister():
     print("comeca change register")
     print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     userData = usersDataOnline.getUser(session['user'])
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     if userData == None:
         print("usersDataOnline.getUser(session['user']) == None")
         if 'user' in session:

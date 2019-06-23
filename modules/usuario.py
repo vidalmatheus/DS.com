@@ -159,11 +159,17 @@ class acessManager:
 
     def getUser(self,cpf):
         print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("getUser")
         print("tipo de cpf = " + str(type(cpf)))
+        dataReturn = acessoUser()
         print("cpf = " + cpf)
         print("self.dictUsersOn = " + str(self.dictUsersOn))
         if cpf in self.dictUsersOn:
             print("tipo de self.dictUsersOn[cpf] = " + str(type(self.dictUsersOn[cpf])))
-            return self.dictUsersOn[cpf]
+            dataReturn.copy(self.dictUsersOn[cpf])
+            print("dataReturn.getStringList = "+str(dataReturn.getStringList))
+            print
+            return dataReturn
         else:
+            print("return None")
             return None
