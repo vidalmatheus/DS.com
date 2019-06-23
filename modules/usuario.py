@@ -105,7 +105,7 @@ class acessManager:
     def logoutUser(self,cpf):
         if cpf == "0000000" and self.dictUsersOn != None:
             return
-        for cpf in self.dictUsersOn:
+        if cpf in self.dictUsersOn:
             self.dictUsersOn.pop(cpf, None)
 
     def userIsOn(self,cpf):
