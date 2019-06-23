@@ -99,7 +99,7 @@ class acessManager:
         self.dictUsersOn.update({user.getCPF(): user})
 
     def logoutUser(self,cpf):
-        if user.getCPF() == "0000000":
+        if cpf == "0000000" and self.dictUsersOn != None:
             return
         self.dictUsersOn.pop(cpf, None)
 
