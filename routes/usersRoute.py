@@ -8,5 +8,6 @@ def users():
     cur = connectionData.getConnector().cursor()
     cur.execute("SELECT * FROM paciente")
     userDetails = cur.fetchall()
+    print("tipo de cur.fetchall() = "+ str(type(userDetails)))
     return render_template('users.html',userDetails=userDetails)
 

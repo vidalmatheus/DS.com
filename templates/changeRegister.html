@@ -23,6 +23,15 @@
             }
 
         }
+        var simpleText = "hello_world";
+        var finalSplitText = simpleText.split("_");
+        var splitText = finalSplitText[0];
+
+        window.onload = function() {
+               //when the document is finished loading, replace everything
+               //between the <a ...> </a> tags with the value of splitText
+           document.getElementById("myLink").innerHTML=splitText;
+        }
     </script>
 
 </head>
@@ -42,7 +51,7 @@
                             </h3>
                             <div class="form-group">
                                 <label for="username" class="text-info">Nome</label><br>
-                                <input type="text" placeholder="Adriano Soares Rodrigues" name="name" id="name" class="form-control" required>
+                                <input type="text" value = "{{userDetails[0]}}" name="name" id="myLink" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Nova Senha</label><br>
@@ -50,38 +59,38 @@
                             </div>
                             <div class="form-group">
                                 <label for="saram" class="text-info">SARAM</label><br>
-                                <input type="code" placeholder= "1122211" name="saram" id="saram" maxlength=7 class="form-control" required>
+                                <input type="code" value = {{userDetails[1]}} name="saram" id="saram" maxlength=7 class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="cpf" class="text-info">CPF</label><br>
-                                <input type="cpf" placeholder="743.857.548-36" name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required>
+                                <input type="cpf" value ={{userDetails[2]}} name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="birth_date" class="text-info">Data de Nascimento</label><br>
-                                <input placeholder="08/03/96" name="birth_date" id="birth_date" class="form-control" required>
+                                <input type = "date" value ={{userDetails[3]}} name="birth_date" id="birth_date" class="form-control" required>
                             </div>
                             <div class="form-group">    
                                 <div class="default-select" id="default-select">
                                         <select>
-                                            <option value="1">Masculino</option>
+                                            <option value="1">{{userDetails[4]}}</option>
                                         </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="adress" class="text-info">Endereço</label><br>
-                                <input type="adress" placeholder="Rua H8B, ap 214" name="adress" id="adress" class="form-control" required>
+                                <input type="adress" value = "{{userDetails[5]}}" name="adress" id="adress" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="text-info">Celular</label><br>
-                                <input type="tel" placeholder = "12-3002-9852" name="phone" id="phone" maxlength=13 OnKeyPress="formatar('##-#####-####', this)" class="form-control">
+                                <input type="tel" value = {{userDetails[6]}} name="phone" id="phone" maxlength=13 OnKeyPress="formatar('##-#####-####', this)" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="Email" class="text-info">Email</label><br>
-                                <input type="email" placeholder="adriano@email.com" name="email" id="email" class="form-control" required>
+                                <input type="email" value = {{userDetails[7]}} name="email" id="email" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="military" class="text-info">Posto/Graduação Militar</label><br>
-                                <input type="text" placeholder = "Aspirante a Oficial"name="military" id="military" maxlength=20 class="form-control">
+                                <input type="text" value = "{{userDetails[8]}}" name="military" id="military" maxlength=20 class="form-control">
                                 <i>Obs.: Caso aluno do ITA bolsista da AEITA, escrever "alunoITA" </i>
                             </div>
                             <div class="form-group">

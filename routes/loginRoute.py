@@ -4,6 +4,8 @@ login_api = Blueprint('login_api', __name__)
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
+    if userData.getLogged():
+        return redirect('/logged')
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
@@ -30,18 +32,19 @@ def login():
             elif (errorCPF): print("CPF NÃO ENCONTRADO")
             else:
                 psd_db = user[0][1]
-                print("o tipo de variavel da user[0] é "+str(type(user[0])))
-                print("o tipo de variavel da user[0][0] é " + str(type(user[0][0])))
-                print("o tipo de variavel da user[0][1] é " + str(type(user[0][1])))
-                print("o tipo de variavel da user[0][2] é " + str(type(user[0][2])))
-                print("o tipo de variavel da user[0][3] é " + str(type(user[0][3])))
-                print("o tipo de variavel da user[0][4] é " + str(type(user[0][4])))
-                print("o tipo de variavel da user[0][5] é " + str(type(user[0][5])))
-                print("o tipo de variavel da user[0][6] é " + str(type(user[0][6])))
-                print("o tipo de variavel da user[0][7] é " + str(type(user[0][7])))
-                print("o tipo de variavel da user[0][8] é " + str(type(user[0][8])))
-                print("o tipo de variavel da user[0][9] é " + str(type(user[0][9])))
-                print("o tipo de variavel da user[0][10] é " + str(type(user[0][10])))
+                print("o tipo de variavel da user[0] = "+str(type(user[0])))
+                print("o tipo de variavel da user[0][0] = " + str(type(user[0][0])))
+                print("o tipo de variavel da user[0][1] = " + str(type(user[0][1])))
+                print("o tipo de variavel da user[0][2] = " + str(type(user[0][2])))
+                print("o tipo de variavel da user[0][3] = " + str(type(user[0][3])))
+                print("o tipo de variavel da user[0][4] = " + str(type(user[0][4])))
+                print("o tipo de variavel da user[0][5] = " + str(type(user[0][5])))
+                print("o tipo de variavel da user[0][6] = " + str(type(user[0][6])))
+                print("o tipo de variavel da user[0][7] = " + str(type(user[0][7])))
+                print("o tipo de variavel da user[0][8] = " + str(type(user[0][8])))
+                print("o tipo de variavel da user[0][9] = " + str(type(user[0][9])))
+                print("o user[0][9] = " + user[0][9])
+                print("o tipo de variavel da user[0][10] = " + str(type(user[0][10])))
                 #vou alterar umas coisas aqui
 
                 userData.logginUser(user[0])

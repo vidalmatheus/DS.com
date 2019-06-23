@@ -10,7 +10,7 @@ class acessoUser:
         self.numContato = ""
         self.email = ""
         self.sexo = ""
-        self.classificacao = False
+        self.classificacao = ""
         self.confirmado = False
 
     def getLogged(self):
@@ -70,6 +70,19 @@ class acessoUser:
         self.numContato = ""
         self.email = ""
         self.sexo = ""
-        self.classificacao = False
+        self.classificacao = ""
         self.confirmado = False
+
+    def getStringList(self):
+        lista = []
+        lista.append(self.name)
+        lista.append(str(self.saram))
+        lista.append(self.cpf)
+        lista.append(str(self.dataNascimento))
+        lista.append(self.getSexo())
+        lista.append(self.endereco)
+        lista.append(self.numContato)
+        lista.append(self.email)
+        lista.append(self.classificacao)
+        return lista
 
