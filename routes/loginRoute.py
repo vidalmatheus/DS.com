@@ -4,7 +4,6 @@ login_api = Blueprint('login_api', __name__)
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
-    global usersDataOnline
     print("////////////////////////////////////////")
     print("Comeca route login")
     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))

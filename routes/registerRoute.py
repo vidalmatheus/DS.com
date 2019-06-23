@@ -5,7 +5,6 @@ register_api = Blueprint('register_api', __name__)
 # register
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
-    global usersDataOnline
     print("////////////////////////////////////////")
     print("comeca register")
     print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
