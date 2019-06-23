@@ -9,7 +9,7 @@ def login():
     userData = usuario.acessoUser()
     if 'user' in session:
         print("user is in session")
-        if usersDataOnline.useIsOn(session['user']):
+        if usersDataOnline.userIsOn(session['user']):
             print("Usuario ira loggar")
             return redirect('/logged')
         else:
