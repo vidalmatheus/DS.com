@@ -4,11 +4,16 @@ login_api = Blueprint('login_api', __name__)
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
+    print("////////////////////////////////////////")
+    print("Comeca route login")
     userData = usuario.acessoUser()
     if 'user' in session:
+        print("user is in session")
         if usersDataOnline.getUser(session['user']) != None:
+            print("Usuario ira loggar")
             return redirect('/logged')
         else:
+            print("user saira de session")
             session.pop('user', None)
     if request.method == 'POST':
         # Fetch form data
@@ -50,11 +55,14 @@ def login():
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     userData.logginUser(user[0])
-                    if usersDataOnline.userIsOn(userData.getCPF()):
-                        print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        return redirect('/login')
-                    usersDataOnline.addUserOn(userData)
-                    session['user'] = userData.getCPF()
+                    if not session['user'] == userData.getCPF():
+                        if usersDataOnline.userIsOn(userData.getCPF()):
+                            print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                            return redirect('/login')
+                        else:
+                            print("Usuario nao esta logado")
+                            session['user'] = userData.getCPF()
+                            usersDataOnline.addUserOn(userData)
                     #close the cursor
                     cur.close()
                     #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
