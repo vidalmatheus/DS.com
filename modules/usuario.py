@@ -104,7 +104,9 @@ class acessManager:
         self.dictUsersOn.pop(cpf, None)
 
     def getUser(self,cpf):
+        print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
         print("tipo de cpf = " + str(type(cpf)))
+        print("cpf = " + cpf)
         print("self.dictUsersOn = " + str(self.dictUsersOn))
         print("tipo de self.dictUsersOn[cpf] = " + str(type(self.dictUsersOn[cpf])))
         return self.dictUsersOn[cpf]
