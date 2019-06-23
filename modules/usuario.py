@@ -109,7 +109,13 @@ class acessManager:
             self.dictUsersOn.pop(cpf, None)
 
     def userIsOn(self,cpf):
-        return (cpf in self.dictUsersOn)
+        isOnDict = (cpf in self.dictUsersOn)
+        if isOnDict:
+            return isOnDict
+        elif self.dictUsersOn[cpf] == None:
+            return False 
+
+        return False
 
     def getUser(self,cpf):
         print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
