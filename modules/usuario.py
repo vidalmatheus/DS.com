@@ -108,6 +108,9 @@ class acessManager:
         if cpf in self.dictUsersOn:
             self.dictUsersOn.pop(cpf, None)
 
+    def userIsOn(self,cpf):
+        return (cpf in self.dictUsersOn)
+
     def getUser(self,cpf):
         print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
         print("tipo de cpf = " + str(type(cpf)))
