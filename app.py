@@ -25,8 +25,6 @@ def index():
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
-    for a in session:
-        session.pop(a, None)
     app.run(threaded=True)
     #close the connection
     connectionData.getConnector().close()
