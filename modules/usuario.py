@@ -95,12 +95,20 @@ class acessManager:
 
     def addUserOn(self, user = acessoUser()):
         cpf = user.getCPF()
+        print("cpf = " + str(cpf))
+        print("///////////////////////")
+        print("Entrou Add User")
         if cpf == "0000000":
+            print("return 01")
             return
         if cpf in self.dictUsersOn:
+            print("return 02")
             self.dictUsersOn[user.getCPF()] = user
+            print("user.getStringList() = " + str(user.getStringList()))
             return
+        
         self.dictUsersOn.update({cpf: user})
+        print("self.dictUsersOn[cpf].getStringList() = " + self.dictUsersOn[cpf].getStringList())
 
     def logoutUser(self,cpf):
         if cpf == "0000000" and self.dictUsersOn != None:
@@ -120,6 +128,9 @@ class acessManager:
             return True
 
         return False
+
+    def getDictionary(self):
+        return self.dictUsersOn
 
     def getUser(self,cpf):
         print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
