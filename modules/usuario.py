@@ -99,7 +99,7 @@ class acessManager:
         self.dictUsersOn.update({user.getCPF(): user})
 
     def logoutUser(self,cpf):
-        self.dictUsersOn.pop(str(cpf), None)
+        self.dictUsersOn.pop(cpf, None)
 
     def getUser(self,cpf):
-        return self.dictUsersOn[str(cpf)]
+        return self.dictUsersOn[cpf]
