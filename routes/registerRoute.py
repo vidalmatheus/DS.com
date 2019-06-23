@@ -6,6 +6,8 @@ register_api = Blueprint('register_api', __name__)
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        print("/////////////////////////")
+        print("Comeca route register")
         # Fetch form data
         userDetails = request.form
         cpf = userDetails['cpf']
@@ -29,9 +31,14 @@ def register():
         userData = usuario.acessoUser()
         cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
         user = cur.fetchall()
+        print("adciona user[0] = " + str(user[0]))
         userData.logginUser(user[0])
+        print("userData.getStringList() = " + str(userData.getStringList()))
         session['user'] = cpf
         usersDataOnline.addUserOn(userData)
+        print("after added user on login")
+        print("session['user'] = "+ session['user'])
+        print("usersDataOnline.getDictionary = "+ str(usersDataOnline.getDictionary))
         #close the cursor
         cur.close()
         return redirect('/logged')
