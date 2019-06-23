@@ -13,7 +13,7 @@ def changeRegister():
         print("usersDataOnline.getUser(session['user']) == None")
         if 'user' in session:
             session.pop('user', None)
-        return redirect('/')
+        return redirect('/logged')
     user_list = userData.getStringList()
     print("userData.getStringList() = "+ str(user_list))
     saram = user_list[1]
