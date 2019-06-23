@@ -88,6 +88,19 @@ class acessoUser:
         lista.append(self.classificacao)
         return lista
 
+    def copy(self, userCopied = acessoUser()):
+        self.name = userCopied.name
+        self.logado = userCopied.logado
+        self.cpf = userCopied.cpf
+        self.dataNascimento = userCopied.dataNascimento
+        self.saram = userCopied.saram
+        self.endereco = userCopied.endereco
+        self.numContato = userCopied.numContato
+        self.email = userCopied.email
+        self.sexo = userCopied.sexo
+        self.classificacao = userCopied.classificacao
+        self.confirmado = userCopied.confirmado
+
 
 class acessManager:
     def __init__(self):
@@ -95,6 +108,7 @@ class acessManager:
 
     def addUserOn(self, user = acessoUser()):
         cpf = user.getCPF()
+        userDict = acessoUser()
         print("cpf = " + str(cpf))
         print("///////////////////////")
         print("Entrou Add User")
@@ -107,7 +121,8 @@ class acessManager:
             print("user.getStringList() = " + str(user.getStringList()))
             return
         
-        self.dictUsersOn.update({cpf: user})
+        userDict.copy(user)
+        self.dictUsersOn.update({cpf: userDict})
         print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
 
     def logoutUser(self,cpf):
