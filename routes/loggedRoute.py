@@ -7,7 +7,8 @@ logged_api = Blueprint('logged_api', __name__)
 @logged_api.route('/logged', methods=['GET'])
 def logged():
     print('/////////////////////////')
-    print("logged_api.route")
+    print("Comeca logged")
+    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
     if not ('user' in session):
         print("user not in session, redirect to login")
         return redirect('/login')
