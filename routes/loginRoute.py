@@ -6,6 +6,7 @@ login_api = Blueprint('login_api', __name__)
 def login():
     print("////////////////////////////////////////")
     print("Comeca route login")
+    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
     userData = usuario.acessoUser()
     if 'user' in session:
         print("user is in session")
