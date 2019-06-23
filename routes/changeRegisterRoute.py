@@ -29,12 +29,9 @@ def changeRegister():
             cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
             psd_db = cur.fetchall()
             psd_db = psd_db[0][0]
-            print(psd)
-            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode() and len(psd) != 0):  
-                print("AAAAAAAAAAAA")      
+            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode() and len(psd) != 0):      
                 cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,saram))
             else:
-                print("blblblbblblbblbl")
                 cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(name,birth_date,sex,adress,phone,email,military,saram)) 
             #commit the transcation
             connectionData.getConnector().commit()
