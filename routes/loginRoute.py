@@ -4,7 +4,8 @@ login_api = Blueprint('login_api', __name__)
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
-    if userData.getLogged():
+    userData = usuario.acessoUser()
+    if 'user' in session:
         return redirect('/logged')
     if request.method == 'POST':
         # Fetch form data
@@ -43,11 +44,11 @@ def login():
                 print("o user[0][9] = " + user[0][9])
                 print("o tipo de variavel da user[0][10] = " + str(type(user[0][10])))
                 #vou alterar umas coisas aqui
-
                 userData.logginUser(user[0])
-
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
+                    usersDataOnline.addUserOn(userData)
+                    session['user'] = userData.getCPF()
                     #close the cursor
                     cur.close()
                     #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###

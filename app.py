@@ -3,6 +3,8 @@ from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,c
 
 # create app
 app = Flask(__name__,static_url_path='/static')
+app.secret_key = os.urandom(24)
+
 
 #blueprint
 app.register_blueprint(loginRoute.login_api)
@@ -14,7 +16,7 @@ app.register_blueprint(changeRegisterRoute.changeRegister_api)
 # main page
 @app.route('/')
 def index():
-    if userData.getLogged():
+    if 'user' in session:
         return redirect('/logged')
     return render_template('index.html')
 

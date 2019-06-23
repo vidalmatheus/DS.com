@@ -5,7 +5,8 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 # users registers
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
-    user = userData.getStringList()
+    userData = usersDataOnline.getUser(session['user'])
+    userDetails = userData.getStringList()
     saram = user[1]
     if request.method == 'POST':
         # Fetch form data
