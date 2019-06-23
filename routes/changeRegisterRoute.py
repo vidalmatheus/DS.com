@@ -5,6 +5,7 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 # users registers
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
+    global usersDataOnline
     print("////////////////////////////////////////")
     print("comeca change register")
     print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
