@@ -128,10 +128,18 @@ class acessManager:
         print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
 
     def logoutUser(self,cpf):
-        if cpf == "0000000" and self.dictUsersOn != None:
+        print("/////////////////////////////////")
+        print("logout user")
+        if not self.dictUsersOn:
+            print("self.dictUsersOn is empty")
             return
         if cpf in self.dictUsersOn:
+            print("cpf in self.dictUsersOn")
+            print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
+            print("self.dictUsersOn = " + str(self.dictUsersOn))
             self.dictUsersOn.pop(cpf, None)
+            print("self.dictUsersOn = " + str(self.dictUsersOn))
+        print("ended logoutUser()")
 
     def userIsOn(self,cpf):
         isOnDict = (cpf in self.dictUsersOn)
