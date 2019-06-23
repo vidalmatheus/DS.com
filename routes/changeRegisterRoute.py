@@ -7,6 +7,8 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 def changeRegister():
     userData = usersDataOnline.getUser(session['user'])
     if userData == None:
+        if 'user' in session:
+            session.pop('user', None)
         return redirect('/')
     user_list = userData.getStringList()
     saram = user_list[1]

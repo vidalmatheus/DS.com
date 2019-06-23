@@ -6,7 +6,10 @@ login_api = Blueprint('login_api', __name__)
 def login():
     userData = usuario.acessoUser()
     if 'user' in session:
-        return redirect('/logged')
+        if usersDataOnline.getUser(session['user'] != None):
+            return redirect('/logged')
+        else:
+            session.pop('user', None)
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
