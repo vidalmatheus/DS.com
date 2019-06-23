@@ -110,7 +110,11 @@ class acessManager:
 
     def userIsOn(self,cpf):
         isOnDict = (cpf in self.dictUsersOn)
+        print("/////////////////////////////")
+        print("acessManager.userIsOn()")
         if isOnDict:
+            print("User is on       ?")
+            print(str(self.dictUsersOn))
             if self.dictUsersOn[cpf] == None:
                 return False
             return True
