@@ -111,9 +111,9 @@ class acessManager:
     def userIsOn(self,cpf):
         isOnDict = (cpf in self.dictUsersOn)
         if isOnDict:
-            return isOnDict
-        elif self.dictUsersOn[cpf] == None:
-            return False 
+            if self.dictUsersOn[cpf] == None:
+                return False
+            return True
 
         return False
 
