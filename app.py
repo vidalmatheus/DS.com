@@ -24,8 +24,9 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    for 'user' in session:
-        session.pop('user', None)
+    print('tipo de session = '+str(type(session)))
+    for a in session:
+        session.pop(a, None)
     app.run(threaded=True)
     #close the connection
     connectionData.getConnector().close()
