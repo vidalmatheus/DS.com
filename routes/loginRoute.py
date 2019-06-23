@@ -67,7 +67,7 @@ def login():
                         print("Usuario nao esta logado")
                         session['user'] = userData.getCPF()
                         usersDataOnline.addUserOn(userData)
-                        print("dicionary of user = "+ usersDataOnline.getDictionary())
+                        print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
                         print("fAZ Login")
                     print("FLAG 13")
                     #close the cursor
