@@ -55,17 +55,14 @@ def login():
                 #fim alteração
                 if (bcrypt.hashpw(psd.encode(),psd_db.encode()) == psd_db.encode()):
                     userData.logginUser(user[0])
-                    if 'user' in session:
-                        print("FLAG 11")
-                        if not session['user'] == userData.getCPF():
-                            print("FLAG 12")
-                            if usersDataOnline.userIsOn(userData.getCPF()):
-                                print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                return redirect('/login')
-                            else:
-                                print("Usuario nao esta logado")
-                                session['user'] = userData.getCPF()
-                                usersDataOnline.addUserOn(userData)
+                    if usersDataOnline.userIsOn(userData.getCPF()):
+                        print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                        return redirect('/login')
+                    else:
+                        print("Usuario nao esta logado")
+                        session['user'] = userData.getCPF()
+                        usersDataOnline.addUserOn(userData)
+                        print("fAZ Login")
                     print("FLAG 13")
                     #close the cursor
                     cur.close()
