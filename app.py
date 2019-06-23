@@ -1,6 +1,6 @@
 from sharedData import *
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
-import logging
+import logging, sys
 
 # create app
 app = Flask(__name__,static_url_path='/static')
