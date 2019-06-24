@@ -7,9 +7,9 @@ def logout():
     #userData.logOutUser()
     print("/////////////////////////////")
     print("Começa logout")
-    if not 'user' in session:
-        print("not 'user' so return to '/'")
-        return redirect('/') 
+    #if not 'user' in session:
+        #print("not 'user' so return to '/'")
+        #return redirect('/') 
     usersDataOnline.logoutUser(session['user'])
     session.pop('user', None)
     print("usersDataOnline.dictUsersOn = " + str(usersDataOnline.dictUsersOn))
