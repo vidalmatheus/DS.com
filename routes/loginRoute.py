@@ -1,12 +1,11 @@
 from sharedData import *
-import sharedData
 
 login_api = Blueprint('login_api', __name__)
 
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
-    #global usersDataOnline
+    global usersDataOnline
     print("////////////////////////////////////////")
     print("Comeca route login")
     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
@@ -70,7 +69,7 @@ def login():
                     else:
                         print("Usuario nao esta logado")
                         session['user'] = userData.getCPF()
-                        sharedData.usersDataOnline.addUserOn(userData)
+                        usersDataOnline.addUserOn(userData)
                         print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
                         print("fAZ Login")
                     print("FLAG 13")
