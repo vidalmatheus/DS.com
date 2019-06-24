@@ -8,11 +8,11 @@ def login():
     global usersDataOnline
     print("////////////////////////////////////////")
     print("Comeca route login")
-    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
+    print("globals.usersDataOnline.dictUsersOn = "+str(globals.usersDataOnline.dictUsersOn))
     userData = usuario.acessoUser()
     if 'user' in session:
         print("user is in session")
-        if usersDataOnline.userIsOn(session['user']):
+        if globals.usersDataOnline.userIsOn(session['user']):
             print("Usuario ira loggar")
             return redirect('/logged')
         else:
@@ -62,15 +62,15 @@ def login():
                     if 'user' in session:
                         print("session['user'] = "+str(session['user']))
                     
-                    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
-                    if usersDataOnline.userIsOn(userData.getCPF()):
+                    print("globals.usersDataOnline.dictUsersOn = "+str(globals.usersDataOnline.dictUsersOn))
+                    if globals.usersDataOnline.userIsOn(userData.getCPF()):
                         print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         return redirect('/login')
                     else:
                         print("Usuario nao esta logado")
                         session['user'] = userData.getCPF()
-                        usersDataOnline.addUserOn(userData)
-                        print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
+                        globals.usersDataOnline.addUserOn(userData)
+                        print("dicionary of user = "+ str(globals.usersDataOnline.getDictionary()))
                         print("fAZ Login")
                     print("FLAG 13")
                     #close the cursor
