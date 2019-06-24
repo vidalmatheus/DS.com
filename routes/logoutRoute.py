@@ -1,5 +1,5 @@
 from sharedData import *
-from sharedData import usersDataOnline
+import sharedData
 
 logout_api = Blueprint('logout_api', __name__)
 
@@ -12,7 +12,7 @@ def logout():
     #if not 'user' in session:
         #print("not 'user' so return to '/'")
         #return redirect('/') 
-    usersDataOnline.logoutUser(session['user'])
+    sharedData.usersDataOnline.logoutUser(session['user'])
     session.pop('user', None)
     print("usersDataOnline.dictUsersOn = " + str(usersDataOnline.dictUsersOn))
     return redirect('/')

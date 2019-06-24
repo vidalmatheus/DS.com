@@ -1,5 +1,5 @@
 from sharedData import *
-from sharedData import usersDataOnline
+import sharedData
 
 login_api = Blueprint('login_api', __name__)
 
@@ -70,7 +70,7 @@ def login():
                     else:
                         print("Usuario nao esta logado")
                         session['user'] = userData.getCPF()
-                        usersDataOnline.addUserOn(userData)
+                        sharedData.usersDataOnline.addUserOn(userData)
                         print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
                         print("fAZ Login")
                     print("FLAG 13")

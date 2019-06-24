@@ -1,5 +1,5 @@
 from sharedData import *
-from sharedData import usersDataOnline
+import sharedData
 
 logged_api = Blueprint('logged_api', __name__)
 
