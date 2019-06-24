@@ -16,9 +16,6 @@ connectionData = dataBase.dataAccess()
 ####
 
 ###Usuario
-def inicialize():
-    global usersDataOnline
-    usersDataOnline = usuario.acessManager()
 userData = usuario.acessoUser()
 ###
 
