@@ -1,5 +1,6 @@
 from sharedData import *
-import globals
+
+
 logged_api = Blueprint('logged_api', __name__)
 
 
@@ -9,13 +10,13 @@ def logged():
     global usersDataOnline
     print('/////////////////////////')
     print("Comeca logged")
-    print("globals.usersDataOnline.dictUsersOn = "+str(globals.usersDataOnline.dictUsersOn))
+    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
     if not ('user' in session):
         print("user not in session, redirect to login")
         return redirect('/login')
     print(request.args.get('userDetails'))
-    userData = globals.usersDataOnline.getUser(session['user'])
-    if not globals.usersDataOnline.userIsOn(session['user']):
+    userData = usersDataOnline.getUser(session['user'])
+    if not usersDataOnline.userIsOn(session['user']):
         print("user has cookie but not logged, redirect to login")
         session.pop('user', None)
         return redirect('/login')

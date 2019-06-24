@@ -1,5 +1,6 @@
 from sharedData import *
-import globals
+
+
 changeRegister_api = Blueprint('changeRegister_api', __name__)
 
 # users registers
@@ -8,12 +9,12 @@ def changeRegister():
     global usersDataOnline
     print("////////////////////////////////////////")
     print("comeca change register")
-    print("globals.usersDataOnline.getDictionary() = "+ str(globals.usersDataOnline.getDictionary()))
-    userData = globals.usersDataOnline.getUser(session['user'])
-    print("globals.usersDataOnline.getDictionary() = "+ str(globals.usersDataOnline.getDictionary()))
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
+    userData = usersDataOnline.getUser(session['user'])
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     print("volta para change register")
     if userData == None:
-        print("globals.usersDataOnline.getUser(session['user']) == None")
+        print("usersDataOnline.getUser(session['user']) == None")
         if 'user' in session:
             session.pop('user', None)
         return redirect('/logged')
@@ -51,12 +52,12 @@ def changeRegister():
 
             #apaga no dictionary a usuario
             cpf = session['user']
-            globals.usersDataOnline.logoutUser(cpf)
+            usersDataOnline.logoutUser(cpf)
             userData = usuario.acessoUser()
 
             user = cur.fetchall()
             userData.logginUser(user[0])
-            globals.usersDataOnline.addUserOn(userData)
+            usersDataOnline.addUserOn(userData)
 
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
             #close the cursor

@@ -1,13 +1,11 @@
 from sharedData import *
-from sharedData import usersDataOnline
-import globals
 
 users_api = Blueprint('users_api', __name__)
 
 # users registers
 @users_api.route('/users', methods=['GET'])
 def users():
-
+    global usersDataOnline
     cur = connectionData.getConnector().cursor()
     cur.execute("SELECT * FROM paciente")
     userDetails = cur.fetchall()

@@ -8,7 +8,7 @@ def register():
     global usersDataOnline
     print("////////////////////////////////////////")
     print("comeca register")
-    print("globals.globals.usersDataOnline.getDictionary() = "+ str(globals.usersDataOnline.getDictionary()))
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     if request.method == 'POST':
         print("/////////////////////////")
         print("Comeca route register")
@@ -39,10 +39,10 @@ def register():
         userData.logginUser(user[0])
         print("userData.getStringList() = " + str(userData.getStringList()))
         session['user'] = cpf
-        globals.usersDataOnline.addUserOn(userData)
+        usersDataOnline.addUserOn(userData)
         print("after added user on login")
         print("session['user'] = "+ session['user'])
-        print("globals.usersDataOnline.getDictionary() = "+ str(globals.usersDataOnline.getDictionary()))
+        print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
         #close the cursor
         cur.close()
         return redirect('/logged')
