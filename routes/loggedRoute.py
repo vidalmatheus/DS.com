@@ -7,7 +7,7 @@ logged_api = Blueprint('logged_api', __name__)
 # logged page
 @logged_api.route('/logged', methods=['GET'])
 def logged():
-    global usersDataOnline
+    #global usersDataOnline
     print('/////////////////////////')
     print("Comeca logged")
     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
