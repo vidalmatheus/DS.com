@@ -16,7 +16,8 @@ connectionData = dataBase.dataAccess()
 ####
 
 ###Usuario
-userData = usuario.acessoUser()
+usersDataOnline = usuario.acessManager()
+#userData = usuario.acessoUser()
 ###
 
 
