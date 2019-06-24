@@ -1,4 +1,6 @@
 from sharedData import *
+from sharedData import usersDataOnline
+
 logout_api = Blueprint('logout_api', __name__)
 
 @logout_api.route('/logout')

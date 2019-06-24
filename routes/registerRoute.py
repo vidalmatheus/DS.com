@@ -1,4 +1,5 @@
 from sharedData import *
+from sharedData import usersDataOnline
 
 register_api = Blueprint('register_api', __name__)
 

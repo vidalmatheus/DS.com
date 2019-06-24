@@ -137,9 +137,7 @@ class acessManager:
             print("cpf in self.dictUsersOn")
             print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
             print("self.dictUsersOn = " + str(self.dictUsersOn))
-            self.dictUsersOn.clear()
-            self.dictUsersOn = {"0000000" : acessoUser()}
-            #self.dictUsersOn.pop(cpf, None)
+            self.dictUsersOn.pop(cpf, None)
             print("self.dictUsersOn = " + str(self.dictUsersOn))
         print("ended logoutUser()")
 

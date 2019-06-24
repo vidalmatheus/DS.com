@@ -1,4 +1,5 @@
 from sharedData import *
+from sharedData import usersDataOnline
 
 changeRegister_api = Blueprint('changeRegister_api', __name__)
 
