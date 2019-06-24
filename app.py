@@ -1,6 +1,7 @@
 from sharedData import *
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
 import logging, sys
+import globals
 
 # create app
 app = Flask(__name__,static_url_path='/static')
@@ -25,6 +26,7 @@ def index():
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
+    globals.initialize()
     usersDataOnline.resetServer()
     app.run(debug=True,threaded=False)
     #close the connection
