@@ -79,6 +79,6 @@ def login():
                     #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
                     return redirect('/logged')
                 else: print("SENHA ERRADA!") ## FALTA JOGAR PRO html
-        else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
+        else: print("ERRO! SARAM OU CPF EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
 
     return render_template('login.html')

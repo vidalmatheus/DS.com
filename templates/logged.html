@@ -162,7 +162,19 @@
 
                     <ul>
                         <li class="cd-schedule__event">
-                            <a data-start="08:30" data-end="9:30" data-event="event-4">
+                            <script>
+                                window.onload = function() {
+                                    var clickfun = document.getElementById("button1").getAttribute("onclick");
+                                    var funname = clickfun.substring(0, clickfun.indexOf("("));
+                                    document.getElementById("button1").setAttribute("onclick", funname + "('somethingDiff1'," + "'somethingDiff2')");
+                                };
+                            </script>
+                            <a id="button1" onclick="function()" data-start="08:30" data-end="9:30" data-event="event-4">
+                                <div class="cd-schedule__name">Livre</div>
+                            </a>
+                        </li>
+                        <li class="cd-schedule__event">
+                            <a data-start="10:30" data-end="16:30" data-event="event-4">
                                 <div class="cd-schedule__name">Livre</div>
                             </a>
                         </li>

@@ -1,6 +1,7 @@
 from sharedData import *
 
 register_api = Blueprint('register_api', __name__)
+ 
 
 # register
 @register_api.route('/register', methods=['GET', 'POST'])
