@@ -1,4 +1,5 @@
-from sharedData import *
+#from sharedData import *
+from flask import Flask, render_template, redirect , session
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
 import logging, sys
 
@@ -19,13 +20,27 @@ app.register_blueprint(changeRegisterRoute.changeRegister_api)
 # main page
 @app.route('/')
 def index():
-    if 'user' in session:
-        return redirect('/logged')
+
+    if "userCPF" in session:
+        if "verifica se esta loggado com o 'loginHash' correto"=="verifica se esta loggado com o 'loginHash' correto":
+            #session["loginHash"]
+            #session["userName"] = userData.getName()
+            #session["userCPF"]
+            if session["userType"] == 'P':
+               cpf = session['userID']
+            elif session["userType"] == 'M':
+                crm = session['userID']
+            return redirect('/logged')
+        else:
+            session.pop("loginHash", None)
+            session.pop("userName", None)
+            session.pop("userID", None)
+            session.pop("userType", None)
+
     return render_template('index.html')
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
     app.run(debug=True,threaded=True)
     #close the connection
-    connectionData.getConnector().close()
 

@@ -1,10 +1,30 @@
-from sharedData import *
+#from sharedData import *
+from flask import render_template, request, redirect,Blueprint, session
+from modules import dataBase
+import bcrypt, datetime
 
 register_api = Blueprint('register_api', __name__)
 
 # register
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
+    userData = dataBase.PessoaUserData()
+    baseData = dataBase.DataManager()
+
+    if "userCPF" in session:
+        if "verifica se esta loggado com o 'loginHash' correto"== "verifica se esta loggado com o 'loginHash' correto":
+            # session["loginHash"]
+            # session["userName"] = userData.getName()
+            # session["userCPF"]
+            return redirect('/logged')
+        else:
+            session.pop("loginHash", None)
+            session.pop("userName", None)
+            session.pop("userCPF", None)
+            session.pop("userType", None)
+
+            return redirect('/login')
+
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
@@ -19,21 +39,22 @@ def register():
         email = userDetails['email']
         military = userDetails['military']
         #cursor
-        cur = connectionData.getConnector().cursor()
+        #cur = connectionData.getConnector().cursor()
         #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
+
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
-        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
+
+        tupleData = baseData.addDataThenGetIt("paciente", (cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation
-        connectionData.getConnector().commit()
-        userData = usuario.acessoUser()
-        cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
-        user = cur.fetchall()
-        userData.logginUser(user[0])
-        session['user'] = cpf
-        usersDataOnline.addUserOn(userData)
+
+        userData.logginUser(tupleData[0])
+        session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
+        session["userName"] = userData.getName()
+        session["userCPF"] = userData.getCPF()
+        ###########aloca usuario logado no banco de dados
+        #usersDataOnline.addUserOn(userData)
         #close the cursor
-        cur.close()
         return redirect('/logged')
     return render_template('register.html')
 

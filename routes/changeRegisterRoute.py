@@ -1,15 +1,32 @@
-from sharedData import *
+#from sharedData import *
+from flask import render_template, request, redirect,Blueprint, session
+import bcrypt, datetime
+from modules import dataBase
 
 changeRegister_api = Blueprint('changeRegister_api', __name__)
 
 # users registers
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
-    userData = usersDataOnline.getUser(session['user'])
-    if userData == None:
-        if 'user' in session:
-            session.pop('user', None)
-        return redirect('/')
+    baseData = dataBase.DataManager()
+    if "userCPF" in session:
+        if "verifica se esta loggado com o 'loginHash' correto"=="verifica se esta loggado com o 'loginHash' correto":
+            print('session["loginHash"]' + session["loginHash"])
+            #session["userName"] = userData.getName()
+            #session["userCPF"]
+        else:
+            session.pop("loginHash", None)
+            session.pop("userName", None)
+            session.pop("userCPF", None)
+            session.pop("userType", None)
+
+            return redirect('/login')
+
+    userData = dataBase.PessoaUserData()
+    userExist,tuplaDataInfo = baseData.getDataInfo("paciente","cpf",session["userCPF"])
+
+    userData.setUser(tuplaDataInfo)
+
     user_list = userData.getStringList()
     saram = user_list[1]
     if request.method == 'POST':
@@ -26,34 +43,29 @@ def changeRegister():
             email = userDetails['email']
             military = userDetails['military']
             #cursor
-            cur = connectionData.getConnector().cursor()
+            #cur = connectionData.getConnector().cursor()
             #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
-            hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
-            hashedDecoded = hashed.decode('utf-8')
-            cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
-            psd_db = cur.fetchall()
-            psd_db = psd_db[0][0]
-            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode() and len(psd) != 0):      
-                cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,saram))
+            if len(psd) > 1:
+                hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
+                hashedDecoded = hashed.decode('utf-8')
+                user = baseData.changeDataAndReturnNewData("paciente",
+                                                    ["senha", "nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
+                                                     'email', 'militar'],
+                                                    [hashedDecoded, name, birth_date, sex, adress, phone, email,
+                                                     military], saram, 'saram')
             else:
-                cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(name,birth_date,sex,adress,phone,email,military,saram)) 
-            #commit the transcation
-            connectionData.getConnector().commit()
-            cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+                user = baseData.changeDataAndReturnNewData("paciente", ["nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
+                                                                 'email', 'militar'],[name,birth_date,sex,adress,phone,email,military],saram,'saram')
 
-            #apaga no dictionary a usuario
-            cpf = session['user']
-            usersDataOnline.logoutUser(cpf)
-            userData = usuario.acessoUser()
+            userData = dataBase.PessoaUserData()
 
-            user = cur.fetchall()
-            userData.logginUser(user[0])
-            usersDataOnline.addUserOn(userData)
-
+            userData.setUser(user)
+            session["userName"] = userData.getName()
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
-            #close the cursor
-            cur.close()
+
             return redirect('/logged')
-        elif (submit == "Cancelar"): return redirect('/logged')
+        elif (submit == "Cancelar"):
+            print("ATUALIZAÇÃO DOS DADOS CANCELADA")
+            return redirect('/logged')
     return render_template('changeRegister.html',userDetails = user_list)
 
