@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/img/DS.ico" type="image/x-icon" />
+    <title>Cadastro Médico</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+
+    <!--Função de Máscaras-->
+    <script>
+        function formatar(mascara, documento) {
+            var i = documento.value.length;
+            var saida = mascara.substring(0, 1);
+            var texto = mascara.substring(i)
+
+            if (texto.substring(0, 1) != saida) {
+                documento.value += texto.substring(0, 1);
+            }
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="register">
+        <h3 class="text-center text-white pt-5"></h3>
+        <div class="container ">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">
+                                <a href="/"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
+                                <h3>Novo Médico:</h3>
+                            </h3>
+                            </h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Nome*</label><br>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Senha*</label><br>
+                                <input type="password" name="psd" id="psd" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="saram" class="text-info">SARAM*</label><br>
+                                <input type="code" name="saram" id="saram" maxlength=7 class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cpf" class="text-info">CRM*</label><br>
+                                <input type="cpf" name="cpf" id="cpf" maxlength=14  class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                    <label for="especialidade" class="text-info">Especialidade*</label><br>
+                                    <input type="text" name="name" id="name" class="form-control" required>
+                                </div>
+                            <div class="form-group">
+                                <label for="military" class="text-info">Posto/Graduação Militar</label><br>
+                                <input type="text" name="military" id="military" maxlength=20 class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Enviar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
