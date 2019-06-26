@@ -1,5 +1,5 @@
-#from sharedData import *
-from flask import redirect,Blueprint, session
+from sharedData import session
+from flask import redirect,Blueprint
 logout_api = Blueprint('logout_api', __name__)
 
 @logout_api.route('/logout')
@@ -11,7 +11,7 @@ def logout():
 
     session.pop("loginHash", None)
     session.pop("userName", None)
-    session.pop("userCPF", None)
+    session.pop("userID", None)
     session.pop("userType", None)
 
     return redirect('/')

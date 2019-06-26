@@ -1,5 +1,5 @@
-#from sharedData import *
-from flask import Flask, render_template, redirect , session
+from sharedData import session
+from flask import Flask, render_template, redirect
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
 import logging, sys
 

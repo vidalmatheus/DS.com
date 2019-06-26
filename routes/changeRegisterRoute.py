@@ -1,5 +1,5 @@
-#from sharedData import *
-from flask import render_template, request, redirect,Blueprint, session
+from sharedData import session
+from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
 
@@ -9,7 +9,7 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
     baseData = dataBase.DataManager()
-    if "userCPF" in session:
+    if 'userID' in session:
         if "verifica se esta loggado com o 'loginHash' correto"=="verifica se esta loggado com o 'loginHash' correto":
             print('session["loginHash"]' + session["loginHash"])
             #session["userName"] = userData.getName()
@@ -17,15 +17,14 @@ def changeRegister():
         else:
             session.pop("loginHash", None)
             session.pop("userName", None)
-            session.pop("userCPF", None)
+            session.pop("userID", None)
             session.pop("userType", None)
 
             return redirect('/login')
 
     userData = dataBase.PessoaUserData()
-    userExist,tuplaDataInfo = baseData.getDataInfo("paciente","cpf",session["userCPF"])
-
-    userData.setUser(tuplaDataInfo)
+    userExist,tuplaDataInfo = baseData.getDataInfo("paciente","cpf",session["userID"])
+    userData.setUser(tuplaDataInfo[0])
 
     user_list = userData.getStringList()
     saram = user_list[1]
@@ -59,7 +58,7 @@ def changeRegister():
 
             userData = dataBase.PessoaUserData()
 
-            userData.setUser(user)
+            userData.setUser(user[0])
             session["userName"] = userData.getName()
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
 

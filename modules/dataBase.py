@@ -188,7 +188,7 @@ class DataManager:
         while i < n:
             comandoString = comandoString + "," +dataStringList[i] + "=%s"
             tuplaValues = tuplaValues + (dataVarList[i],)
-            i = i +1
+            i = i + 1
 
         comandoString = comandoString + " WHERE " + dataLook + "=%s"
         tuplaValues = tuplaValues + (dataLookVar,)
@@ -212,7 +212,7 @@ class DataManager:
         comandoString = "INSERT INTO " + dataType + " VALUES(%s"
         n = len(dataVarList)
         i = 1
-        comandoString = comandoString + ", %s"
+
         tuplaValues = (dataVarList[0],)
         while i < n:
             comandoString = comandoString + ", %s"

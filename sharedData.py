@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect,Blueprint, json, url_for, session
-from modules import dataBase,usuario
+from flask import session
+'''from modules import dataBase,usuario
 import psycopg2, os, subprocess, bcrypt
 
 #
@@ -19,6 +19,6 @@ connectionData = dataBase.dataAccess()
 usersDataOnline = usuario.acessManager()
 #userData = usuario.acessoUser()
 ###
-
+'''
 
 

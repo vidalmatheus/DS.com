@@ -1,5 +1,5 @@
-#from sharedData import *
-from flask import render_template, request, redirect,Blueprint, session
+from sharedData import session
+from flask import render_template, request, redirect,Blueprint
 from modules import dataBase
 import bcrypt, datetime
 
@@ -20,7 +20,7 @@ def register():
         else:
             session.pop("loginHash", None)
             session.pop("userName", None)
-            session.pop("userCPF", None)
+            session.pop("userID", None)
             session.pop("userType", None)
 
             return redirect('/login')
@@ -48,10 +48,11 @@ def register():
         tupleData = baseData.addDataThenGetIt("paciente", (cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
         #commit the transcation
 
-        userData.logginUser(tupleData[0])
+        userData.setUser(tupleData)
         session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
         session["userName"] = userData.getName()
-        session["userCPF"] = userData.getCPF()
+        print("////////////////////////////////NOME REGISTRADO\n=>"+session["userName"])
+        session["userID"] = userData.getCPF()
         ###########aloca usuario logado no banco de dados
         #usersDataOnline.addUserOn(userData)
         #close the cursor

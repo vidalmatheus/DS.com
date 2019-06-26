@@ -1,5 +1,5 @@
-#from sharedData import *
-from flask import render_template, request, redirect,Blueprint, session
+from sharedData import session
+from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
 login_api = Blueprint('login_api', __name__)
@@ -49,12 +49,14 @@ def login():
             if not dataExist:
                 dataExist, passwordCorrect, userData = baseData.confirmPessoaPassword("medico", loginType,
                                                                                       userDetails['login'], passWord)
-
+            print("/////////////////////////////\nverifica senha")
             if not dataExist:
                 print("SARAM/CPF NAO ENCONTRADO")
                 return redirect('/login')
             else:
+                print("DATA EXIST")
                 if passwordCorrect:
+                    print("PASSWORD IS CORRECT")
                     session["userName"] = userData.getName()
                     session["userID"] = userData.getCPF()
                     session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
