@@ -28,7 +28,7 @@
 <body>
     <header class="header_area">
         <div class="main_menu">
-                <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
+                &emsp;&emsp;&emsp;&emsp;<a class="navbar-brand logo_h"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
         </div>
     </header>
 
@@ -40,13 +40,12 @@
                     <div class="col-lg-5">
                         <div class="banner_content">
                             <h2>
-                                <font color="white">Olá,</font>
+                                <font color="white">Olá, Dr.</font>
                             </h2>
                             <h2>
                                 <font color="white">{{userDetails}}</font>
                             </h2>
-                            <p>Não esqueça de verificar seu calendário</br>
-                                para não esquecer de suas consultas.</p>
+                            
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -59,69 +58,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Inicio Da Area de Filtro -->
-    <div class="whole-wrap">
-        <div class="container">
-            <div class="section-top-border">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <h3 class="mb-30 title_color">Marcar Consulta</h3>
-                        <h5 class="mb-30 title_color">Especialidade</h5>
-                        <div class="default-select" id="default-select">
-                            <select>
-                                  <option value="1">Geral</option>
-                                  <option value="1">Ortopedista</option>
-                                  <option value="1">Dentista</option>
-                                  <option value="1">Oftalmologista</option>
-                                  <option value="1">Nutricionista</option>
-                              </select>
-                        </div>
-                        <h5 class="mb-30 title_color"><br/>Descreva o motivo da consulta.</h5>
-                        <div class="mt-10">
-                            <textarea class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'" required></textarea>
-                        </div>
-                        <div class="button-group-area mt-40">
-                            <a href="#" class="genric-btn success circle">Enviar</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
-                        <div class="single-element-widget">
-                            <h4 class="mb-30 title_color">Destina-se</h4>
-                            <div class="switch-wrap d-flex justify-content-between">
-                                <p>Pessoal:&emsp;&emsp;&emsp;&emsp;</p>
-                                <div class="confirm-switch">
-                                    <input type="checkbox" id="confirm-switch" checked>
-                                    <label for="confirm-switch"></label>
-                                </div>
-                            </div>
-                            <div class="switch-wrap d-flex justify-content-between">
-                                <p>Dependente:&emsp;&emsp;&emsp;&emsp; </p>
-                                <div class="primary-switch">
-                                    <input type="checkbox" id="default-switch">
-                                    <label for="default-switch"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-element-widget">
-                            <h4 class="mb-30 title_color">Selecione o médico de sua preferência.</h4>
-                            <div class="default-select" id="default-select">
-                                <select>
-                                  <option value="1">Qualquer</option>
-                                  <option value="1">Jackson</option>
-                                  <option value="1">Alonso</option>
-                                  <option value="1">Bizarro</option>
-                                  <option value="1">Nilda</option>
-                              </select><br/>
-                            </div><br/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fim Da Area de Filtro -->
-
 
 
     <!--================ Inicio da Agenda =================-->
@@ -155,16 +91,10 @@
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Segunda</span></div>
 
-                    <ul id="Segunda">
-                            <li class="cd-schedule__event">
-                                    <a data-start="10:30" data-end="12:30" data-event="event-4">
-                                        <div class="cd-schedule__name">Livre</div>
-                                    </a>
-                            </li>
-
+                    <ul>
                         <li class="cd-schedule__event">
-                            <a data-start="08:30" data-end="9:30" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
+                            <a data-start="08:30" data-end="9:30" data-event="event-2">
+                                <div class="cd-schedule__name">Paciente Agendado</div>
                             </a>
                         </li>
 
@@ -174,20 +104,17 @@
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Terça</span></div>
-                    <ul id="Terça">
-                        
-                    </ul>
 
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quarta</span></div>
 
-                    <ul id="Quarta">
+                    <ul>
 
                         <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="12:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
+                            <a data-start="10:00" data-end="12:00" data-event="event-2">
+                                <div class="cd-schedule__name">Paciente Agendado</div>
                             </a>
                         </li>
 
@@ -198,20 +125,16 @@
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quinta</span></div>
-                    <ul id="Quinta">
 
-
-
-                    </ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Sexta</span></div>
 
-                    <ul id= "Sexta">
+                    <ul>
                         <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="11:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
+                            <a data-start="10:00" data-end="11:00" data-event="event-2">
+                                <div class="cd-schedule__name">Paciente Agendado</div>
                             </a>
                         </li>
 
@@ -247,25 +170,8 @@
     </div>
     <!-- Fim da Tabela -->
 
-    <script>
-        
-        function insereConsulta(){
-            
-            console.log('clicou');
-            //var novo_li = document.createElement('li');
-            //var novo_a = document.createElement('a');
-            //novo_a.setAttribute('data-start',tempoInicio);
-            //novo_a.setAttribute('data-end',tempoFim);
-        }
-        document.getElementById("Segunda").addEventListener("click",insereConsulta);
-        
-    </script>
-    <script></script>
-    <script></script>
-    <script></script>
-    <script></script>
-
     <!-- Carregamento dos códigos -->
+
     <script src="../static/js/jquery-3.2.1.min.js"></script>
     <script src="../static/js/popper.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
