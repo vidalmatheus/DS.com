@@ -1,6 +1,7 @@
 from sharedData import session
 from flask import Flask, render_template, request, redirect,Blueprint, json, url_for
 
+
 logged_api = Blueprint('logged_api', __name__)
 
 

@@ -26,6 +26,8 @@ def register():
             return redirect('/login')
 
     if request.method == 'POST':
+        print("/////////////////////////")
+        print("Comeca route register")
         # Fetch form data
         userDetails = request.form
         cpf = userDetails['cpf']

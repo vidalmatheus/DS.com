@@ -41,6 +41,7 @@ def index():
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
-    app.run(debug=True,threaded=True)
+    usersDataOnline.resetServer()
+    app.run(debug=True,threaded=False)
     #close the connection
 

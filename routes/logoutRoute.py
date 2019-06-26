@@ -4,6 +4,7 @@ logout_api = Blueprint('logout_api', __name__)
 
 @logout_api.route('/logout')
 def logout():
+    global usersDataOnline
     #userData.logOutUser()
     #usersDataOnline.logoutUser(session['user'])
 

@@ -3,6 +3,7 @@ from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
 
+
 changeRegister_api = Blueprint('changeRegister_api', __name__)
 
 # users registers
@@ -27,6 +28,7 @@ def changeRegister():
     userData.setUser(tuplaDataInfo[0])
 
     user_list = userData.getStringList()
+    print("userData.getStringList() = "+ str(user_list))
     saram = user_list[1]
     if request.method == 'POST':
         # Fetch form data

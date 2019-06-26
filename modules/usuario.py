@@ -88,42 +88,88 @@ class acessoUser:
         lista.append(self.classificacao)
         return lista
 
+    def copy(self, userCopied):
+        self.name = userCopied.name
+        self.logado = userCopied.logado
+        self.cpf = userCopied.cpf
+        self.dataNascimento = userCopied.dataNascimento
+        self.saram = userCopied.saram
+        self.endereco = userCopied.endereco
+        self.numContato = userCopied.numContato
+        self.email = userCopied.email
+        self.sexo = userCopied.sexo
+        self.classificacao = userCopied.classificacao
+        self.confirmado = userCopied.confirmado
+
 
 class acessManager:
     def __init__(self):
         self.dictUsersOn = {"0000000" : acessoUser()}
-
+    def resetServer(self):
+        self.dictUsersOn.clear()
+        self.dictUsersOn = {"0000000" : acessoUser()}
     def addUserOn(self, user = acessoUser()):
         cpf = user.getCPF()
+        userDict = acessoUser()
+        print("cpf = " + str(cpf))
+        print("///////////////////////")
+        print("Entrou Add User")
         if cpf == "0000000":
+            print("return 01")
             return
         if cpf in self.dictUsersOn:
+            print("return 02")
             self.dictUsersOn[user.getCPF()] = user
+            print("user.getStringList() = " + str(user.getStringList()))
             return
-        self.dictUsersOn.update({cpf: user})
+        
+        userDict.copy(user)
+        self.dictUsersOn.update({cpf: userDict})
+        print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
 
     def logoutUser(self,cpf):
-        if cpf == "0000000" and self.dictUsersOn != None:
+        print("/////////////////////////////////")
+        print("logout user")
+        if not self.dictUsersOn:
+            print("self.dictUsersOn is empty")
             return
         if cpf in self.dictUsersOn:
+            print("cpf in self.dictUsersOn")
+            print("self.dictUsersOn[cpf].getStringList() = " + str(self.dictUsersOn[cpf].getStringList()))
+            print("self.dictUsersOn = " + str(self.dictUsersOn))
             self.dictUsersOn.pop(cpf, None)
+            print("self.dictUsersOn = " + str(self.dictUsersOn))
+        print("ended logoutUser()")
 
     def userIsOn(self,cpf):
         isOnDict = (cpf in self.dictUsersOn)
+        print("/////////////////////////////")
+        print("acessManager.userIsOn()")
         if isOnDict:
+            print("User is on       ?")
+            print("self.dictUsersOn = "+ str(self.dictUsersOn))
             if self.dictUsersOn[cpf] == None:
                 return False
             return True
 
         return False
 
+    def getDictionary(self):
+        return self.dictUsersOn
+
     def getUser(self,cpf):
         print("/////////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("getUser")
         print("tipo de cpf = " + str(type(cpf)))
+        dataReturn = acessoUser()
         print("cpf = " + cpf)
         print("self.dictUsersOn = " + str(self.dictUsersOn))
         if cpf in self.dictUsersOn:
             print("tipo de self.dictUsersOn[cpf] = " + str(type(self.dictUsersOn[cpf])))
-            return self.dictUsersOn[cpf]
+            dataReturn.copy(self.dictUsersOn[cpf])
+            print("dataReturn.getStringList = "+str(dataReturn.getStringList))
+            print
+            return dataReturn
         else:
+            print("return None")
             return None
