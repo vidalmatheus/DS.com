@@ -96,4 +96,4 @@ def login():
 
         print(alert)
 
-    return render_template('login.html')
+    return render_template('loginMedico.html')
