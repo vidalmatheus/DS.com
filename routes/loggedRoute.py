@@ -38,7 +38,9 @@ def logged():
     print ("---------------------")
     chosen_esp = "--Escolha a Especialidade--"
     chosen_medic = "--Escolha um Médico--"
-    med=[]
+    chosen_crm = "--CRM--"
+    med = []
+    crm = {}
     if request.method == 'GET':
         # Fetch form data
         chosen_esp = request.args.get('esp')
@@ -46,14 +48,23 @@ def logged():
         print(chosen_esp)
         cur.execute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
         med = cur.fetchall()
-        print(med)
     else:
-        #------- Caregando a descrição do pedido de consulta -------
+        #------- Caregando o médico -------
         chosen_medic = request.form['medico']
-        desc = request.form['desc']
         print(chosen_medic)
+        cur.execute("SELECT CRM  FROM medico WHERE nome = %s",(chosen_medic,))
+        chosen_crm = cur.fetchall()[0][0]
+        print(chosen_crm)
+        #------- Caregando a descrição do pedido de consulta -------
+        desc = request.form['desc']
         print(desc)
-        
+
+        #------- Caregando os horários -------
+        cur.execute("select p.Nome, k.Nome, data, hora from	(medico as m inner join consulta as c on (m.CRM=c.CRM) ) as k inner join paciente as p on (k.CPF_pac=p.CPF) where status = 'marcado'")
+        tabela = cur.fetchall()
+
+
+
 
 
 

@@ -124,7 +124,6 @@
     </script>
     <script>
         function Enviado() {
-            confirm("Tem certeza dessa solicitação?")
             var x = document.getElementById("snackbar2");
             x.className = "show";
             setTimeout(function() {
@@ -225,9 +224,10 @@
                                     <option value="{{chosen_medic}}" onchange='this.form.submit()' selected disabled hidden>{{chosen_medic}}</option>
                                     {% for med in medicos %}
                                     <!-- pega a especialidade escolhida anteriormente-->
-                                    <option value="{{med[0]}}">{{med[0]}}</option> <!-- index 1 é nome-->
+                                    <option value="{{med[0]}}">{{med[0]}}</option> 
                                     {% endfor %}
                                 </select>
+
                                 </form>
                                 <br />
                             </div><br />
