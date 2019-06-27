@@ -9,6 +9,8 @@ medicoRegister_api = Blueprint('medicoRegister_api', __name__)
 # register
 @medicoRegister_api.route('/registerMedico', methods=['GET', 'POST'])
 def register():
+    print("/////////////////////////")
+    print("Comeca Medicoroute register")
     medicoData = dataBase.MedicoUserData()
     baseData = dataBase.DataManager()
 
@@ -27,8 +29,6 @@ def register():
             return redirect('/registerMedico')
 
     if request.method == 'POST':
-        print("/////////////////////////")
-        print("Comeca route register")
         # Fetch form data
         userDetails = request.form
         cpf = userDetails['cpf']
@@ -45,7 +45,28 @@ def register():
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
 
-        tupleData = baseData.addDataThenGetIt("Medico", (cpf,hashedDecoded,saram,name,military, crm,especialidade))
+        # VERIFICA SE SARAM/CPF É VALIDO
+
+        achouInvalidante, tupleLook = baseData.getDataInfo("medico", "saram", saram)
+        if not achouInvalidante:
+            achouInvalidante, tupleLook = baseData.getDataInfo("medico", "cpf", cpf)
+            if achouInvalidante:
+                print("CPF " + cpf + " JA CADASTRADO")
+                return redirect("/registerMedico")
+            else:
+                achouInvalidante, tupleLook = baseData.getDataInfo("medico", "crm", crm)
+                if achouInvalidante:
+                    print("CRM " + crm + " JA CADASTRADO")
+
+        else:
+            print("SARAM " + saram + " JA CADASTRADO")
+
+        if achouInvalidante:
+            return redirect("/registerMedico")
+
+        # SE NAO É VALIDO RETORNA PARA O REGISTER
+
+        tupleData = baseData.addDataThenGetIt("Medico", (cpf,hashedDecoded,saram,name,military, crm, especialidade))
         #commit the transcation
 
         medicoData.setUser(tupleData)

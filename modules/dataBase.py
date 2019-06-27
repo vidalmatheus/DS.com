@@ -144,28 +144,26 @@ class DataManager:
         return self.dataConnection
 
     def __getDataType__(self, dataType = "paciente",dataName = "saram",dataVar = "0"):
-        print('//////////////////////////////////////////////////////////////////////////')
+        print('\n//////////////////////////////////////////////////////////////////////////')
         print("DataManager __getDataType__ comeca")
         cursor = self.dataConnection.cursor()
+        achou = True
         cursor.execute("SELECT * FROM "+dataType+" WHERE "+dataName+" = %s", (dataVar,))
         user = cursor.fetchall()
-        tupla = (False, user)
         cursor.close()
         print("DataManager __getDataType__ acaba")
-        print('//////////////////////////////////////////////////////////////////////////')
-        if len(user) == 0: return tupla
-        tupla = (True, user)
-        return tupla
+        print('//////////////////////////////////////////////////////////////////////////\n')
+        if len(user) == 0: achou = False
+        return achou, user
 
     def confirmPessoaPassword(self,dataType = "paciente",dataName = "saram",dataVar = "0",password = ""):
-        print('//////////////////////////////////////////////////////////////////////////')
+        print('\n//////////////////////////////////////////////////////////////////////////')
         print("DataManager confirmPacientePassword comeca")
         dataExist = False
         passWordCorrect = False
         pacienteData = PessoaUserData()
-        tupla = self.__getDataType__(dataType,dataName ,dataVar)
-        dataExist = tupla[0]
-        user = tupla[1]
+        dataExist, user = self.__getDataType__(dataType,dataName ,dataVar)
+
         print("o tipo de variavel da user[0] = " + str(type(user[0])))
         print("o tipo de variavel da user[0][0] = " + str(type(user[0][0])))
         print("o tipo de variavel da user[0][1] = " + str(type(user[0][1])))
@@ -186,8 +184,8 @@ class DataManager:
                 pacienteData.setUser(user[0])
 
         tuplaResposta = (dataExist,passWordCorrect,pacienteData)
-        print("DataManager confirmPacientePassword acaba")
-        print('//////////////////////////////////////////////////////////////////////////')
+        print("\nDataManager confirmPacientePassword acaba")
+        print('//////////////////////////////////////////////////////////////////////////\n')
         return tuplaResposta
 
     def getDataInfo(self,dataType = "paciente",dataName = "saram",dataVar = "0"):
@@ -197,13 +195,12 @@ class DataManager:
         if (len(dataVar) == 11 and dataName == "cpf"):
             dataVar = dataVar[0:3] + "." + dataVar[3:6] + "." + dataVar[6:9] + "-" + dataVar[9:11]
         pessoasDatas = []
-        tupla = self.__getDataType__(dataType,dataName, dataVar)
-        dataExist = tupla[0]
+        dataExist, tupla = self.__getDataType__(dataType,dataName, dataVar)
 
 
         print("DataManager getPacienteInfo acaba")
-        print('//////////////////////////////////////////////////////////////////////////')
-        return dataExist,tupla[1]
+        print('//////////////////////////////////////////////////////////////////////////\n')
+        return dataExist, tupla
 
     def verificaSeContaEstaLogadaReLogada(self, sessionHash, sessionCPF,userType):
         foiRelogado = False
@@ -221,9 +218,9 @@ class DataManager:
         if (len(dataCpf) == 11):
             normalizedCPF = dataCpf[0:3] + "." + dataCpf[3:6] + "." + dataCpf[6:9] + "-" + dataCpf[9:11]
         elif (len(dataCpf) == 14):
-            print("CPF JA NORMALIZADO")
+            print("CPF JA NORMALIZADO\n")
         else:
-            print("CPF NAO VALIDO")
+            print("CPF NAO VALIDO\n")
         return normalizedCPF
 
     def changeDataAndReturnNewData(self, dataType, dataStringList, dataVarList,dataLookVar,dataLook = "saram"):
@@ -246,9 +243,9 @@ class DataManager:
 
         if n > 0:
             cursor.execute(comandoString, tuplaValues)
-            print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
+            print("ATUALIZAÇÃO DOS DADOS COM SUCESSO\n")
         else:
-            print("NAO FOI DETERMINADO VALORES PARA MUDAR")
+            print("NAO FOI DETERMINADO VALORES PARA MUDAR\n")
 
         self.dataConnection.commit()
 
@@ -274,9 +271,9 @@ class DataManager:
 
         if n > 0:
             cursor.execute(comandoString, tuplaValues)
-            print("ATUALIZACAO DOS DADOS COM SUCESSO")
+            print("ATUALIZACAO DOS DADOS COM SUCESSO\n")
         else:
-            print("NAO FOI DETERMINADO VALORES PARA MUDAR")
+            print("NAO FOI DETERMINADO VALORES PARA MUDAR\n")
 
         self.dataConnection.commit()
         cursor.close()
