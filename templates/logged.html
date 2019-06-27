@@ -141,13 +141,7 @@
     <div id="snackbar2">Consulta Marcada com Sucesso!</div>
     <header class="header_area">
         <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico"
-                            alt=""></a>
-
-                </div>
-            </nav>
+            <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
         </div>
     </header>
     <!--================ Bloco Azul  =================-->
@@ -273,74 +267,34 @@
             </ul>
         </div>
 
-        <div class="cd-schedule__events">
+        <div class="cd-schedule__events ">
             <ul>
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Segunda</span></div>
-
-                    <ul>
-                        <li class="cd-schedule__event">
-                            <script>
-                                window.onload = function() {
-                                    var clickfun = document.getElementById("button1").getAttribute("onclick");
-                                    var funname = clickfun.substring(0, clickfun.indexOf("("));
-                                    document.getElementById("button1").setAttribute("onclick", funname + "('somethingDiff1'," + "'somethingDiff2')");
-                                };
-                            </script>
-                            <a id="button1" onclick="function()" data-start="08:30" data-end="9:30" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-                        <li class="cd-schedule__event">
-                            <a data-start="10:30" data-end="16:30" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-                    </ul>
-
+                    <ul id="Segunda"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Terça</span></div>
-
+                    <ul id="Terça"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quarta</span></div>
-
-                    <ul>
-
-                        <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="12:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-
-                    </ul>
-
+                    <ul id="Quarta"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quinta</span></div>
-
+                    <ul id="Quinta"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Sexta</span></div>
-
-                    <ul>
-                        <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="11:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-
+                    <ul id="Sexta">
                         <li class="cd-schedule__event">
                             <a data-start="12:00" data-end="17:00" data-event="event-2">
-                                <div class="cd-schedule__name">Fora de Funcionamento</div>
+                                <div class="cd-schedule__name">Fora de Expediente</div>
                             </a>
                         </li>
                     </ul>
@@ -362,7 +316,6 @@
                 <div class="cd-schedule-modal__event-info"></div>
                 <div class="cd-schedule-modal__body-bg"></div>
             </div>
-
         </div>
 
         <div class="cd-schedule__cover-layer"></div>
@@ -370,21 +323,76 @@
     <!-- Fim da Tabela -->
 
     <script>
-        var close = document.getElementsByClassName("closebtn");
-        var i;
+        //Exemplo de entrada
+        var dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+        var horariosSegunda = [{
+            data_inicio: '8:00',
+            data_fim: '9:00'
+        }, {
+            data_inicio: '11:00',
+            data_fim: '12:00'
+        }, {
+            data_inicio: '15:00',
+            data_fim: '16:30'
+        }];
 
-        for (i = 0; i < close.length; i++) {
-            close[i].onclick = function() {
-                var div = this.parentElement;
-                div.style.opacity = "0";
-                setTimeout(function() {
-                    div.style.display = "none";
-                }, 600);
+        var horariosTerça = [];
+
+        var horariosQuarta = [{
+            data_inicio: '12:00',
+            data_fim: '13:00'
+        }, {
+            data_inicio: '16:00',
+            data_fim: '17:00'
+        }];
+        var horariosQuinta = [{
+            data_inicio: '13:30',
+            data_fim: '14:30'
+        }];
+        var horariosSexta = [];
+
+        //Fim da Entrada Exemplo
+
+        var horarios = [horariosSegunda, horariosTerça, horariosQuarta, horariosQuinta, horariosSexta];
+
+        function carregaBanco() {
+
+            for (let i = 0; i < horarios.length; i++) {
+                let diaDaSemana = document.getElementById(dias[i]);
+                horarios[i].forEach((element) => {
+                    let novo_li = document.createElement('li');
+                    novo_li.classList.add("cd-schedule__event", "horario_livre");
+
+                    diaDaSemana.appendChild(novo_li);
+                    novo_li.innerHTML = "<a data-start=" + element.data_inicio + " data-end=" + element.data_fim + " data-event=event-4> <div class=cd-schedule__name>Livre</div></a>";
+                });
+
             }
-        }
+
+        };
+        carregaBanco();
+        var escolheuHorario = false;
+        var horariosLivres = document.querySelectorAll(".horario_livre");
+
+        horariosLivres.forEach(function(horario) {
+            horario.addEventListener("click", function(event) {
+                event.preventDefault();
+                if (!escolheuHorario) {
+                    aux = this.getElementsByTagName('a')[0].getAttributeNode('data-event').value = "event-1";
+                    escolheuHorario = true;
+                    this.classList.add("Escolhido");
+                    this.getElementsByTagName('div')[0].textContent = "Horário Selecionado";
+                    console.log(this.getElementsByTagName('div')[0].textContent);
+                    //this.remove();
+                } else if (this.classList.contains("Escolhido")) {
+                    aux = this.getElementsByTagName('a')[0].getAttributeNode('data-event').value = "event-4";
+                    this.classList.remove("Escolhido");
+                    this.getElementsByTagName('div')[0].textContent = "Livre";
+                    escolheuHorario = false;
+                }
+            });
+        });
     </script>
-
-
 
     <!-- Carregamento dos códigos -->
     <script src="../static/js/jquery-3.2.1.min.js"></script>
