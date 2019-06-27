@@ -56,7 +56,7 @@ def register():
         saram = userDetails['saram']
         name = userDetails['name']
         military = userDetails['military']
-        especialidade = userDetails['especialidade']
+        especialidade = userDetails['esp']
         crm = userDetails["crm"]
         #cursor
         #cur = connectionData.getConnector().cursor()
@@ -106,5 +106,5 @@ def register():
         #usersDataOnline.addUserOn(userData)
         #close the cursor
         return redirect('/logged')
-    return render_template('registerMedico.html')
+    return render_template('registerMedic.html')
 

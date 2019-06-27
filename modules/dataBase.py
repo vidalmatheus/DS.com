@@ -163,7 +163,7 @@ class DataManager:
         print("DataManager confirmPacientePassword comeca")
         dataExist = False
         passWordCorrect = False
-        pacienteData = PessoaUserData()
+        pessoaData = MicroData()
         dataExist, user = self.__getDataType__(dataType,dataName ,dataVar)
 
         print("o tipo de variavel da user[0] = " + str(type(user[0])))
@@ -183,12 +183,17 @@ class DataManager:
             passworDataBase = user[0][1]
             passWordCorrect = (bcrypt.hashpw(password.encode(),passworDataBase.encode())==passworDataBase.encode())
             if passWordCorrect:
-                pacienteData.setUser(user[0])
+                if dataType == "paciente":
+                    pessoaData = PessoaUserData()
+                    pessoaData.setUser(user[0])
+                elif dataType == "medico":
+                    pessoaData = MedicoUserData()
+                    pessoaData.setUser(user[0])
 
-        tuplaResposta = (dataExist,passWordCorrect,pacienteData)
+        #tuplaResposta = (dataExist,passWordCorrect,pacienteData)
         print("\nDataManager confirmPacientePassword acaba")
         print('//////////////////////////////////////////////////////////////////////////\n')
-        return tuplaResposta
+        return dataExist,passWordCorrect,pessoaData
 
     def getExecute(self,command = "SELECT distinct especialidade FROM medico ORDER BY especialidade",tupla = ()):
         cursor = self.dataConnection.cursor()

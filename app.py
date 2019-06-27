@@ -1,7 +1,7 @@
 from sharedData import session, dataBase
 from flask import Flask, render_template, redirect
 from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute, registerMedicoRoute
-from routes import medicosRoute
+from routes import medicosRoute, loggedMedicoRoute, loginMedicoRoute
 import logging, sys
 import sharedData
 import time
@@ -22,6 +22,8 @@ app.register_blueprint(usersRoute.users_api)
 app.register_blueprint(changeRegisterRoute.changeRegister_api)
 app.register_blueprint(registerMedicoRoute.medicoRegister_api)
 app.register_blueprint(medicosRoute.medicos_api)
+app.register_blueprint(loggedMedicoRoute.loggedMedico_api)
+app.register_blueprint(loginMedicoRoute.loginMedico_api)
 
 # main page
 @app.route('/')
