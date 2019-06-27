@@ -22,21 +22,128 @@
     <link rel="stylesheet" href="../static/css/styleDS.css">
     <link rel="stylesheet" href="../static/css/responsive.css">
 
+    <!--Alerts-->
+    <style>
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+        
+        #snackbar2 {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+        
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        #snackbar2.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        function Logout() {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+    <script>
+        function Enviado() {
+            confirm("Tem certeza dessa solicitação?")
+            var x = document.getElementById("snackbar2");
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+
 
 </head>
 
 <body>
+    <div id="snackbar">Logout...</div>
+    <div id="snackbar2">Consulta Marcada com Sucesso!</div>
     <header class="header_area">
         <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
-
-                </div>
-            </nav>
+            <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
         </div>
     </header>
-
     <!--================ Bloco Azul  =================-->
     <section class="home_banner_area">
         <div class="banner_inner">
@@ -57,7 +164,7 @@
                     <div class="col-lg-7">
                         <div class="home_left_img">
                             &emsp;&emsp;&emsp;&emsp;&emsp;<a class="banner_btn" href="changeregister">Alterar Dados</a> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            <a class="banner_btn" href="logout">Sair</a>
+                            <a class="banner_btn" href="logout" onclick="Logout()">Sair</a>
                         </div>
                     </div>
                 </div>
@@ -74,21 +181,23 @@
                         <h3 class="mb-30 title_color">Marcar Consulta</h3>
                         <h5 class="mb-30 title_color">Especialidade</h5>
                         <div class="default-select" id="default-select">
-                            <select>
-                                  <option value="1">Geral</option>
-                                  <option value="1">Ortopedista</option>
-                                  <option value="1">Dentista</option>
-                                  <option value="1">Oftalmologista</option>
-                                  <option value="1">Nutricionista</option>
-                              </select>
+                            <form id="consult-esp" action="" class="form" method="GET">
+                                <select name="esp" id="esp" onchange='this.form.submit()' required>
+                                    <option value="{{chosen_esp}}" selected disabled hidden>{{chosen_esp}}</option>
+                                    {% for esp in especialidades %}
+                                    <option value="{{esp[0]}}">{{esp[0]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
                         </div>
-                        <h5 class="mb-30 title_color"><br/>Descreva o motivo da consulta.</h5>
-                        <div class="mt-10">
-                            <textarea class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'" required></textarea>
-                        </div>
-                        <div class="button-group-area mt-40">
-                            <a href="#" class="genric-btn success circle">Enviar</a>
-                        </div>
+                        <form id="consult-medic" class="form" action="" onsubmit="Enviado()" method="POST">
+                            <h5 class="mb-30 title_color"><br />Descreva o motivo da consulta.</h5>
+                            <div class="mt-10">
+                                <textarea name="desc" id="desc" class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'"></textarea>
+                            </div>
+                            <div class="button-group-area mt-40">
+                                <input type="submit" name="submit" href="#" class="genric-btn success circle" value="Enviar"></input>
+                            </div>
                     </div>
                     <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
                         <div class="single-element-widget">
@@ -111,14 +220,17 @@
                         <div class="single-element-widget">
                             <h4 class="mb-30 title_color">Selecione o médico de sua preferência.</h4>
                             <div class="default-select" id="default-select">
-                                <select>
-                                  <option value="1">Qualquer</option>
-                                  <option value="1">Jackson</option>
-                                  <option value="1">Alonso</option>
-                                  <option value="1">Bizarro</option>
-                                  <option value="1">Nilda</option>
-                              </select><br/>
-                            </div><br/>
+
+                                <select name="medico" id="medico" required>
+                                    <option value="{{chosen_medic}}" onchange='this.form.submit()' selected disabled hidden>{{chosen_medic}}</option>
+                                    {% for med in medicos %}
+                                    <!-- pega a especialidade escolhida anteriormente-->
+                                    <option value="{{med[0]}}">{{med[0]}}</option> <!-- index 1 é nome-->
+                                    {% endfor %}
+                                </select>
+                                </form>
+                                <br />
+                            </div><br />
                         </div>
                     </div>
                 </div>
@@ -155,62 +267,34 @@
             </ul>
         </div>
 
-        <div class="cd-schedule__events">
+        <div class="cd-schedule__events ">
             <ul>
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Segunda</span></div>
-
-                    <ul>
-                        <li class="cd-schedule__event">
-                            <a data-start="08:30" data-end="9:30" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-                    </ul>
-
+                    <ul id="Segunda"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Terça</span></div>
-
+                    <ul id="Terça"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quarta</span></div>
-
-                    <ul>
-
-                        <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="12:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-
-                    </ul>
-
+                    <ul id="Quarta"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Quinta</span></div>
-
+                    <ul id="Quinta"></ul>
                 </li>
 
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>Sexta</span></div>
-
-                    <ul>
-                        <li class="cd-schedule__event">
-                            <a data-start="10:00" data-end="11:00" data-event="event-4">
-                                <div class="cd-schedule__name">Livre</div>
-                            </a>
-                        </li>
-
-
+                    <ul id="Sexta">
                         <li class="cd-schedule__event">
                             <a data-start="12:00" data-end="17:00" data-event="event-2">
-                                <div class="cd-schedule__name">Fora de Funcionamento</div>
+                                <div class="cd-schedule__name">Fora de Expediente</div>
                             </a>
                         </li>
                     </ul>
@@ -232,12 +316,83 @@
                 <div class="cd-schedule-modal__event-info"></div>
                 <div class="cd-schedule-modal__body-bg"></div>
             </div>
-
         </div>
 
         <div class="cd-schedule__cover-layer"></div>
     </div>
     <!-- Fim da Tabela -->
+
+    <script>
+        //Exemplo de entrada
+        var dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+        var horariosSegunda = [{
+            data_inicio: '8:00',
+            data_fim: '9:00'
+        }, {
+            data_inicio: '11:00',
+            data_fim: '12:00'
+        }, {
+            data_inicio: '15:00',
+            data_fim: '16:30'
+        }];
+
+        var horariosTerça = [];
+
+        var horariosQuarta = [{
+            data_inicio: '12:00',
+            data_fim: '13:00'
+        }, {
+            data_inicio: '16:00',
+            data_fim: '17:00'
+        }];
+        var horariosQuinta = [{
+            data_inicio: '13:30',
+            data_fim: '14:30'
+        }];
+        var horariosSexta = [];
+
+        //Fim da Entrada Exemplo
+
+        var horarios = [horariosSegunda, horariosTerça, horariosQuarta, horariosQuinta, horariosSexta];
+
+        function carregaBanco() {
+
+            for (let i = 0; i < horarios.length; i++) {
+                let diaDaSemana = document.getElementById(dias[i]);
+                horarios[i].forEach((element) => {
+                    let novo_li = document.createElement('li');
+                    novo_li.classList.add("cd-schedule__event", "horario_livre");
+
+                    diaDaSemana.appendChild(novo_li);
+                    novo_li.innerHTML = "<a data-start=" + element.data_inicio + " data-end=" + element.data_fim + " data-event=event-4> <div class=cd-schedule__name>Livre</div></a>";
+                });
+
+            }
+
+        };
+        carregaBanco();
+        var escolheuHorario = false;
+        var horariosLivres = document.querySelectorAll(".horario_livre");
+
+        horariosLivres.forEach(function(horario) {
+            horario.addEventListener("click", function(event) {
+                event.preventDefault();
+                if (!escolheuHorario) {
+                    aux = this.getElementsByTagName('a')[0].getAttributeNode('data-event').value = "event-1";
+                    escolheuHorario = true;
+                    this.classList.add("Escolhido");
+                    this.getElementsByTagName('div')[0].textContent = "Horário Selecionado";
+                    console.log(this.getElementsByTagName('div')[0].textContent);
+                    //this.remove();
+                } else if (this.classList.contains("Escolhido")) {
+                    aux = this.getElementsByTagName('a')[0].getAttributeNode('data-event').value = "event-4";
+                    this.classList.remove("Escolhido");
+                    this.getElementsByTagName('div')[0].textContent = "Livre";
+                    escolheuHorario = false;
+                }
+            });
+        });
+    </script>
 
     <!-- Carregamento dos códigos -->
     <script src="../static/js/jquery-3.2.1.min.js"></script>

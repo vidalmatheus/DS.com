@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
+        document.getElementsByTagName("html")[0].className += " js";
+    </script>
+    <link rel="icon" href="../static/img/DS.ico" type="image/x-icon" />
+    <title>Divisão de Saúde</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/vendors/linericon/style.css">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="../static/vendors/lightbox/simpleLightbox.css">
+    <link rel="stylesheet" href="../static/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="../static/vendors/animate-css/animate.css">
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/styleDS.css">
+    <link rel="stylesheet" href="../static/css/responsive.css">
+
+
+</head>
+
+<body>
+    <header class="header_area">
+        <div class="main_menu">
+                &emsp;&emsp;&emsp;&emsp;<a class="navbar-brand logo_h"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
+        </div>
+    </header>
+
+    <!--================ Bloco Azul  =================-->
+    <section class="home_banner_area">
+        <div class="banner_inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="banner_content">
+                            <h2>
+                                <font color="white">Olá, Dr.</font>
+                            </h2>
+                            <h2>
+                                <font color="white">{{userDetails}}</font>
+                            </h2>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="home_left_img">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;<a class="banner_btn" href="changeregister">Alterar Dados</a> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <a class="banner_btn" href="logout">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--================ Inicio da Agenda =================-->
+    <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
+        <div class="cd-schedule__timeline">
+            <ul>
+                <li><span>08:00</span></li>
+                <li><span>08:30</span></li>
+                <li><span>09:00</span></li>
+                <li><span>09:30</span></li>
+                <li><span>10:00</span></li>
+                <li><span>10:30</span></li>
+                <li><span>11:00</span></li>
+                <li><span>11:30</span></li>
+                <li><span>12:00</span></li>
+                <li><span>12:30</span></li>
+                <li><span>13:00</span></li>
+                <li><span>13:30</span></li>
+                <li><span>14:00</span></li>
+                <li><span>14:30</span></li>
+                <li><span>15:00</span></li>
+                <li><span>15:30</span></li>
+                <li><span>16:00</span></li>
+                <li><span>16:30</span></li>
+                <li><span>17:00</span></li>
+            </ul>
+        </div>
+
+        <div class="cd-schedule__events">
+            <ul>
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Segunda</span></div>
+                    <ul id = "Segunda"></ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Terça</span></div>
+                    <ul id="Terça"></ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Quarta</span></div>
+                    <ul id="Quarta"></ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Quinta</span></div>
+                    <ul id="Quinta"></ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Sexta</span></div>
+
+                    <ul id="Sexta">
+                        <li class="cd-schedule__event">
+                            <a data-start="12:00" data-end="17:00" data-event="event-2">
+                                <div class="cd-schedule__name">Fora de Funcionamento</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cd-schedule-modal">
+            <header class="cd-schedule-modal__header">
+                <div class="cd-schedule-modal__content">
+                    <span class="cd-schedule-modal__date"></span>
+                    <h3 class="cd-schedule-modal__name"></h3>
+                </div>
+
+                <div class="cd-schedule-modal__header-bg"></div>
+            </header>
+
+            <div class="cd-schedule-modal__body">
+                <div class="cd-schedule-modal__event-info"></div>
+                <div class="cd-schedule-modal__body-bg"></div>
+            </div>
+
+        </div>
+
+        <div class="cd-schedule__cover-layer"></div>
+    </div>
+    <!-- Fim da Tabela -->
+
+    <script>
+            //Exemplo de entrada
+            var dias = ['Segunda','Terça','Quarta','Quinta','Sexta'];
+            var horariosSegunda = [{
+                data_inicio: '8:00',
+                data_fim : '9:00'
+            },
+            {
+                data_inicio: '11:00',
+                data_fim : '12:00'
+            },
+            {
+                data_inicio: '15:00',
+                data_fim : '16:30'
+            }];
+            
+            var horariosTerça = [];
+    
+            var horariosQuarta = [{
+                data_inicio: '12:00',
+                data_fim : '13:00'
+            },
+            {
+                data_inicio: '16:00',
+                data_fim : '17:00'
+            }];
+            var horariosQuinta = [{
+                data_inicio: '13:30',
+                data_fim : '14:30'
+            }];
+            var horariosSexta = [];
+    
+            //Fim da Entrada Exemplo
+    
+            var horarios = [horariosSegunda,horariosTerça,horariosQuarta,horariosQuinta,horariosSexta];
+            function carregaBanco(){    
+                
+                for(let i =0; i<horarios.length;i++){
+                    let diaDaSemana = document.getElementById(dias[i]);
+                    horarios[i].forEach((element)=>{
+                        let novo_li = document.createElement('li');
+                        novo_li.classList.add("cd-schedule__event","horario_livre");
+                        
+                        diaDaSemana.appendChild(novo_li);
+                        novo_li.innerHTML = "<a data-start="+element.data_inicio+" data-end="+element.data_fim+" data-event=event-1> <div class=cd-schedule__name>Consulta Agendada</div></a>";
+                    });
+    
+                }
+                
+            };
+            carregaBanco();
+           
+            
+        </script>
+
+    <!-- Carregamento dos códigos -->
+
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/js/popper.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/stellar.js"></script>
+    <script src="../static/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="../static/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="../static/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="../static/vendors/isotope/isotope-min.js"></script>
+    <script src="../static/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="../static/js/jquery.ajaxchimp.min.js"></script>
+    <script src="../static/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="../static/vendors/counter-up/jquery.counterup.min.js"></script>
+    <script src="../static/js/mail-script.js"></script>
+    <script src="../static/js/theme.js"></script>
+    <script src="../static/js/util.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+
+</html>

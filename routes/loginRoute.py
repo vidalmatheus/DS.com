@@ -64,8 +64,8 @@ def login():
 
             #######################VERIFICA SE ADCIONA NO LOGADO
             if not dataExist:
-                print("SARAM/CPF NAO ENCONTRADO")
-                return redirect('/login')
+                alert = "ERRO! SARAM/CPF em formato incorreto!" ## FALTA JOGAR PRO html
+                #return redirect('/login')
             else:
                 print("DATA EXIST")
                 if passwordCorrect:
@@ -91,10 +91,12 @@ def login():
                     return redirect('/logged')
 
                 else:
-                    print("SENHA ERRADA")
-                    return redirect('/login')
+                    alert = "Senha incorreta. Tente novamente!" ## FALTA JOGAR PRO html
+                    #return redirect('/login')
 
 
         else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
+
+    print(alert)
 
     return render_template('login.html')

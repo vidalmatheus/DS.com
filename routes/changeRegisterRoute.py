@@ -49,7 +49,7 @@ def changeRegister():
 
     user_list = userData.getStringList()
     print("userData.getStringList() = "+ str(user_list))
-    saram = user_list[1]
+    cpf = user_list[2]
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
