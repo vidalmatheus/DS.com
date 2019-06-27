@@ -3,12 +3,13 @@ from flask import render_template, request, redirect,Blueprint
 from modules import dataBase
 import bcrypt, datetime
 
-register_api = Blueprint('register_api', __name__)
+medicoRegister_api = Blueprint('medicoRegister_api', __name__)
+
 
 # register
-@register_api.route('/register', methods=['GET', 'POST'])
+@medicoRegister_api.route('/registerMedico', methods=['GET', 'POST'])
 def register():
-    userData = dataBase.PessoaUserData()
+    medicoData = dataBase.MedicoUserData()
     baseData = dataBase.DataManager()
 
     if "userCPF" in session:
@@ -23,7 +24,7 @@ def register():
             session.pop("userID", None)
             session.pop("userType", None)
 
-            return redirect('/register')
+            return redirect('/registerMedico')
 
     if request.method == 'POST':
         print("/////////////////////////")
@@ -34,12 +35,9 @@ def register():
         psd = userDetails['psd']
         saram = userDetails['saram']
         name = userDetails['name']
-        birth_date = userDetails['birth_date']
-        sex = userDetails['sex']
-        adress = userDetails['adress']
-        phone = userDetails['phone']
-        email = userDetails['email']
         military = userDetails['military']
+        especialidade = userDetails['especialidade']
+        crm = userDetails["crm"]
         #cursor
         #cur = connectionData.getConnector().cursor()
         #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
@@ -47,18 +45,18 @@ def register():
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
 
-        tupleData = baseData.addDataThenGetIt("paciente", (cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
+        tupleData = baseData.addDataThenGetIt("Medico", (cpf,hashedDecoded,saram,name,military, crm,especialidade))
         #commit the transcation
 
-        userData.setUser(tupleData)
-        session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
-        session["userName"] = userData.getName()
+        medicoData.setUser(tupleData)
+        session["loginHash"] = bcrypt.hashpw((medicoData.getName()+medicoData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
+        session["userName"] = medicoData.getName()
         print("////////////////////////////////NOME REGISTRADO\n=>"+session["userName"])
-        session["userID"] = userData.getCPF()
-        session['userType'] = 'P'
+        session["userID"] = medicoData.getCPF()
+        session['userType'] = 'M'
         ###########aloca usuario logado no banco de dados
         #usersDataOnline.addUserOn(userData)
         #close the cursor
         return redirect('/logged')
-    return render_template('register.html')
+    return render_template('registerMedico.html')
 

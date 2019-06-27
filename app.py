@@ -1,6 +1,7 @@
 from sharedData import session
 from flask import Flask, render_template, redirect
-from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
+from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute, registerMedicoRoute
+from routes import medicosRoute
 import logging, sys
 
 # create app
@@ -17,6 +18,8 @@ app.register_blueprint(registerRoute.register_api)
 app.register_blueprint(loggedRoute.logged_api)
 app.register_blueprint(usersRoute.users_api)
 app.register_blueprint(changeRegisterRoute.changeRegister_api)
+app.register_blueprint(registerMedicoRoute.medicoRegister_api)
+app.register_blueprint(medicosRoute.medicos_api)
 # main page
 @app.route('/')
 def index():
@@ -41,7 +44,6 @@ def index():
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
-    usersDataOnline.resetServer()
     app.run(debug=True,threaded=False)
     #close the connection
 

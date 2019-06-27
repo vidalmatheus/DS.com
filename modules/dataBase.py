@@ -11,8 +11,11 @@ class PessoaUserData(MicroData):
     def __init__(self):
         #self.dictionaryInfo = {'name':"visitante", 'logged': False, 'birthDate':datetime.datetime.now(),
         #                       'hasSaram':False,'saram':0000000}
+
+        super(PessoaUserData, self).__init__()
         self.name = "visitante"
         self.cpf = "0000000"
+        self.saram = ""
         self.dataNascimento = datetime.datetime.now()
         self.possuiSaram = False
         self.endereco = ""
@@ -22,8 +25,6 @@ class PessoaUserData(MicroData):
         self.classificacao = ""
         self.confirmado = False
 
-    def getLogged(self):
-        return self.logado
     def getCPF(self):
         return self.cpf
 
@@ -80,6 +81,56 @@ class PessoaUserData(MicroData):
         lista.append(self.numContato)
         lista.append(self.email)
         lista.append(self.classificacao)
+        return lista
+
+
+#Permite o armazenamento e manipulação dos dados do medico
+class MedicoUserData(MicroData):
+    def __init__(self):
+        #self.dictionaryInfo = {'name':"visitante", 'logged': False, 'birthDate':datetime.datetime.now(),
+        #                       'hasSaram':False,'saram':0000000}
+        super(MedicoUserData , self).__init__()
+        self.name = "visitante"
+        self.cpf = "0000000"
+        self.saram = ""
+        self.militar = ""
+        self.crm = "00000000"
+        self.especialidade = "medico"
+
+    def getCPF(self):
+        return self.cpf
+
+    def getName(self):
+        return self.name
+
+    def getSaram(self):
+        return self.saram
+
+    def getCRM(self):
+        return self.crm
+
+    def getEspecialidade(self):
+        return self.especialidade
+
+    def setUser(self,listaTupleUser):
+        self.cpf = listaTupleUser[0]
+        self.saram = listaTupleUser[2]
+        self.name = listaTupleUser[3]
+        self.militar = listaTupleUser[4]
+        self.crm = listaTupleUser[5]
+        self.especialidade = listaTupleUser[6]
+
+    def getStringListName(self):
+        return ["Nome", "saram", "cpf", "militar", "crm", "especialidade"]
+
+    def getStringList(self):
+        lista = []
+        lista.append(self.name)
+        lista.append(str(self.saram))
+        lista.append(self.cpf)
+        lista.append(self.militar)
+        lista.append(self.crm)
+        lista.append(self.especialidade)
         return lista
 
 
