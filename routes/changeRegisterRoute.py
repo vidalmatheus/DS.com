@@ -1,9 +1,4 @@
-from sharedData import session, dataBase
-from flask import render_template, request, redirect,Blueprint
-import bcrypt, datetime
-from modules import dataBase
-import time
-import sharedData
+from sharedData import *
 
 
 changeRegister_api = Blueprint('changeRegister_api', __name__)
@@ -11,43 +6,18 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 # users registers
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
-    baseData = dataBase.DataManager()
-    loginType = ""
-    #verifica se session is correct
-
-    #trabalha com a sessão e verifica se esta logado
-
-    if "userID" in session:
-        cpf = session['userID']
-        dataName = "cpf"
-
-        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
-
-        if dataAchou:
-            dataAchou = (tupleLogado[0][1] == session['loginHash'])
-
-            if dataAchou:
-                if session['userType'] == 'M':
-                    baseData.getConnector().close()
-                    return redirect('/loggedMedico')
-
-        if not dataAchou:
-            session.pop("loginHash", None)
-            session.pop("userName", None)
-            session.pop("userID", None)
-            session.pop("userType", None)
-    else:
-        session.pop("loginHash", None)
-        session.pop("userName", None)
-        session.pop("userID", None)
-        session.pop("userType", None)
-
-    # caso esteja apropridamente logado continua
-
-    userData = dataBase.PessoaUserData()
-    userExist,tuplaDataInfo = baseData.getDataInfo("paciente","cpf",session["userID"])
-    userData.setUser(tuplaDataInfo[0])
-
+    global usersDataOnline
+    print("////////////////////////////////////////")
+    print("comeca change register")
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
+    userData = usersDataOnline.getUser(session['user'])
+    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
+    print("volta para change register")
+    if userData == None:
+        print("usersDataOnline.getUser(session['user']) == None")
+        if 'user' in session:
+            session.pop('user', None)
+        return redirect('/logged')
     user_list = userData.getStringList()
     print("userData.getStringList() = "+ str(user_list))
     cpf = user_list[2]
@@ -65,30 +35,33 @@ def changeRegister():
             email = userDetails['email']
             military = userDetails['military']
             #cursor
-            #cur = connectionData.getConnector().cursor()
+            cur = connectionData.getConnector().cursor()
             #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
-            if len(psd) > 1:
-                hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
-                hashedDecoded = hashed.decode('utf-8')
-                user = baseData.changeDataAndReturnNewData("paciente",
-                                                    ["senha", "nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
-                                                     'email', 'militar'],
-                                                    [hashedDecoded, name, birth_date, sex, adress, phone, email,
-                                                     military], cpf, 'cpf')
+            hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
+            hashedDecoded = hashed.decode('utf-8')
+            cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
+            psd_db = cur.fetchall()
+            psd_db = psd_db[0][0]
+            if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode() and len(psd) != 0):      
+                cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE cpf=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,cpf))
             else:
-                user = baseData.changeDataAndReturnNewData("paciente", ["nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
-                                                                 'email', 'militar'],[name,birth_date,sex,adress,phone,email,military],cpf,'cpf')
+                cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE cpf=%s",(name,birth_date,sex,adress,phone,email,military,cpf)) 
+            #commit the transcation
+            connectionData.getConnector().commit()
+            cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
 
-            userData = dataBase.PessoaUserData()
+            #apaga no dictionary a usuario
+            cpf = session['user']
+            usersDataOnline.logoutUser(cpf)
+            userData = usuario.acessoUser()
 
-            userData.setUser(user[0])
-            session["userName"] = userData.getName()
+            user = cur.fetchall()
+            userData.logginUser(user[0])
+            usersDataOnline.addUserOn(userData)
+
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
-            baseData.getConnector().close()
-            return redirect('/logged')
-        elif (submit == "Cancelar"):
-            print("ATUALIZAÇÃO DOS DADOS CANCELADA")
-            baseData.getConnector().close()
+            #close the cursor
+            cur.close()
             return redirect('/logged')
     return render_template('changeRegister.html',userDetails = user_list)
 

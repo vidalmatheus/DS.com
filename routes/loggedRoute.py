@@ -1,8 +1,5 @@
-from sharedData import session, dataBase
-from flask import Flask, render_template, request, redirect,Blueprint, json, url_for
-from modules import dataBase
-import sharedData
-import time
+from sharedData import *
+from collections import namedtuple
 
 logged_api = Blueprint('logged_api', __name__)
 
@@ -10,47 +7,26 @@ logged_api = Blueprint('logged_api', __name__)
 # logged page
 @logged_api.route('/logged', methods=['GET','POST'])
 def logged():
-    print("/////////////////////////////\nCOMECA LOGGED")
-    start = time.time()
-    baseData = dataBase.DataManager()
-    loginType = ""
-    # verifica se session is correct
-
-    # trabalha com a sessão e verifica se esta logado
-
-    if "userID" in session:
-        cpf = session['userID']
-        dataName = "cpf"
-
-        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
-
-        if dataAchou:
-            dataAchou = (tupleLogado[0][1] == session['loginHash'])
-
-            if dataAchou:
-                if session['userType'] == 'M':
-                    return redirect('/loggedMedicos')
-
-        if not dataAchou:
-            session.pop("loginHash", None)
-            session.pop("userName", None)
-            session.pop("userID", None)
-            session.pop("userType", None)
-    else:
-        session.pop("loginHash", None)
-        session.pop("userName", None)
-        session.pop("userID", None)
-        session.pop("userType", None)
-
-    # caso esteja apropridamente logado continua
-
+    global usersDataOnline
+    print('/////////////////////////')
+    print("Comeca logged")
+    print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
+    if not ('user' in session):
+        print("user not in session, redirect to login")
+        return redirect('/login')
     print(request.args.get('userDetails'))
-    #userData = usersDataOnline.getUser(session['user'])
-
-    print("RENDERIZA A TELA DE LOGGED")
-
+    userData = usersDataOnline.getUser(session['user'])
+    if not usersDataOnline.userIsOn(session['user']):
+        print("user has cookie but not logged, redirect to login")
+        session.pop('user', None)
+        return redirect('/login')
+    print("render logged")
+    
+    # cursor
+    cur = connectionData.getConnector().cursor()
     # ------- Caregando as informações das especialidades dos médicos -------
-    especs = baseData.getExecute("SELECT distinct especialidade FROM medico ORDER BY especialidade")
+    cur.execute("SELECT distinct especialidade FROM medico ORDER BY especialidade")
+    especs = cur.fetchall()
     i = 0
     key_esp={}
     for e in especs:
@@ -70,20 +46,19 @@ def logged():
         chosen_esp = request.args.get('esp')
         #chosen_esp = userDetails['esp']
         print(chosen_esp)
-        med = baseData.getExecute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
-        print(med)
+        cur.execute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
+        med = cur.fetchall()
     else:
         #------- Caregando o médico -------
         chosen_medic = request.form['medico']
         print(chosen_medic)
-        chosen_crm = baseData.getExecute("SELECT CRM  FROM medico WHERE nome = %s",(chosen_medic,))[0][0]
-        baseData.getExecute()
+        cur.execute("SELECT CRM  FROM medico WHERE nome = %s",(chosen_medic,))
+        chosen_crm = cur.fetchall()[0][0]
         print(chosen_crm)
         #------- Caregando a descrição do pedido de consulta -------
         desc = request.form['desc']
         print(desc)
-    
-    cur = baseData.getConnector()
+
     #------- Caregando as consultas marcadas -------
     cur.execute("select p.Nome as Paciente, k.Nome as Medico, dia, hora_inicio, hora_fim from (medico as m inner join consulta as c on (m.CRM=c.CRM) ) as k inner join paciente as p on (k.CPF_pac=p.CPF)")
     tabela = cur.fetchall()
@@ -124,5 +99,8 @@ def logged():
 
 
 
-    return render_template('logged.html',  userDetails=session['userName'],especialidades=especs,chosen_esp=chosen_esp,medicos=med,chosen_medic=chosen_medic,tabela=tabela,n=n,segunda_ini=segunda_ini,segunda_fim=segunda_fim,terca=terca,quarta=quarta,quinta=quinta,sexta=sexta)
 
+
+
+
+    return render_template('logged.html', userDetails=userData.getName(),especialidades=especs,chosen_esp=chosen_esp,medicos=med,chosen_medic=chosen_medic,tabela=tabela,n=n,segunda_ini=segunda_ini,segunda_fim=segunda_fim,terca=terca,quarta=quarta,quinta=quinta,sexta=sexta)
