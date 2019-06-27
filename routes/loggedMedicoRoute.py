@@ -4,11 +4,11 @@ from modules import dataBase
 import sharedData
 import time
 
-logged_api = Blueprint('logged_api', __name__)
+loggedMedico_api = Blueprint('loggedMedico_api', __name__)
 
 
 # logged page
-@logged_api.route('/logged', methods=['GET','POST'])
+@loggedMedico_api.route('/loggedMedico', methods=['GET','POST'])
 def logged():
     print("/////////////////////////////\nCOMECA LOGGED")
     start = time.time()
@@ -28,8 +28,8 @@ def logged():
             dataAchou = (tupleLogado[0][1] == session['loginHash'])
 
             if dataAchou:
-                if session['userType'] == 'M':
-                    return redirect('/loggedMedicos')
+                if session['userType'] == 'P':
+                    return redirect('/logged')
 
         if not dataAchou:
             session.pop("loginHash", None)
@@ -46,6 +46,16 @@ def logged():
 
     print(request.args.get('userDetails'))
     #userData = usersDataOnline.getUser(session['user'])
+    if not "verifica no banco de dados se esta logado" == "verifica no banco de dados se esta logado":
+        print("SE TIVER EM SESSION MAS NAO ESTA NO BANCO DE LOGADOS")
+
+
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userCPF", None)
+        session.pop("userType", None)
+
+        return redirect('/login')
 
     print("RENDERIZA A TELA DE LOGGED")
 
@@ -82,47 +92,8 @@ def logged():
         #------- Caregando a descrição do pedido de consulta -------
         desc = request.form['desc']
         print(desc)
-    
-    cur = baseData.getConnector()
-    #------- Caregando as consultas marcadas -------
-    cur.execute("select p.Nome as Paciente, k.Nome as Medico, dia, hora_inicio, hora_fim from (medico as m inner join consulta as c on (m.CRM=c.CRM) ) as k inner join paciente as p on (k.CPF_pac=p.CPF)")
-    tabela = cur.fetchall()
-    # tamanho 
-    cur.execute("select count(id) from consulta")
-    n = cur.fetchall()[0][0]
 
-    cur.execute("select hora_inicio, hora_fim from consulta where dia = 'Segunda'")
-    aux = cur.fetchall()
-    segunda = [[],[]]
-    print(aux[0][0])
-    print(aux[0][1])
-    nAux = len(aux)
-    i = 0
-    segunda_ini=[]
-    segunda_fim=[]
-    while i<nAux:
-        segunda_ini.append(aux[i][0])
-        segunda_fim.append(aux[i][1])
-        i = i+1
-    '''for fim in aux[1]:
-        segunda[1].append(fim)
-        segunda[1].append(fim)'''
-    print(segunda)
+        #------- Caregando os horários -------
+        tabela = baseData.getExecute("select p.Nome, k.Nome, data, hora from	(medico as m inner join consulta as c on (m.CRM=c.CRM) ) as k inner join paciente as p on (k.CPF_pac=p.CPF) where status = 'marcado'")
 
-    cur.execute("select hora_inicio, hora_fim from consulta where dia = 'Terça'")
-    terca = cur.fetchall()
-
-    cur.execute("select hora_inicio, hora_fim from consulta where dia = 'Quarta'")
-    quarta = cur.fetchall()
-
-    cur.execute("select hora_inicio, hora_fim from consulta where dia = 'Quinta'")
-    quinta = cur.fetchall()
-
-    cur.execute("select hora_inicio, hora_fim from consulta where dia  = 'Sexta'")
-    sexta = cur.fetchall()
-
-
-
-
-    return render_template('logged.html',  userDetails=session['userName'],especialidades=especs,chosen_esp=chosen_esp,medicos=med,chosen_medic=chosen_medic,tabela=tabela,n=n,segunda_ini=segunda_ini,segunda_fim=segunda_fim,terca=terca,quarta=quarta,quinta=quinta,sexta=sexta)
-
+    return render_template('loggedMedico.html', userDetails=session['userName'])

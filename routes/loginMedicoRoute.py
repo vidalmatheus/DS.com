@@ -3,10 +3,10 @@ from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
 import sharedData
-login_api = Blueprint('login_api', __name__)
+loginMedico_api = Blueprint('loginMedico_api', __name__)
 
 #login
-@login_api.route("/login", methods=['GET', 'POST'])
+@loginMedico_api.route("/loginMedico", methods=['GET', 'POST'])
 def login():
     userData = dataBase.PessoaUserData()
     #baseData = sharedData.baseData
@@ -50,21 +50,18 @@ def login():
         passWord = userDetails['password']
         alert = ""
         errorSARAM = errorCPF = False
-        if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
-            if (len(userDetails['login']) == 7):
-                loginType = "saram"
-            elif (len(userDetails['login']) == 11 or len(userDetails['login']) == 14):
-                loginType = "cpf"
-                cpf = userDetails['login']
+        if (len(userDetails['login']) == 8):
+            loginType = "crm"
+            crm = userDetails['login']
 
             #pega as informaçoes
-            dataExist,passwordCorrect,userData = baseData.confirmPessoaPassword("paciente", loginType, userDetails['login'],passWord)
+            dataExist,passwordCorrect,userData = baseData.confirmPessoaPassword("medico", loginType, userDetails['login'],passWord)
 
             print("/////////////////////////////\nverifica senha")
 
             #######################VERIFICA SE ADCIONA NO LOGADO
             if not dataExist:
-                alert = "ERRO! SARAM/CPF em formato incorreto!" ## FALTA JOGAR PRO html
+                alert = "ERRO! CRM NAO ENCONTRADO!" ## FALTA JOGAR PRO html
                 #return redirect('/login')
             else:
                 print("DATA EXIST")
@@ -73,7 +70,7 @@ def login():
                     session["userName"] = userData.getName()
                     session["userID"] = userData.getCPF()
                     session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
-                    session["userType"] = "P"
+                    session["userType"] = "M"
 
                     ########VERIFICA SE ESTA NO LOGADO E RETIRA, PARA DEPOIS O POR DE VOLTA
 
@@ -88,7 +85,7 @@ def login():
 
                     #muda em logged in database
 
-                    return redirect('/logged')
+                    return redirect('/loggedMedico')
 
                 else:
                     alert = "Senha incorreta. Tente novamente!" ## FALTA JOGAR PRO html
@@ -99,4 +96,4 @@ def login():
 
         print(alert)
 
-    return render_template('login.html')
+    return render_template('loginMedico.html')

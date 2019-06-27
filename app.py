@@ -1,6 +1,10 @@
-from sharedData import *
-from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute
+from sharedData import session, dataBase
+from flask import Flask, render_template, redirect
+from routes import loginRoute,logoutRoute,registerRoute,loggedRoute,usersRoute,changeRegisterRoute, registerMedicoRoute
+from routes import medicosRoute, loggedMedicoRoute, loginMedicoRoute
 import logging, sys
+import sharedData
+import time
 
 # create app
 app = Flask(__name__,static_url_path='/static')
@@ -16,17 +20,56 @@ app.register_blueprint(registerRoute.register_api)
 app.register_blueprint(loggedRoute.logged_api)
 app.register_blueprint(usersRoute.users_api)
 app.register_blueprint(changeRegisterRoute.changeRegister_api)
+app.register_blueprint(registerMedicoRoute.medicoRegister_api)
+app.register_blueprint(medicosRoute.medicos_api)
+app.register_blueprint(loggedMedicoRoute.loggedMedico_api)
+app.register_blueprint(loginMedicoRoute.loginMedico_api)
+
 # main page
 @app.route('/')
 def index():
-    if 'user' in session:
-        return redirect('/logged')
+    start = time.time()
+    baseData = dataBase.DataManager()
+    loginType = ""
+    # verifica se session is correct
+
+    # trabalha com a sessão e verifica se esta logado
+
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
+            if dataAchou:
+                if session['userType'] == 'P':
+                    return redirect('/logged')
+                elif session['userType'] == 'M':
+                    return redirect('/logged')
+
+        if not dataAchou:
+            session.pop("loginHash", None)
+            session.pop("userName", None)
+            session.pop("userID", None)
+            session.pop("userType", None)
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
+
+    # caso esteja apropridamente logado continua
+
+    end = time.time()
+    print("FLAG05 " + str(end - start))
     return render_template('index.html')
+
 
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
-    usersDataOnline.resetServer()
-    app.run(debug=True,threaded=False)
+    app.run(debug=True,threaded=True)
     #close the connection
-    connectionData.getConnector().close()
 

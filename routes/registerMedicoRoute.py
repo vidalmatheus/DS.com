@@ -1,17 +1,19 @@
-from sharedData import session
+from sharedData import session, dataBase
 from flask import render_template, request, redirect,Blueprint
 from modules import dataBase
 import bcrypt, datetime
 import sharedData
 
-register_api = Blueprint('register_api', __name__)
- 
+medicoRegister_api = Blueprint('medicoRegister_api', __name__)
+
 
 # register
-@register_api.route('/register', methods=['GET', 'POST'])
+@medicoRegister_api.route('/registerMedico', methods=['GET', 'POST'])
 def register():
-    userData = dataBase.PessoaUserData()
-    #baseData = sharedData.baseData
+    print("/////////////////////////")
+    print("Comeca Medicoroute register")
+    medicoData = dataBase.MedicoUserData()
+
     baseData = dataBase.DataManager()
     loginType = ""
     #verifica se session is correct
@@ -31,7 +33,7 @@ def register():
                 if session['userType'] == 'P':
                     return redirect('/logged')
                 elif session['userType'] == 'M':
-                    return redirect('/logged')
+                    return redirect('/loggedMedico')
 
         if not dataAchou:
             session.pop("loginHash", None)
@@ -47,20 +49,15 @@ def register():
     # caso esteja apropridamente logado continua
 
     if request.method == 'POST':
-        print("/////////////////////////")
-        print("Comeca route register")
         # Fetch form data
         userDetails = request.form
         cpf = userDetails['cpf']
         psd = userDetails['psd']
         saram = userDetails['saram']
         name = userDetails['name']
-        birth_date = userDetails['birth_date']
-        sex = userDetails['sex']
-        adress = userDetails['adress']
-        phone = userDetails['phone']
-        email = userDetails['email']
         military = userDetails['military']
+        especialidade = userDetails['esp']
+        crm = userDetails["crm"]
         #cursor
         #cur = connectionData.getConnector().cursor()
         #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
@@ -68,37 +65,46 @@ def register():
         hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
         hashedDecoded = hashed.decode('utf-8')
 
-        #VERIFICA SE SARAM/CPF É VALIDO
+        # VERIFICA SE SARAM/CPF É VALIDO
 
-        achouInvalidante ,tupleLook = baseData.getDataInfo("paciente","saram",saram)
+        achouInvalidante, tupleLook = baseData.getDataInfo("medico", "saram", saram)
         if not achouInvalidante:
-            achouInvalidante ,tupleLook = baseData.getDataInfo("paciente","cpf", cpf)
+            achouInvalidante, tupleLook = baseData.getDataInfo("medico", "cpf", cpf)
             if achouInvalidante:
                 print("CPF " + cpf + " JA CADASTRADO")
-                return redirect("/register")
+                return redirect("/registerMedico")
+            else:
+                achouInvalidante, tupleLook = baseData.getDataInfo("medico", "crm", crm)
+                if achouInvalidante:
+                    print("CRM " + crm + " JA CADASTRADO")
+
         else:
-            print("SARAM " + saram + " JA CADASTRADO" )
+            print("SARAM " + saram + " JA CADASTRADO")
 
         if achouInvalidante:
-            return redirect("/register")
+            return redirect("/registerMedico")
 
-        #SE NAO É VALIDO RETORNA PARA O REGISTER
+        # SE NAO É VALIDO RETORNA PARA O REGISTER
 
-        #ADCIONA O PACIENTE
-        tupleData = baseData.addDataThenGetIt("paciente", (cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
+        tupleData = baseData.addDataThenGetIt("Medico", (cpf,hashedDecoded,saram,name,military, crm, especialidade))
         #commit the transcation
 
-        userData.setUser(tupleData)
-        session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
-        ###########loga paciente
-        tupleData = baseData.addDataThenGetIt("logado", (cpf, session["loginHash"]))
-        session["userName"] = userData.getName()
+        medicoData.setUser(tupleData)
+        session["loginHash"] = bcrypt.hashpw((medicoData.getName()+medicoData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
+        session["userName"] = medicoData.getName()
         print("////////////////////////////////NOME REGISTRADO\n=>"+session["userName"])
-        session["userID"] = userData.getCPF()
-        session['userType'] = 'P'
+        session["userID"] = medicoData.getCPF()
+        session['userType'] = 'M'
+
+        ###############ADD AO LOGADO
+
+        tupleData = baseData.addDataThenGetIt("logado", (medicoData.getCPF(), session["loginHash"]))
+        ###############TERMINA ADD AO LOGADO
+
+
         ###########aloca usuario logado no banco de dados
         #usersDataOnline.addUserOn(userData)
         #close the cursor
-        return redirect('/logged')
-    return render_template('register.html')
+        return redirect('/loggedMedico')
+    return render_template('registerMedic.html')
 
