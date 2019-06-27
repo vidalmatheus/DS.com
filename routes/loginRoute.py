@@ -29,7 +29,7 @@ def login():
                 if session['userType'] == 'P':
                     return redirect('/logged')
                 elif session['userType'] == 'M':
-                    return redirect('/logged')
+                    return redirect('/loggedMedico')
 
         if not dataAchou:
             session.pop("loginHash", None)

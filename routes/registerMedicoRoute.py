@@ -33,7 +33,7 @@ def register():
                 if session['userType'] == 'P':
                     return redirect('/logged')
                 elif session['userType'] == 'M':
-                    return redirect('/logged')
+                    return redirect('/loggedMedico')
 
         if not dataAchou:
             session.pop("loginHash", None)
@@ -105,6 +105,6 @@ def register():
         ###########aloca usuario logado no banco de dados
         #usersDataOnline.addUserOn(userData)
         #close the cursor
-        return redirect('/logged')
+        return redirect('/loggedMedico')
     return render_template('registerMedic.html')
 
