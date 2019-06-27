@@ -1,6 +1,7 @@
-#from sharedData import *
+from sharedData import session,dataBase
 from flask import render_template,Blueprint
 from modules import dataBase
+import sharedData
 users_api = Blueprint('users_api', __name__)
 
 # users registers

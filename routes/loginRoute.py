@@ -2,12 +2,14 @@ from sharedData import session
 from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
+import sharedData
 login_api = Blueprint('login_api', __name__)
 
 #login
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
     userData = dataBase.PessoaUserData()
+    #baseData = sharedData.baseData
     baseData = dataBase.DataManager()
     loginType = ""
     #verifica se session is correct
@@ -74,8 +76,9 @@ def login():
                     session["userType"] = "P"
 
                     ########VERIFICA SE ESTA NO LOGADO E RETIRA, PARA DEPOIS O POR DE VOLTA
-                    dataAchou, tupleLogado = baseData.getDataInfo("logado", "cpf", session['userID'])
 
+                    dataAchou, tupleLogado = baseData.getDataInfo("logado", "cpf", session['userID'])
+                    
                     if dataAchou:
                         user = baseData.changeDataAndReturnNewData("logado",
                                                                    ['session_hash'], [session["loginHash"]], session["userID"], 'cpf')

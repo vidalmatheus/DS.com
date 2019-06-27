@@ -2,6 +2,7 @@ from sharedData import session
 from flask import render_template, request, redirect,Blueprint
 from modules import dataBase
 import bcrypt, datetime
+import sharedData
 
 register_api = Blueprint('register_api', __name__)
 
@@ -9,22 +10,40 @@ register_api = Blueprint('register_api', __name__)
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
     userData = dataBase.PessoaUserData()
+    #baseData = sharedData.baseData
     baseData = dataBase.DataManager()
+    loginType = ""
+    #verifica se session is correct
 
+    #trabalha com a sessão e verifica se esta logado
 
-    if "userCPF" in session:
-        if "verifica se esta loggado com o 'loginHash' correto"== "verifica se esta loggado com o 'loginHash' correto":
-            # session["loginHash"]
-            # session["userName"] = userData.getName()
-            # session["userCPF"]
-            return redirect('/logged')
-        else:
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
+            if dataAchou:
+                if session['userType'] == 'P':
+                    return redirect('/logged')
+                elif session['userType'] == 'M':
+                    return redirect('/logged')
+
+        if not dataAchou:
             session.pop("loginHash", None)
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
 
-            return redirect('/register')
+    # caso esteja apropridamente logado continua
 
     if request.method == 'POST':
         print("/////////////////////////")
@@ -70,6 +89,8 @@ def register():
 
         userData.setUser(tupleData)
         session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
+        ###########loga paciente
+        tupleData = baseData.addDataThenGetIt("logado", (cpf, session["loginHash"]))
         session["userName"] = userData.getName()
         print("////////////////////////////////NOME REGISTRADO\n=>"+session["userName"])
         session["userID"] = userData.getCPF()

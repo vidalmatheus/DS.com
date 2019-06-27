@@ -1,7 +1,9 @@
-from sharedData import session
+from sharedData import session, dataBase
 from flask import render_template, request, redirect,Blueprint
 import bcrypt, datetime
 from modules import dataBase
+import time
+import sharedData
 
 
 changeRegister_api = Blueprint('changeRegister_api', __name__)
@@ -10,6 +12,8 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
     baseData = dataBase.DataManager()
+    loginType = ""
+    #verifica se session is correct
 
     #trabalha com a sessão e verifica se esta logado
 
@@ -21,6 +25,7 @@ def changeRegister():
 
         if dataAchou:
             dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
             if dataAchou:
                 if session['userType'] == 'M':
                     return redirect('/loggedMedico')
@@ -30,13 +35,11 @@ def changeRegister():
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
-            return redirect('/login')
     else:
         session.pop("loginHash", None)
         session.pop("userName", None)
         session.pop("userID", None)
         session.pop("userType", None)
-        return redirect('/login')
 
     # caso esteja apropridamente logado continua
 

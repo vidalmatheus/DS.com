@@ -1,7 +1,8 @@
-from sharedData import session
+from sharedData import session, dataBase
 from flask import Flask, render_template, request, redirect,Blueprint, json, url_for
 from modules import dataBase
-
+import sharedData
+import time
 
 logged_api = Blueprint('logged_api', __name__)
 
@@ -10,10 +11,12 @@ logged_api = Blueprint('logged_api', __name__)
 @logged_api.route('/logged', methods=['GET'])
 def logged():
     print("/////////////////////////////\nCOMECA LOGGED")
-
+    start = time.time()
     baseData = dataBase.DataManager()
+    loginType = ""
+    # verifica se session is correct
 
-    #trabalha com a sessão e verifica se esta logado
+    # trabalha com a sessão e verifica se esta logado
 
     if "userID" in session:
         cpf = session['userID']
@@ -26,20 +29,18 @@ def logged():
 
             if dataAchou:
                 if session['userType'] == 'M':
-                    return redirect('/logged')
+                    return redirect('/loggedMedicos')
 
         if not dataAchou:
             session.pop("loginHash", None)
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
-            return redirect('/login')
     else:
         session.pop("loginHash", None)
         session.pop("userName", None)
         session.pop("userID", None)
         session.pop("userType", None)
-        return redirect('/login')
 
     # caso esteja apropridamente logado continua
 

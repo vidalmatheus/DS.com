@@ -223,12 +223,6 @@ class DataManager:
             print("CPF NAO VALIDO\n")
         return normalizedCPF
 
-    def deleteLookVar(self,dataType = "logado", lookVarName = "session_hash" ,lookVarValue = ""):
-        cursor = self.dataConnection.cursor()
-        cursor.execute("Delete from " + dataType +" where "+lookVarName+" = %s",lookVarValue)
-        self.dataConnection.commit()
-
-
     def deleteDataType(self,dataType = "logado"):
         cursor = self.dataConnection.cursor()
         cursor.execute("TRUNCATE TABLE "+ dataType)
@@ -293,9 +287,7 @@ class DataManager:
     def deleteData(self, dataType, dataLookVar,dataLook = "saram"):
         cursor = self.dataConnection.cursor()
         cursor.execute("DELETE FROM " + dataType + " WHERE " + dataLook + " = %s", (dataLookVar,))
-        user = cursor.fetchall()
 
-        rows_deleted = cursor.rowcount
 
         cursor.close()
 

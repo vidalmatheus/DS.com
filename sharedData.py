@@ -1,4 +1,5 @@
 from flask import session
+from modules import dataBase
 '''from modules import dataBase,usuario
 import psycopg2, os, subprocess, bcrypt
 
@@ -7,9 +8,9 @@ import psycopg2, os, subprocess, bcrypt
 #    DATABASE_URL = os.environ['DATABASE_URL']
 #    con = psycopg2.connect(DATABASE_URL, sslmode='require')
 #    return con
-
-
-
+'''
+baseData = dataBase.DataManager()
+'''
 ### connect to the dataBase
 DATABASE_URL = os.environ['DATABASE_URL']
 connectionData = dataBase.dataAccess()

@@ -1,7 +1,8 @@
-from sharedData import session
+from sharedData import session, dataBase
 from flask import render_template, request, redirect,Blueprint
 from modules import dataBase
 import bcrypt, datetime
+import sharedData
 
 medicoRegister_api = Blueprint('medicoRegister_api', __name__)
 
@@ -12,7 +13,10 @@ def register():
     print("/////////////////////////")
     print("Comeca Medicoroute register")
     medicoData = dataBase.MedicoUserData()
+
     baseData = dataBase.DataManager()
+    loginType = ""
+    #verifica se session is correct
 
     #trabalha com a sessão e verifica se esta logado
 
@@ -36,7 +40,6 @@ def register():
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
-            return redirect('/login')
     else:
         session.pop("loginHash", None)
         session.pop("userName", None)
