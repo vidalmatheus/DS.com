@@ -12,23 +12,35 @@ def login():
     loginType = ""
     #verifica se session is correct
 
+    #trabalha com a sessão e verifica se esta logado
 
-    if "userCPF" in session:
-        if "verifica se esta loggado com o 'loginHash' correto"=="verifica se esta loggado com o 'loginHash' correto":
-            #session["loginHash"]
-            #session["userName"] = userData.getName()
-            #session["userCPF"]
-            if session["userType"] == 'P':
-               cpf = session['userID']
-            elif session["userType"] == 'M':
-                crm = session['userID']
-            return redirect('/logged')
-        else:
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
+            if dataAchou:
+                if session['userType'] == 'P':
+                    return redirect('/logged')
+                elif session['userType'] == 'M':
+                    return redirect('/logged')
+
+        if not dataAchou:
             session.pop("loginHash", None)
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
 
+    # caso esteja apropridamente logado continua
 
     if request.method == 'POST':
         # Fetch form data
@@ -46,10 +58,9 @@ def login():
             #pega as informaçoes
             dataExist,passwordCorrect,userData = baseData.confirmPessoaPassword("paciente", loginType, userDetails['login'],passWord)
 
-            if not dataExist:
-                dataExist, passwordCorrect, userData = baseData.confirmPessoaPassword("medico", loginType,
-                                                                                      userDetails['login'], passWord)
             print("/////////////////////////////\nverifica senha")
+
+            #######################VERIFICA SE ADCIONA NO LOGADO
             if not dataExist:
                 print("SARAM/CPF NAO ENCONTRADO")
                 return redirect('/login')
@@ -61,6 +72,16 @@ def login():
                     session["userID"] = userData.getCPF()
                     session["loginHash"] = bcrypt.hashpw((userData.getName()+userData.getCPF()+str(datetime.datetime.now())).encode(),bcrypt.gensalt(12)).decode('utf-8')
                     session["userType"] = "P"
+
+                    ########VERIFICA SE ESTA NO LOGADO E RETIRA, PARA DEPOIS O POR DE VOLTA
+                    dataAchou, tupleLogado = baseData.getDataInfo("logado", "cpf", session['userID'])
+
+                    if dataAchou:
+                        user = baseData.changeDataAndReturnNewData("logado",
+                                                                   ['session_hash'], [session["loginHash"]], session["userID"], 'cpf')
+                    else:
+                        tupleData = baseData.addDataThenGetIt("logado", (userData.getCPF(), session["loginHash"]))
+                    ########VERIFICA SE ESTA NO LOGADO E TROCA
 
                     #muda em logged in database
 

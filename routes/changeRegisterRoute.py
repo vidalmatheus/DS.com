@@ -10,18 +10,35 @@ changeRegister_api = Blueprint('changeRegister_api', __name__)
 @changeRegister_api.route('/changeregister', methods=['GET', 'POST'])
 def changeRegister():
     baseData = dataBase.DataManager()
-    if 'userID' in session:
-        if "verifica se esta loggado com o 'loginHash' correto"=="verifica se esta loggado com o 'loginHash' correto":
-            print('session["loginHash"]' + session["loginHash"])
-            #session["userName"] = userData.getName()
-            #session["userCPF"]
-        else:
+
+    #trabalha com a sessão e verifica se esta logado
+
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+            if dataAchou:
+                if session['userType'] == 'M':
+                    return redirect('/loggedMedico')
+
+        if not dataAchou:
             session.pop("loginHash", None)
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
-
             return redirect('/login')
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
+        return redirect('/login')
+
+    # caso esteja apropridamente logado continua
 
     userData = dataBase.PessoaUserData()
     userExist,tuplaDataInfo = baseData.getDataInfo("paciente","cpf",session["userID"])

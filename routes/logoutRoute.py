@@ -1,18 +1,19 @@
 from sharedData import session
 from flask import redirect,Blueprint
+from modules import dataBase
 logout_api = Blueprint('logout_api', __name__)
 
 @logout_api.route('/logout')
 def logout():
-    global usersDataOnline
-    #userData.logOutUser()
-    #usersDataOnline.logoutUser(session['user'])
+    baseData = dataBase.DataManager()
 
-    #retira do login data
+    if 'userID' in session:
 
-    session.pop("loginHash", None)
-    session.pop("userName", None)
-    session.pop("userID", None)
-    session.pop("userType", None)
+        ###############RETIRA DO LOGADO
+        baseData.deleteLookVar("logado", "session_hash", session["session_hash"])
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
 
     return redirect('/')

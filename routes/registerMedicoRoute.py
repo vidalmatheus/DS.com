@@ -14,19 +14,36 @@ def register():
     medicoData = dataBase.MedicoUserData()
     baseData = dataBase.DataManager()
 
-    if "userCPF" in session:
-        if "verifica se esta loggado com o 'loginHash' correto"== "verifica se esta loggado com o 'loginHash' correto":
-            # session["loginHash"]
-            # session["userName"] = userData.getName()
-            # session["userCPF"]
-            return redirect('/logged')
-        else:
+    #trabalha com a sessão e verifica se esta logado
+
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
+            if dataAchou:
+                if session['userType'] == 'P':
+                    return redirect('/logged')
+                elif session['userType'] == 'M':
+                    return redirect('/logged')
+
+        if not dataAchou:
             session.pop("loginHash", None)
             session.pop("userName", None)
             session.pop("userID", None)
             session.pop("userType", None)
+            return redirect('/login')
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
 
-            return redirect('/registerMedico')
+    # caso esteja apropridamente logado continua
 
     if request.method == 'POST':
         # Fetch form data
@@ -75,6 +92,13 @@ def register():
         print("////////////////////////////////NOME REGISTRADO\n=>"+session["userName"])
         session["userID"] = medicoData.getCPF()
         session['userType'] = 'M'
+
+        ###############ADD AO LOGADO
+
+        tupleData = baseData.addDataThenGetIt("logado", (medicoData.getCPF(), session["loginHash"]))
+        ###############TERMINA ADD AO LOGADO
+
+
         ###########aloca usuario logado no banco de dados
         #usersDataOnline.addUserOn(userData)
         #close the cursor

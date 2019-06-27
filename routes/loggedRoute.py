@@ -1,5 +1,6 @@
 from sharedData import session
 from flask import Flask, render_template, request, redirect,Blueprint, json, url_for
+from modules import dataBase
 
 
 logged_api = Blueprint('logged_api', __name__)
@@ -9,9 +10,39 @@ logged_api = Blueprint('logged_api', __name__)
 @logged_api.route('/logged', methods=['GET'])
 def logged():
     print("/////////////////////////////\nCOMECA LOGGED")
-    if not ("userID" in session):
-        print("USER IS NOT IN SESSION")
+
+    baseData = dataBase.DataManager()
+
+    #trabalha com a sessão e verifica se esta logado
+
+    if "userID" in session:
+        cpf = session['userID']
+        dataName = "cpf"
+
+        dataAchou, tupleLogado = baseData.getDataInfo("logado", dataName, session['userID'])
+
+        if dataAchou:
+            dataAchou = (tupleLogado[0][1] == session['loginHash'])
+
+            if dataAchou:
+                if session['userType'] == 'M':
+                    return redirect('/logged')
+
+        if not dataAchou:
+            session.pop("loginHash", None)
+            session.pop("userName", None)
+            session.pop("userID", None)
+            session.pop("userType", None)
+            return redirect('/login')
+    else:
+        session.pop("loginHash", None)
+        session.pop("userName", None)
+        session.pop("userID", None)
+        session.pop("userType", None)
         return redirect('/login')
+
+    # caso esteja apropridamente logado continua
+
     print(request.args.get('userDetails'))
     #userData = usersDataOnline.getUser(session['user'])
     if not "verifica no banco de dados se esta logado" == "verifica no banco de dados se esta logado":
