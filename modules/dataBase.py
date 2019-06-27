@@ -140,6 +140,8 @@ class DataManager:
         DATABASE_URL = os.environ['DATABASE_URL']
         self.dataConnection = psycopg2.connect(DATABASE_URL, sslmode='require')
 
+    def __del__(self):
+        self.dataConnection.close()
     def getConnector(self):
         return self.dataConnection
 
@@ -187,6 +189,17 @@ class DataManager:
         print("\nDataManager confirmPacientePassword acaba")
         print('//////////////////////////////////////////////////////////////////////////\n')
         return tuplaResposta
+
+    def getExecute(self,command = "SELECT distinct especialidade FROM medico ORDER BY especialidade",tupla = ()):
+        cursor = self.dataConnection.cursor()
+        if len(tupla) == 0:
+            cursor.execute(command)
+        else:
+            cursor.execute(command,tupla)
+
+        data = cursor.fetchall()
+        cursor.close()
+        return data
 
     def getDataInfo(self,dataType = "paciente",dataName = "saram",dataVar = "0"):
         print('//////////////////////////////////////////////////////////////////////////')

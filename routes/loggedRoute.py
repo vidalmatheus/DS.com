@@ -58,14 +58,9 @@ def logged():
         return redirect('/login')
 
     print("RENDERIZA A TELA DE LOGGED")
-    return render_template('logged.html', userDetails = session['userName'])
-    print("render logged")
-    
-    # cursor
-    cur = connectionData.getConnector().cursor()
+
     # ------- Caregando as informações das especialidades dos médicos -------
-    cur.execute("SELECT distinct especialidade FROM medico ORDER BY especialidade")
-    especs = cur.fetchall()
+    especs = baseData.getExecute("SELECT distinct especialidade FROM medico ORDER BY especialidade")
     i = 0
     key_esp={}
     for e in especs:
@@ -83,8 +78,7 @@ def logged():
         chosen_esp = request.args.get('esp')
         #chosen_esp = userDetails['esp']
         print(chosen_esp)
-        cur.execute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
-        med = cur.fetchall()
+        med = baseData.getExecute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
         print(med)
     else:
         #------- Caregando a descrição do pedido de consulta -------
@@ -92,9 +86,9 @@ def logged():
         desc = request.form['desc']
         print(chosen_medic)
         print(desc)
-        
 
 
 
 
-    return render_template('logged.html', userDetails=userData.getName(),especialidades=especs,chosen_esp=chosen_esp,medicos=med,chosen_medic=chosen_medic)
+
+    return render_template('logged.html', userDetails=session['userName'],especialidades=especs,chosen_esp=chosen_esp,medicos=med,chosen_medic=chosen_medic)

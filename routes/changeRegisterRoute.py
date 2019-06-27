@@ -28,6 +28,7 @@ def changeRegister():
 
             if dataAchou:
                 if session['userType'] == 'M':
+                    baseData.getConnector().close()
                     return redirect('/loggedMedico')
 
         if not dataAchou:
@@ -73,20 +74,21 @@ def changeRegister():
                                                     ["senha", "nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
                                                      'email', 'militar'],
                                                     [hashedDecoded, name, birth_date, sex, adress, phone, email,
-                                                     military], saram, 'saram')
+                                                     military], cpf, 'cpf')
             else:
                 user = baseData.changeDataAndReturnNewData("paciente", ["nome", 'dt_nasc', 'sexo', 'endereco', 'telefone',
-                                                                 'email', 'militar'],[name,birth_date,sex,adress,phone,email,military],saram,'saram')
+                                                                 'email', 'militar'],[name,birth_date,sex,adress,phone,email,military],cpf,'cpf')
 
             userData = dataBase.PessoaUserData()
 
             userData.setUser(user[0])
             session["userName"] = userData.getName()
             print("ATUALIZAÇÃO DOS DADOS COM SUCESSO")
-
+            baseData.getConnector().close()
             return redirect('/logged')
         elif (submit == "Cancelar"):
             print("ATUALIZAÇÃO DOS DADOS CANCELADA")
+            baseData.getConnector().close()
             return redirect('/logged')
     return render_template('changeRegister.html',userDetails = user_list)
 

@@ -48,7 +48,7 @@ def login():
         # Fetch form data
         userDetails = request.form
         passWord = userDetails['password']
-
+        alert = ""
         errorSARAM = errorCPF = False
         if (len(userDetails['login']) == 7 or len(userDetails['login']) == 11):
             if (len(userDetails['login']) == 7):
@@ -97,6 +97,6 @@ def login():
 
         else: print("ERRO! CPF OU SENHA EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
 
-    print(alert)
+        print(alert)
 
     return render_template('login.html')
