@@ -64,10 +64,10 @@ CREATE TABLE Consulta (
     id SERIAL,
     CPF_pac varchar(14) unique NOT NULL,
     CRM int unique NOT NULL,
-    Data DATE NOT NULL,
-    Hora TIME NOT NULL,
+    dia varchar(15) NOT NULL,
+    hora_inicio varchar(10) NOT NULL,
+	hora_fim varchar(10) NOT NULL,
 	descricao varchar(70),
-    status VARCHAR(10) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -96,18 +96,18 @@ delete from Medico;
 delete from Consulta;
 
 insert into Paciente values 
-(13420296746,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',7654321,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
-(43967557839,'123456',8654321,'Adriano Soares','1996/03/08','M','Rua H8B,214 - SJC,SP','(18)99606-3534','srodrigues@gmail.com','alunoITA',false),
-(04339241698,'123456',9654321,'Pedro Alves','1997/04/04','M','Rua H8B,203 - SJC,SP','(18)99605-7649','alvesouza@gmail.com','alunoITA',false);
+('134.202.967-46','$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',7654321,'Matheus Vidal','1995/03/28','M','Rua H8B,203 - SJC,SP','(21)99330-7585','matheusvidaldemenezes@gmail.com','alunoITA',false),
+('439.675.578-39','$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',8654321,'Adriano Soares','1996/03/08','M','Rua H8B,214 - SJC,SP','(18)99606-3534','srodrigues@gmail.com','alunoITA',false),
+('043.392.416-98','$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',9654321,'Pedro Alves','1997/04/04','M','Rua H8B,203 - SJC,SP','(18)99605-7649','alvesouza@gmail.com','alunoITA',false);
 
 insert into Medico values 
-(13420296741,16863158,'123456',1234567,'Charlie','odontologista','1tenente'),
-(13420296742,15846758,'123456',1234568,'Jonas','ortopedista','2tenente'),
-(13420296743,15523418,'123456',1234569,'Nathalia','oftalmologista','capitao');
+('134.202.967-41',16863158,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',1234567,'Charlie','odontologista','1tenente'),
+('134.202.967-42',15846758,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',1234568,'Jonas','ortopedista','2tenente'),
+('134.202.967-43',15523418,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDWYK',1234569,'Nathalia','oftalmologista','capitao');
 
-insert into Consulta (CPF_pac,CRM,Data,Hora,status) values 
-(13420296746,16863158,'2019/05/27','11:00:00','aberto'),
-(43967557839,15846758,'2019/05/28','15:30:00','marcado');
+insert into Consulta (CPF_pac,CRM,dia,hora_inicio,hora_fim,descricao) values 
+('134.202.967-46',16863158,'Segunda','11:00','11:30','deu ruim'),
+('439.675.578-39',15846758,'Terça','15:30','16:00','Jacks');
 
 insert into Logado values 
 (13420296746,'$2b$12$9hihmAkRabPNb5MhIk0ui.mY7rEjDGdcctGaRR2/DHflaa9ldDAAA'),

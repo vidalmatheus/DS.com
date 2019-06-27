@@ -129,8 +129,12 @@
             setTimeout(function() {
                 x.className = x.className.replace("show", "");
             }, 3000);
-        }
+            event.preventDefault();
+            let escolhido = document.getElementById("#Escolhido");
+            escolhido.innerHTML = ""
+        };
     </script>
+
 
 
 </head>
@@ -195,7 +199,7 @@
                                 <textarea name="desc" id="desc" class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'"></textarea>
                             </div>
                             <div class="button-group-area mt-40">
-                                <input type="submit" name="submit" href="#" class="genric-btn success circle" value="Enviar"></input>
+                                <input name="submit" id="Enviar" onclick="Enviado()" class="genric-btn success circle" value="Enviar"></input>
                             </div>
                     </div>
                     <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
@@ -325,6 +329,36 @@
     <script>
         //Exemplo de entrada
         var dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+
+        var horariosSegunda = [];
+        var horariosTerca = [];
+        var horariosQuarta = [];
+        var horariosQuinta = [];
+        var horariosSexta = [];
+
+
+
+        /*
+        "{{segunda_ini}}".forEach((element) => {
+            horariosSegunda_ini.push({
+                data_inicio: element[0],
+            });
+        });
+        "{{segunda_fim}}".forEach((element) => {
+            horariosSegunda_fim.push({
+                data_fim: element[0],
+            });
+        });
+
+        for (let i = 0; i < horariosSegunda_ini.length; i++) {
+            horariosSegunda.push({
+                data_inicio: horariosSegunda_ini[i],
+                data_fim: horariosSegunda_fim[i]
+            });
+        }*/
+
+
+
         var horariosSegunda = [{
             data_inicio: '8:00',
             data_fim: '9:00'
