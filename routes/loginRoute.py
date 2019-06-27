@@ -7,6 +7,7 @@ login_api = Blueprint('login_api', __name__)
 @login_api.route("/login", methods=['GET', 'POST'])
 def login():
     global usersDataOnline
+    alert=""
     print("////////////////////////////////////////")
     print("Comeca route login")
     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
@@ -38,8 +39,8 @@ def login():
                 cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
                 user = cur.fetchall()
                 if (len(user)==0): errorCPF = True
-            if (errorSARAM): print("SARAM NÃO ENCONTRADO")
-            elif (errorCPF): print("CPF NÃO ENCONTRADO")
+            if (errorSARAM): alert = "SARAM não encontrado. Efetuar cadastro."
+            elif (errorCPF): alert = "CPF não encontrado. Efetuar cadastro."
             else:
                 psd_db = user[0][1]
                 print("o tipo de variavel da user[0] = "+str(type(user[0])))
@@ -78,7 +79,7 @@ def login():
                     cur.close()
                     #return redirect(url_for('logged_api.logged',userDetails=user[0][3])) ### FALTA PASSAR ALGUM PARÂMETRO PARA SABER O NOME ###
                     return redirect('/logged')
-                else: print("SENHA ERRADA!") ## FALTA JOGAR PRO html
-        else: print("ERRO! SARAM OU CPF EM FORMATO INCORRETO!") ## FALTA JOGAR PRO html
-
-    return render_template('login.html')
+                else: alert = "Senha incorreta. Tente novamente!" ## FALTA JOGAR PRO html
+        else: alert = "ERRO! SARAM/CPF em formato incorreto!" ## FALTA JOGAR PRO html
+    print(alert)
+    return render_template('login.html',alert=alert)

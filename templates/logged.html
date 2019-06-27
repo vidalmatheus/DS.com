@@ -22,21 +22,134 @@
     <link rel="stylesheet" href="../static/css/styleDS.css">
     <link rel="stylesheet" href="../static/css/responsive.css">
 
+    <!--Alerts-->
+    <style>
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+        
+        #snackbar2 {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+        
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        #snackbar2.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+        
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        function Logout() {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+    <script>
+        function Enviado() {
+            confirm("Tem certeza dessa solicitação?")
+            var x = document.getElementById("snackbar2");
+            x.className = "show";
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+
 
 </head>
 
 <body>
+    <div id="snackbar">Logout...</div>
+    <div id="snackbar2">Consulta Marcada com Sucesso!</div>
     <header class="header_area">
         <div class="main_menu">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container box_1620">
-                    <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
+                    <a class="navbar-brand logo_h">&emsp;&emsp;&emsp;<img class="img-fluid" src="../static/img/DS.ico"
+                            alt=""></a>
 
                 </div>
             </nav>
         </div>
     </header>
-
     <!--================ Bloco Azul  =================-->
     <section class="home_banner_area">
         <div class="banner_inner">
@@ -57,7 +170,7 @@
                     <div class="col-lg-7">
                         <div class="home_left_img">
                             &emsp;&emsp;&emsp;&emsp;&emsp;<a class="banner_btn" href="changeregister">Alterar Dados</a> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            <a class="banner_btn" href="logout">Sair</a>
+                            <a class="banner_btn" href="logout" onclick="Logout()">Sair</a>
                         </div>
                     </div>
                 </div>
@@ -74,21 +187,23 @@
                         <h3 class="mb-30 title_color">Marcar Consulta</h3>
                         <h5 class="mb-30 title_color">Especialidade</h5>
                         <div class="default-select" id="default-select">
-                            <select>
-                                  <option value="1">Geral</option>
-                                  <option value="1">Ortopedista</option>
-                                  <option value="1">Dentista</option>
-                                  <option value="1">Oftalmologista</option>
-                                  <option value="1">Nutricionista</option>
-                              </select>
+                            <form id="consult-esp" action="" class="form" method="GET">
+                                <select name="esp" id="esp" onchange='this.form.submit()' required>
+                                    <option value="{{chosen_esp}}" selected disabled hidden>{{chosen_esp}}</option>
+                                    {% for esp in especialidades %}
+                                    <option value="{{esp[0]}}">{{esp[0]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
                         </div>
-                        <h5 class="mb-30 title_color"><br/>Descreva o motivo da consulta.</h5>
-                        <div class="mt-10">
-                            <textarea class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'" required></textarea>
-                        </div>
-                        <div class="button-group-area mt-40">
-                            <a href="#" class="genric-btn success circle">Enviar</a>
-                        </div>
+                        <form id="consult-medic" class="form" action="" onsubmit="Enviado()" method="POST">
+                            <h5 class="mb-30 title_color"><br />Descreva o motivo da consulta.</h5>
+                            <div class="mt-10">
+                                <textarea name="desc" id="desc" class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'"></textarea>
+                            </div>
+                            <div class="button-group-area mt-40">
+                                <input type="submit" name="submit" href="#" class="genric-btn success circle" value="Enviar"></input>
+                            </div>
                     </div>
                     <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
                         <div class="single-element-widget">
@@ -111,14 +226,17 @@
                         <div class="single-element-widget">
                             <h4 class="mb-30 title_color">Selecione o médico de sua preferência.</h4>
                             <div class="default-select" id="default-select">
-                                <select>
-                                  <option value="1">Qualquer</option>
-                                  <option value="1">Jackson</option>
-                                  <option value="1">Alonso</option>
-                                  <option value="1">Bizarro</option>
-                                  <option value="1">Nilda</option>
-                              </select><br/>
-                            </div><br/>
+
+                                <select name="medico" id="medico" required>
+                                    <option value="{{chosen_medic}}" onchange='this.form.submit()' selected disabled hidden>{{chosen_medic}}</option>
+                                    {% for med in medicos %}
+                                    <!-- pega a especialidade escolhida anteriormente-->
+                                    <option value="{{med[0]}}">{{med[0]}}</option> <!-- index 1 é nome-->
+                                    {% endfor %}
+                                </select>
+                                </form>
+                                <br />
+                            </div><br />
                         </div>
                     </div>
                 </div>
@@ -250,6 +368,23 @@
         <div class="cd-schedule__cover-layer"></div>
     </div>
     <!-- Fim da Tabela -->
+
+    <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function() {
+                    div.style.display = "none";
+                }, 600);
+            }
+        }
+    </script>
+
+
 
     <!-- Carregamento dos códigos -->
     <script src="../static/js/jquery-3.2.1.min.js"></script>

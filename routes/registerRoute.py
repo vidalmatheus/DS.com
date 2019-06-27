@@ -34,7 +34,7 @@ def register():
         #commit the transcation
         connectionData.getConnector().commit()
         userData = usuario.acessoUser()
-        cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+        cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
         user = cur.fetchall()
         print("adciona user[0] = " + str(user[0]))
         userData.logginUser(user[0])

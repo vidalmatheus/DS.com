@@ -6,11 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="../static/img/DS.ico" type="image/x-icon" />
-    <title>Cadastro</title>
+    <title>Cadastro Médico</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/styleDS.css">
 
     <!--Função de Máscaras-->
     <script>
@@ -18,9 +17,11 @@
             var i = documento.value.length;
             var saida = mascara.substring(0, 1);
             var texto = mascara.substring(i)
+
             if (texto.substring(0, 1) != saida) {
                 documento.value += texto.substring(0, 1);
             }
+
         }
     </script>
 
@@ -36,7 +37,7 @@
                         <form id="login-form" class="form" action="" method="post">
                             <h3 class="text-center text-info">
                                 <a href="/"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
-                                <h3>Novo Paciente:</h3>
+                                <h3>Novo Médico:</h3>
                             </h3>
                             </h3>
                             <div class="form-group">
@@ -52,38 +53,16 @@
                                 <input type="code" name="saram" id="saram" maxlength=7 class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="cpf" class="text-info">CPF*</label><br>
-                                <input type="cpf" name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required>
+                                <label for="cpf" class="text-info">CRM*</label><br>
+                                <input type="cpf" name="CRM" id="CRM" maxlength=8 class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="birth_date" class="text-info">Data de Nascimento*</label><br>
-                                <input type="date" name="birth_date" id="birth_date" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <div class="default-select" id="default-select">
-                                    <select name="sex" id="sex" required>
-                                            <option value="" selected disabled hidden>Sexo</option>
-                                            <option value="M" >Masculino</option>
-                                            <option value="F">Feminino</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="adress" class="text-info">Endereço*</label><br>
-                                <input type="adress" name="adress" id="adress" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone" class="text-info">Celular</label><br>
-                                <input type="tel" name="phone" id="phone" maxlength=13 OnKeyPress="formatar('##-#####-####', this)" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="Email" class="text-info">Email*</label><br>
-                                <input type="email" name="email" id="email" class="form-control" required>
+                                <label for="especialidade" class="text-info">Especialidade*</label><br>
+                                <input type="text" name="esp" id="esp" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="military" class="text-info">Posto/Graduação Militar</label><br>
                                 <input type="text" name="military" id="military" maxlength=20 class="form-control">
-                                <i>Obs.: Caso aluno do ITA bolsista da AEITA, escrever "alunoITA" </i>
                             </div>
                             <div class="form-group">
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="Enviar">

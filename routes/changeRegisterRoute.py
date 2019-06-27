@@ -20,7 +20,7 @@ def changeRegister():
         return redirect('/logged')
     user_list = userData.getStringList()
     print("userData.getStringList() = "+ str(user_list))
-    saram = user_list[1]
+    cpf = user_list[2]
     if request.method == 'POST':
         # Fetch form data
         userDetails = request.form
@@ -39,16 +39,16 @@ def changeRegister():
             #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
             hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
             hashedDecoded = hashed.decode('utf-8')
-            cur.execute("SELECT senha FROM paciente WHERE saram = %s",(saram,))
+            cur.execute("SELECT senha FROM paciente WHERE cpf = %s",(cpf,))
             psd_db = cur.fetchall()
             psd_db = psd_db[0][0]
             if (bcrypt.hashpw(psd.encode(),psd_db.encode()) != psd_db.encode() and len(psd) != 0):      
-                cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,saram))
+                cur.execute("UPDATE paciente SET senha=%s,nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE cpf=%s",(hashedDecoded,name,birth_date,sex,adress,phone,email,military,cpf))
             else:
-                cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE saram=%s",(name,birth_date,sex,adress,phone,email,military,saram)) 
+                cur.execute("UPDATE paciente SET nome=%s,dt_nasc=%s,sexo=%s,endereco=%s,telefone=%s,email=%s,militar=%s WHERE cpf=%s",(name,birth_date,sex,adress,phone,email,military,cpf)) 
             #commit the transcation
             connectionData.getConnector().commit()
-            cur.execute("SELECT * FROM paciente WHERE saram = %s",(saram,))
+            cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
 
             #apaga no dictionary a usuario
             cpf = session['user']
@@ -63,6 +63,5 @@ def changeRegister():
             #close the cursor
             cur.close()
             return redirect('/logged')
-        elif (submit == "Cancelar"): return redirect('/logged')
     return render_template('changeRegister.html',userDetails = user_list)
 

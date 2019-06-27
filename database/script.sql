@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS "ds".medico ;
 
 CREATE TABLE Medico (
 	CPF varchar(14) unique NOT NULL,
-    CRM int unique NOT NULL,
 	senha varchar NOT NULL,
 	SARAM int unique,
     Nome VARCHAR(50) NOT NULL,
+	militar VARCHAR(20) NOT NULL,
+	CRM int unique NOT NULL,
     Especialidade VARCHAR(20) NOT NULL,
-    militar VARCHAR(20) NOT NULL,
     PRIMARY KEY (CRM)
 );
 
@@ -66,6 +66,7 @@ CREATE TABLE Consulta (
     CRM int unique NOT NULL,
     Data DATE NOT NULL,
     Hora TIME NOT NULL,
+	descricao varchar(70),
     status VARCHAR(10) NOT NULL,
     PRIMARY KEY (id)
 );
