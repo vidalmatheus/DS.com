@@ -63,19 +63,19 @@ def login():
                     print("userData.getStringList() = "+str(userData.getStringList()))
                     if 'user' in session:
                         print("session['user'] = "+str(session['user']))
-                        usersDataOnline.logoutUser(session['user'])
-                        session.pop('user', None)
 
                     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
                     if usersDataOnline.userIsOn(userData.getCPF()):
                         print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        return redirect('/login')
-                    else:
-                        print("Usuario nao esta logado")
-                        session['user'] = userData.getCPF()
-                        usersDataOnline.addUserOn(userData)
-                        print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
-                        print("fAZ Login")
+                        usersDataOnline.logoutUser(session['user'])
+                        session.pop('user', None)
+                        #return redirect('/login')
+                    
+                    print("Usuario nao esta logado")
+                    session['user'] = userData.getCPF()
+                    usersDataOnline.addUserOn(userData)
+                    print("dicionary of user = "+ str(usersDataOnline.getDictionary()))
+                    print("fAZ Login")
                     print("FLAG 13")
                     #close the cursor
                     cur.close()
