@@ -19,7 +19,9 @@ def logged():
     if not usersDataOnline.userIsOn(session['user']):
         print("user has cookie but not logged, redirect to login")
         userData = usuario.acessoUser()
-        userData.logginUser(session['user'])
+        cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
+        user = cur.fetchall()
+        userData.logginUser(user[0])
         usersDataOnline.addUserOn(userData)
         #session.pop('user', None)
         #return redirect('/login')
