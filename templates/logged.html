@@ -50,7 +50,7 @@
             border-radius: 2px;
             padding: 16px;
             position: fixed;
-            z-index: 1;
+            z-index: 2;
             left: 50%;
             bottom: 30px;
             font-size: 17px;
@@ -124,14 +124,34 @@
     </script>
     <script>
         function Enviado() {
+            var x = document.forms["esp-form"]["esp"].value;
+            if (x == "None" || x == "--Escolha a Especialidade--") {
+                alert("Espeialidade não escolhida.");
+                return false;
+            }
+            var x = document.forms["medic-form"]["medico"].value;
+            if (x == "--Escolha um Médico--") {
+                alert("Médico não escolhido.");
+                return false;
+            }
+
+            if (!escolheuHora()) {
+                alert("Escolha um horário.");
+                return false;
+            }
+
             var x = document.getElementById("snackbar2");
             x.className = "show";
             setTimeout(function() {
                 x.className = x.className.replace("show", "");
             }, 3000);
+
+
             event.preventDefault();
             let escolhido = document.getElementById("#Escolhido");
             escolhido.innerHTML = ""
+            return true;
+
         };
     </script>
 
@@ -184,7 +204,7 @@
                         <h3 class="mb-30 title_color">Marcar Consulta</h3>
                         <h5 class="mb-30 title_color">Especialidade</h5>
                         <div class="default-select" id="default-select">
-                            <form id="consult-esp" action="" class="form" method="GET">
+                            <form name="esp-form" id="consult-esp" action="" class="form" method="GET">
                                 <select name="esp" id="esp" onchange='this.form.submit()' required>
                                     <option value="{{chosen_esp}}" selected disabled hidden>{{chosen_esp}}</option>
                                     {% for esp in especialidades %}
@@ -193,13 +213,13 @@
                                 </select>
                             </form>
                         </div>
-                        <form id="consult-medic" class="form" action="" onsubmit="Enviado()" method="POST">
+                        <form name="medic-form" id="consult-medic" class="form" action="" onsubmit="return Enviado()" method="POST">
                             <h5 class="mb-30 title_color"><br />Descreva o motivo da consulta.</h5>
                             <div class="mt-10">
                                 <textarea name="desc" id="desc" class="single-textarea" placeholder="Mensagem" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Descrição'"></textarea>
                             </div>
                             <div class="button-group-area mt-40">
-                                <input name="submit" id="Enviar" onclick="Enviado()" class="genric-btn success circle" value="Enviar"></input>
+                                <input type="submit" name="submit" id="Enviar" class="genric-btn success circle" value="Enviar"></input>
                             </div>
                     </div>
                     <div class="col-lg-3 col-md-4 mt-sm-30 element-wrap">
@@ -405,6 +425,8 @@
 
         };
         carregaBanco();
+
+
         var escolheuHorario = false;
         var horariosLivres = document.querySelectorAll(".horario_livre");
 
@@ -426,6 +448,10 @@
                 }
             });
         });
+
+        function escolheuHora() {
+            return escolheuHorario;
+        }
     </script>
 
     <!-- Carregamento dos códigos -->

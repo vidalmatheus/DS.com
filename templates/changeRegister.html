@@ -97,11 +97,21 @@
     </script>
     <script>
         function Alert() {
+            var x = document.forms["change-form"]["military"].value;
+            if (x != "alunoITA" && x != "Marechal-do-Ar" && x != "Tenente-Brigadeiro-do-Ar" && x != "Major-Brigadeiro-do-Ar" && x != "Brigadeiro" &&
+                x != "Coronel" && x != "Tenente-Coronel" && x != "Major" && x != "Capitão" && x != "Primeiro Tenente" &&
+                x != "Segundo Tenente" && x != "Aspirante" && x != "Suboficial" && x != "Primeiro Sargento" && x != "Segundo Sargento" &&
+                x != "Terceiro Sargento" && x != "Cabo" && x != "Taifeiro-Mor" && x != "Soldado Primeira classe" && x != "Soldado Segunda Classe" &&
+                x != "Taifeiro Segunda Classe") {
+                alert("Patente '" + x + "' INVÁLIDA!");
+                return false;
+            }
             var x = document.getElementById("snackbar");
             x.className = "show";
             setTimeout(function() {
                 x.className = x.className.replace("show", "");
             }, 3000);
+            return true;
         }
     </script>
 </head>
@@ -114,7 +124,7 @@
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
                         <div id="snackbar">Alterando dados...</div>
-                        <form id="login-form" class="form" action="" method="post" onsubmit="Alert()">
+                        <form name="change-form" id="login-form" class="form" action="" method="post" onsubmit="return Alert()">
                             <h3 class="text-center text-info">
                                 <a href="/"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
                                 <h3>Alterar Dados:</h3>
@@ -130,11 +140,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="saram" class="text-info">SARAM</label><br>
-                                <input type="number" value={{userDetails[1]}} name="saram" id="saram" maxlength=7 class="form-control" required disabled>
+                                <input type="text" value={{userDetails[1]}} name="saram" id="saram" pattern="[0-9]{7}" class="form-control" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="cpf" class="text-info">CPF</label><br>
-                                <input type="text" value={{userDetails[2]}} name="cpf" id="cpf" maxlength=14 OnKeyPress="formatar('###.###.###-##', this)" class="form-control" required disabled>
+                                <input type="text" value={{userDetails[2]}} name="cpf" id="cpf" pattern="[0-9.-]{14}" OnKeyPress=" formatar( '###.###.###-##', this)" class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="birth_date" class="text-info">Data de Nascimento</label><br>
@@ -168,7 +178,7 @@
                                 <input type="email" value={{userDetails[7]}} name="email" id="email" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="military" class="text-info">Posto/Graduação Militar</label><br>
+                                <label for="military" class="text-info">Posto/Graduação Militar <a class="text-info" href="http://www.fab.mil.br/postosegraduacoes">http://www.fab.mil.br/postosegraduacoes</a></label><br>
                                 <input type="text" value="{{userDetails[8]}}" name="military" id="military" maxlength=20 class="form-control">
                                 <i>Obs.: Caso aluno do ITA bolsista da AEITA, escrever "alunoITA" </i>
                             </div>

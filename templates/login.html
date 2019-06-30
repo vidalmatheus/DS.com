@@ -79,8 +79,6 @@
         }
     </style>
 
-
-
 </head>
 
 
@@ -91,13 +89,13 @@
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post" onsubmit="Alert()">
+                        <form name="login-form" id="login-form" class="form" action="" method="post" onsubmit="Alert()">
                             <h3 class="text-center text-info">
                                 <a href="/"><img class="img-fluid" src="../static/img/DS.ico" alt=""></a>
                             </h3>
                             <div class="form-group">
                                 <label for="username" class="text-info">SARAM/CPF</label><br>
-                                <input type="code" name="login" id="login" maxlength=11 class="form-control" required>
+                                <input type="code" name="login" id="login" minlength="7" maxlength=11 class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Senha</label><br>
@@ -116,7 +114,7 @@
                                     };
                                 </script>
                                 <div id="snackbar">{{alert}}</div>
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Entrar">
+                                <input type="submit" name="submit" onsubmit="return validate()" class="btn btn-info btn-md" value="Entrar">
                             </div>
                             <div id="register-link" class="text-center text-info">
                                 Novo na DS.com? <a href="register" class="text-info">Cadastre-se!</a>

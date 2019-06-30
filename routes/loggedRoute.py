@@ -45,6 +45,7 @@ def logged():
         # Fetch form data
         chosen_esp = request.args.get('esp')
         #chosen_esp = userDetails['esp']
+        if (chosen_esp == None): chosen_esp = "--Escolha a Especialidade--"
         print(chosen_esp)
         cur.execute("SELECT Nome, CRM  FROM medico WHERE especialidade = %s",(chosen_esp,))
         med = cur.fetchall()

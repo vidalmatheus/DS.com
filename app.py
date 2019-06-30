@@ -26,7 +26,8 @@ def index():
 if __name__ == '__main__':
     print('tipo de session = '+str(type(session)))
     app.run(debug=True,threaded=False)
-    usersDataOnline.resetServer()
     #close the connection
     connectionData.getConnector().close()
+    usersDataOnline.resetServer()
+
 
