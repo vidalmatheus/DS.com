@@ -16,8 +16,16 @@ def changeRegister():
     if userData == None:
         print("usersDataOnline.getUser(session['user']) == None")
         if 'user' in session:
-            session.pop('user', None)
-        return redirect('/logged')
+            if not usersDataOnline.userIsOn(session['user']):
+                print("user has cookie but not logged, redirect to login")
+                userData = usuario.acessoUser()
+                cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
+                user = cur.fetchall()
+                userData.logginUser(user[0])
+                usersDataOnline.addUserOn(userData)
+            else:
+                session.pop('user', None)
+                return redirect('/logged')
     user_list = userData.getStringList()
     print("userData.getStringList() = "+ str(user_list))
     cpf = user_list[2]
