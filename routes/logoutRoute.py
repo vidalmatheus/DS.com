@@ -9,6 +9,9 @@ def logout():
     print("/////////////////////////////")
     print("Começa logout")
     if not 'user' in session:
+        if usersDataOnline.userIsOn(userData.getCPF()):
+            print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            usersDataOnline.logoutUser(userData.getCPF())
         print("not 'user' so return to '/'")
         return redirect('/') 
     usersDataOnline.logoutUser(session['user'])

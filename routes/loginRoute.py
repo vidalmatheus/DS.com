@@ -63,12 +63,12 @@ def login():
                     print("userData.getStringList() = "+str(userData.getStringList()))
                     if 'user' in session:
                         print("session['user'] = "+str(session['user']))
+                        session.pop('user', None)
 
                     print("usersDataOnline.dictUsersOn = "+str(usersDataOnline.dictUsersOn))
                     if usersDataOnline.userIsOn(userData.getCPF()):
                         print("Ja esta logada!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                        usersDataOnline.logoutUser(session['user'])
-                        session.pop('user', None)
+                        usersDataOnline.logoutUser(userData.getCPF())
                         #return redirect('/login')
                     
                     print("Usuario nao esta logado")
