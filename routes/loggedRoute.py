@@ -19,6 +19,8 @@ def logged():
     if not usersDataOnline.userIsOn(session['user']):
         print("user has cookie but not logged, redirect to login")
         userData = usuario.acessoUser()
+        #cursor
+        cur = connectionData.getConnector().cursor()
         cur.execute("SELECT * FROM paciente WHERE cpf = %s",(session['user'],))
         user = cur.fetchall()
         userData.logginUser(user[0])
