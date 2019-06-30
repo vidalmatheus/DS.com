@@ -16,10 +16,10 @@ def logged():
         return redirect('/login')
     print(request.args.get('userDetails'))
     userData = usersDataOnline.getUser(session['user'])
-    #if not usersDataOnline.userIsOn(session['user']):
-    #    print("user has cookie but not logged, redirect to login")
-    #    session.pop('user', None)
-    #    return redirect('/login')
+    if not usersDataOnline.userIsOn(session['user']):
+        print("user has cookie but not logged, redirect to login")
+        session.pop('user', None)
+        return redirect('/login')
     print("render logged")
     
     # cursor
