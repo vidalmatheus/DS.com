@@ -18,8 +18,11 @@ def logged():
     userData = usersDataOnline.getUser(session['user'])
     if not usersDataOnline.userIsOn(session['user']):
         print("user has cookie but not logged, redirect to login")
-        session.pop('user', None)
-        return redirect('/login')
+        userData = usuario.acessoUser()
+        userData.logginUser(session['user'])
+        usersDataOnline.addUserOn(userData)
+        #session.pop('user', None)
+        #return redirect('/login')
     print("render logged")
     
     # cursor
