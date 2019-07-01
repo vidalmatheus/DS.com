@@ -7,12 +7,7 @@ register_api = Blueprint('register_api', __name__)
 @register_api.route('/register', methods=['GET', 'POST'])
 def register():
     global usersDataOnline
-    print("////////////////////////////////////////")
-    print("comeca register")
-    print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
     if request.method == 'POST':
-        print("/////////////////////////")
-        print("Comeca route register")
         # Fetch form data
         userDetails = request.form
         cpf = userDetails['cpf']

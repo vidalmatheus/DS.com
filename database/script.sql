@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS "ds".medico ;
 CREATE TABLE Medico (
 	CPF varchar(14) unique NOT NULL,
 	senha varchar NOT NULL,
-	SARAM int unique,
+	SARAM int unique NOT NULL,
     Nome VARCHAR(50) NOT NULL,
 	militar VARCHAR(20) NOT NULL,
 	CRM int unique NOT NULL,
@@ -82,8 +82,6 @@ CREATE TABLE Logado (
     PRIMARY KEY (CPF)
 );
 
---ALTER TABLE Logado ADD FOREIGN KEY (CPF) REFERENCES Paciente(CPF);
---ALTER TABLE Logado ADD FOREIGN KEY (CPF) REFERENCES Medico(CPF);
 ALTER TABLE Consulta ADD FOREIGN KEY (CRM) REFERENCES Medico(CRM);
 ALTER TABLE Consulta ADD FOREIGN KEY (CPF_pac) REFERENCES Paciente(CPF);
 
