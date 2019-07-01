@@ -31,6 +31,7 @@ def register():
             if (len(cur.fetchall())>0): # saram já existe
                 alert = "SARAM já existente. Efetuar login."
         if (alert == ""):
+            saram = None
             cur.execute("SELECT cpf FROM paciente WHERE cpf = %s",(cpf,))  
             if (len(cur.fetchall())>0): # cpf já existe
                 alert = "CPF já existente. Efetuar login."
