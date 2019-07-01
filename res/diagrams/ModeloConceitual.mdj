@@ -8710,7 +8710,7 @@
 									},
 									"font": "Arial;13;1",
 									"left": 448,
-									"top": 645,
+									"top": 565,
 									"width": 225.52685546875,
 									"height": 13,
 									"text": "Logado"
@@ -8736,7 +8736,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 453,
-											"top": 668,
+											"top": 588,
 											"width": 215.52685546875,
 											"height": 13
 										},
@@ -8751,21 +8751,21 @@
 											},
 											"font": "Arial;13;0",
 											"left": 453,
-											"top": 683,
+											"top": 603,
 											"width": 215.52685546875,
 											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 448,
-									"top": 663,
+									"top": 583,
 									"width": 225.52685546875,
 									"height": 38
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 448,
-							"top": 640,
+							"top": 560,
 							"width": 225.52685546875,
 							"height": 61,
 							"nameLabel": {
