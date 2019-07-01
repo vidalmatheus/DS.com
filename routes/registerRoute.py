@@ -20,27 +20,37 @@ def register():
         phone = userDetails['phone']
         email = userDetails['email']
         military = userDetails['military']
+        alert = ""
         #cursor
         cur = connectionData.getConnector().cursor()
-        #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
-        hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
-        hashedDecoded = hashed.decode('utf-8')
-        cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
-        #commit the transcation
-        connectionData.getConnector().commit()
-        userData = usuario.acessoUser()
-        cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
-        user = cur.fetchall()
-        print("adciona user[0] = " + str(user[0]))
-        userData.logginUser(user[0])
-        print("userData.getStringList() = " + str(userData.getStringList()))
-        session['user'] = cpf
-        usersDataOnline.addUserOn(userData)
-        print("after added user on login")
-        print("session['user'] = "+ session['user'])
-        print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
-        #close the cursor
-        cur.close()
-        return redirect('/logged')
-    return render_template('register.html')
+        # verifica se saram já existe:
+        if (len(saram)>0): 
+            cur.execute("SELECT saram FROM paciente WHERE saram = %s",(saram,))
+            if (len(cur.fetchall())>0): # saram já existe
+                alert = "SARAM já existente. Efetuar login."
+        cur.execute("SELECT cpf FROM paciente WHERE cpf = %s",(cpf,))  
+        if (len(cur.fetchall())>0): # cpf já existe
+            alert = "CPF já existente. Efetuar login."
+        else:
+            #print(cpf +" "+ psd +" "+ saram +" "+ name +" "+ birth_date +" "+ sex +" "+ adress +" "+ phone +" "+ email +" "+ military)
+            hashed = bcrypt.hashpw(psd.encode(),bcrypt.gensalt(12))
+            hashedDecoded = hashed.decode('utf-8')
+            cur.execute("INSERT INTO paciente VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(cpf,hashedDecoded,saram,name,birth_date,sex,adress,phone,email,military,False))
+            #commit the transcation
+            connectionData.getConnector().commit()
+            userData = usuario.acessoUser()
+            cur.execute("SELECT * FROM paciente WHERE cpf = %s",(cpf,))
+            user = cur.fetchall()
+            print("adciona user[0] = " + str(user[0]))
+            userData.logginUser(user[0])
+            print("userData.getStringList() = " + str(userData.getStringList()))
+            session['user'] = cpf
+            usersDataOnline.addUserOn(userData)
+            print("after added user on login")
+            print("session['user'] = "+ session['user'])
+            print("usersDataOnline.getDictionary() = "+ str(usersDataOnline.getDictionary()))
+            #close the cursor
+            cur.close()
+            return redirect('/logged')
+    return render_template('register.html',alert=alert)
 
